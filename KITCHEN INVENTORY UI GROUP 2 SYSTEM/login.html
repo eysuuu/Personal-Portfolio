@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(
+            to bottom right,
+            rgba(0, 0, 0, 0.9),
+            rgba(0, 0, 0, 0)
+          ),
+          url(images/back.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .container {
+        display: flex;
+        width: 100%;
+        max-width: 900px;
+        background: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .image-section {
+        flex: 1;
+        background: url(".//images/Checking\ boxes-bro.png") no-repeat
+          center/cover;
+        height: 500px;
+        width: auto;
+      }
+      .login-section {
+        flex: 1;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .login-section h2 {
+        margin-bottom: 20px;
+        text-align: center;
+        margin-left: 100px;
+        font-weight: 600;
+      }
+      .icon {
+        width: 150px;
+        height: auto;
+        margin-bottom: 10px;
+        margin-left: 100px;
+      }
+
+      .input-group {
+        margin-bottom: 15px;
+        width: 100%;
+        position: relative;
+      }
+      .input-group label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .input-group input {
+        width: 150%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .toggle-password {
+        position: absolute;
+        left: 250px;
+        top: 65%;
+        transform: translateY(-25%);
+        cursor: pointer;
+      }
+      .toggle-password img {
+        width: 20px;
+        height: 20px;
+      }
+      .btn {
+        width: 150%;
+        padding: 10px;
+        background: #b82132;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .btn:hover {
+        background: #a11d2c;
+      }
+      .forgot-password {
+        margin-top: 10px;
+        font-size: 13px;
+        margin-left: 85px;
+      }
+      .forgot-password a {
+        color: #b82132;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .forgot-password a:hover {
+        text-decoration: underline;
+      }
+      .signup-text {
+        margin-top: 5px;
+        font-size: 13px;
+        margin-left: 85px;
+      }
+      .signup-text a {
+        color: #b82132;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .signup-text a:hover {
+        text-decoration: underline;
+      }
+      .error-message {
+        color: #b82132;
+        font-size: 13px;
+        margin-top: 5px;
+        margin-left: 85px;
+        display: none;
+      }
+
+      /* Simple Icon Check Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .modal.show {
+        display: flex;
+        opacity: 1;
+      }
+
+      .modal-content {
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      .modal.show .modal-content {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .check-icon {
+        width: 80px;
+        height: 80px;
+        background-color: #b82132;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: pop-in 0.4s ease-out forwards;
+      }
+
+      @keyframes pop-in {
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .check-icon svg {
+        width: 40px;
+        height: 40px;
+        fill: none;
+        stroke: white;
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+        animation: draw-check 0.6s ease-in-out 0.2s forwards;
+      }
+
+      @keyframes draw-check {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      .modal h3 {
+        margin-bottom: 10px;
+        color: black;
+        font-size: 24px;
+        opacity: 0;
+        animation: fade-in 0.3s ease-out 0.5s forwards;
+      }
+
+      .modal p {
+        color: black;
+        margin-bottom: 25px;
+        opacity: 0;
+        animation: fade-in 0.3s ease-out 0.7s forwards;
+      }
+
+      @keyframes fade-in {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .modal-btn {
+        padding: 12px 30px;
+        background: #b82132;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+
+        display: inline-block;
+        text-decoration: none;
+        margin-top: 10px;
+        opacity: 0;
+        animation: fade-in 0.3s ease-out 0.9s forwards;
+      }
+
+      .modal-btn:hover {
+        background: #a11d2c;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+        .image-section {
+          height: 200px;
+        }
+        .error-message {
+          margin-left: 0;
+        }
+        .modal-content {
+          padding: 30px;
+          width: 85%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="image-section"></div>
+      <div class="login-section">
+        <img src="./images/datamesian.PNG" alt="Login Icon" class="icon" />
+        <h2>Kitchen Inventory</h2>
+        <form id="loginForm">
+          <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" required />
+          </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required />
+            <span class="toggle-password" onclick="togglePassword()">
+              <img id="eye-icon" src="./images/eye.png" alt="Toggle Password" />
+            </span>
+          </div>
+          <button type="submit" class="btn">Login</button>
+        </form>
+        <div class="error-message" id="errorMessage">
+          This account is not registered
+        </div>
+        <p class="forgot-password">
+          <a href="forgot.html">Forgot Password?</a>
+        </p>
+        <p class="signup-text">
+          Don't have an account? <a href="register.html">Register now.</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Simple Icon Check Modal -->
+    <div class="modal" id="successModal">
+      <div class="modal-content">
+        <div class="check-icon">
+          <svg viewBox="0 0 24 24">
+            <polyline points="4 12 9 17 20 6"></polyline>
+          </svg>
+        </div>
+        <h3>Login Successful!</h3>
+        <p>Welcome back to Kitchen Inventory</p>
+        <a href="index.html" class="modal-btn">Proceed</a>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Sample accounts database
+        const accounts = [
+          {
+            username: "admin",
+            password: "admin123",
+          },
+          {
+            username: "manager",
+            password: "manager123",
+          },
+          {
+            username: "user",
+            password: "user123",
+          },
+        ];
+
+        function adjustLayout() {
+          const container = document.querySelector(".container");
+          const loginSection = document.querySelector(".login-section");
+          const imageSection = document.querySelector(".image-section");
+          const inputFields = document.querySelectorAll(".input-group input");
+          const button = document.querySelector(".btn");
+          const forgotPassword = document.querySelector(".forgot-password");
+          const signupText = document.querySelector(".signup-text");
+          const loginIcon = document.querySelector(".icon");
+          const loginHeading = document.querySelector(".login-section h2");
+          const eyeIcon = document.querySelector(".toggle-password img");
+          const errorMessage = document.getElementById("errorMessage");
+
+          if (window.innerWidth <= 768) {
+            container.style.flexDirection = "column";
+            container.style.width = "90%";
+            imageSection.style.height = "200px";
+            loginSection.style.padding = "20px";
+            inputFields.forEach((input) => (input.style.width = "100%"));
+            button.style.width = "100%";
+            forgotPassword.style.marginLeft = "0px";
+            signupText.style.marginLeft = "0px";
+            loginIcon.style.width = "100px";
+            loginIcon.style.marginLeft = "5px";
+            loginHeading.style.fontSize = "20px";
+            loginHeading.style.marginLeft = "0px";
+            eyeIcon.style.width = "20px";
+            eyeIcon.style.height = "20px";
+            eyeIcon.style.marginLeft = "-94px";
+            errorMessage.style.marginLeft = "0px";
+          } else {
+            container.style.flexDirection = "row";
+            container.style.width = "100%";
+            imageSection.style.height = "500px";
+
+            imageSection.style.marginTop = "25px";
+            loginSection.style.padding = "40px";
+            inputFields.forEach((input) => (input.style.width = "150%"));
+            button.style.width = "150%";
+            forgotPassword.style.marginLeft = "85px";
+            signupText.style.marginLeft = "85px";
+            loginIcon.style.width = "165px";
+            loginIcon.style.marginLeft = "100px";
+            loginIcon.style.marginBottom = "1px";
+            loginHeading.style.fontSize = "24px";
+            loginHeading.style.marginLeft = "100px";
+            eyeIcon.style.width = "20px";
+            eyeIcon.style.height = "20px";
+            eyeIcon.style.marginLeft = "2px";
+            errorMessage.style.marginLeft = "85px";
+          }
+        }
+
+        adjustLayout();
+        window.addEventListener("resize", adjustLayout);
+
+        function togglePassword() {
+          const passwordField = document.getElementById("password");
+          const eyeIcon = document.getElementById("eye-icon");
+
+          if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.src = "./images/visibility.png";
+          } else {
+            passwordField.type = "password";
+            eyeIcon.src = "./images/eye.png";
+          }
+        }
+
+        document
+          .querySelector(".toggle-password")
+          .addEventListener("click", togglePassword);
+
+        // Login form handling
+        const loginForm = document.getElementById("loginForm");
+        const errorMessage = document.getElementById("errorMessage");
+        const successModal = document.getElementById("successModal");
+
+        loginForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // Find the account that matches the username
+          const account = accounts.find((acc) => acc.username === username);
+
+          if (account) {
+            // Check if password matches
+            if (account.password === password) {
+              // Successful login
+              errorMessage.style.display = "none";
+
+              // Show success modal with simple check icon animation
+              successModal.classList.add("show");
+
+              // Add small delay before redirecting when button is clicked
+              const modalBtn = document.querySelector(".modal-btn");
+              modalBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                const href = this.getAttribute("href");
+                successModal.classList.remove("show");
+
+                setTimeout(function () {
+                  window.location.href = href;
+                }, 300);
+              });
+            } else {
+              // Wrong password
+              errorMessage.textContent = "Incorrect password or username";
+              errorMessage.style.display = "block";
+              shakeError(errorMessage);
+            }
+          } else {
+            // Account not found
+            errorMessage.textContent = "This account is not registered";
+            errorMessage.style.display = "block";
+            shakeError(errorMessage);
+          }
+        });
+
+        // Add CSS for error shake animation
+        const style = document.createElement("style");
+        style.innerHTML = `
+          @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+          }
+          .shake {
+            animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
+          }
+        `;
+        document.head.appendChild(style);
+
+        // Sample accounts info (for demonstration)
+        console.log("Sample accounts for testing:");
+        console.log("1. Admin - username: 'admin', password: 'admin123'");
+        console.log("3. User - username: 'user', password: 'user123'");
+      });
+    </script>
+  </body>
+</html>

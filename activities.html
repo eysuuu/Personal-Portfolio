@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="image/logo.jpg" sizes="128x128" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <title>Geometry Calculator</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: white;
+        color: black;
+        margin: 0;
+        padding: 20px;
+      }
+
+      body.dark-mode {
+        background-color: black;
+        color: white;
+      }
+
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        margin: 0;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        text-decoration: none;
+        color: black;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 8px 16px;
+        background-color: white;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+        transform: translateX(-4px);
+      }
+
+      .back-link .arrow {
+        font-size: 18px;
+        color: black;
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+
+      body.dark-mode .back-link {
+        background-color: black;
+        color: white;
+      }
+
+      body.dark-mode .back-link .arrow {
+        color: white;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 150px;
+      }
+
+      h1 {
+        background-color: white;
+        color: black;
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+
+      h1.dark-mode {
+        background-color: #121212;
+        color: white;
+      }
+
+      .subtitle {
+        background-color: white;
+        color: black;
+        font-size: 16px;
+      }
+
+      .calculator-container {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+        max-width: 1600px;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 1300px) {
+        .calculator-container {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      @media (max-width: 1200px) {
+        .calculator-container {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      @media (max-width: 1100px) {
+        .calculator-container {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 768px) {
+        .calculator-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 480px) {
+        .calculator-container {
+          grid-template-columns: 1fr;
+        }
+      }
+      @keyframes slideInFromLeft {
+        0% {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .calculator-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        font-size: 1em;
+        animation: slideInFromLeft 0.6s ease-out forwards;
+        margin-top: 70px;
+      }
+
+      body.dark-mode .calculator-card {
+        background-color: #1e1e1e;
+        animation: slideInFromLeft 0.6s ease-out forwards;
+      }
+
+      .card-title {
+        color: black;
+        font-size: 18px;
+        margin-bottom: 12px;
+        text-align: center;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .formula-section {
+        margin-bottom: 15px;
+        padding: 0 5px;
+      }
+
+      .formula {
+        font-style: italic;
+        text-align: center;
+        margin: 12px 0;
+        font-size: 18px;
+      }
+
+      .divider {
+        border-top: 1px solid #ddd;
+        margin: 12px 0;
+      }
+
+      .input-section {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 1em;
+      }
+
+      input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        font-size: 1em;
+      }
+
+      button {
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+      body.dark-mode button {
+        background-color: #1976d2;
+        color: white;
+      }
+
+      button:hover {
+        background-color: #1976d2;
+      }
+
+      body.dark-mode button:hover {
+        background-color: #1565c0;
+      }
+      .result-section {
+        margin-top: 15px;
+        padding: 10px;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        display: none;
+        font-size: 1em;
+      }
+
+      .computation {
+        font-family: monospace;
+        margin-top: 10px;
+        padding: 8px;
+        background-color: white;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+
+      .radio-group {
+        margin: 10px 0;
+        font-size: 1em;
+      }
+
+      .radio-group label {
+        display: inline;
+        font-weight: normal;
+        margin-left: 5px;
+      }
+
+      ul {
+        list-style-type: none;
+        padding-left: 5px;
+        margin: 10px 0;
+        font-size: 0.9em;
+      }
+
+      li {
+        margin-bottom: 5px;
+      }
+
+      body.dark-mode h1,
+      body.dark-mode .subtitle {
+        background-color: transparent;
+        color: white;
+      }
+
+      body.dark-mode .calculator-card {
+        background-color: #1e1e1e;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+      }
+
+      body.dark-mode .card-title {
+        color: white;
+        border-bottom: 1px solid #444;
+      }
+
+      body.dark-mode .divider {
+        border-top: 1px solid #444;
+      }
+
+      body.dark-mode input[type="number"] {
+        background-color: #2a2a2a;
+        border: 1px solid #555;
+        color: white;
+      }
+
+      body.dark-mode .result-section {
+        background-color: #2a2a2a;
+        color: white;
+      }
+
+      body.dark-mode .computation {
+        background-color: #1e1e1e;
+        color: white;
+      }
+
+      body.dark-mode label {
+        color: white;
+      }
+
+      body.dark-mode ul {
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="back-button">
+      <a href="index.html" class="back-link">
+        <i class="bx bx-arrow-back arrow"></i>
+        <span class="back-text">Back</span>
+      </a>
+    </h1>
+
+    <div class="calculator-container">
+      <div class="calculator-card" id="circleAreaCard">
+        <h2 class="card-title">Circle Area</h2>
+
+        <div class="formula-section">
+          <p>To find the area of a circle:</p>
+          <div class="formula">A = πr²<br />d = 2r</div>
+          <ul>
+            <li>• r = radius</li>
+            <li>• d = diameter</li>
+            <li>• π ≈ 3.14159</li>
+          </ul>
+        </div>
+
+        <div class="input-section">
+          <div class="radio-group">
+            <input
+              type="radio"
+              id="radiusCircle"
+              name="circleMeasurement"
+              value="radius"
+              checked
+            />
+            <label for="radiusCircle">Use Radius</label>
+            <input
+              type="radio"
+              id="diameterCircle"
+              name="circleMeasurement"
+              value="diameter"
+            />
+            <label for="diameterCircle">Use Diameter</label>
+          </div>
+          <label for="circleValue">Enter Value:</label>
+          <input
+            type="number"
+            id="circleValue"
+            placeholder="Enter radius or diameter"
+            step="any"
+            min="0"
+          />
+        </div>
+
+        <button onclick="calculateCircleArea()">Calculate</button>
+
+        <div id="circleAreaResult" class="result-section">
+          <strong>Result:</strong>
+          <div id="circleAreaComputation" class="computation"></div>
+        </div>
+      </div>
+
+      <div class="calculator-card" id="squareAreaSideCard">
+        <h2 class="card-title">Square Area (Side)</h2>
+
+        <div class="formula-section">
+          <p>To find the area of a square:</p>
+          <div class="formula">A = a²</div>
+          <ul>
+            <li>• a = length of side</li>
+            <li>• A = area</li>
+          </ul>
+        </div>
+
+        <div class="input-section">
+          <label for="squareSide">Enter Side Length:</label>
+          <input
+            type="number"
+            id="squareSide"
+            placeholder="Enter side length"
+            step="any"
+            min="0"
+          />
+        </div>
+
+        <button onclick="calculateSquareAreaSide()">Calculate</button>
+
+        <div id="squareAreaSideResult" class="result-section">
+          <strong>Result:</strong>
+          <div id="squareAreaSideComputation" class="computation"></div>
+        </div>
+      </div>
+
+      <div class="calculator-card" id="squareAreaDiagonalCard">
+        <h2 class="card-title">Square Area (Diagonal)</h2>
+
+        <div class="formula-section">
+          <p>To find the area of a square using diagonal:</p>
+          <div class="formula">A = d²/2</div>
+          <ul>
+            <li>• d = length of diagonal</li>
+            <li>• A = area</li>
+          </ul>
+        </div>
+
+        <div class="input-section">
+          <label for="squareDiagonal">Enter Diagonal Length:</label>
+          <input
+            type="number"
+            id="squareDiagonal"
+            placeholder="Enter diagonal length"
+            step="any"
+            min="0"
+          />
+        </div>
+
+        <button onclick="calculateSquareAreaDiagonal()">Calculate</button>
+
+        <div id="squareAreaDiagonalResult" class="result-section">
+          <strong>Result:</strong>
+          <div id="squareAreaDiagonalComputation" class="computation"></div>
+        </div>
+      </div>
+
+      <div class="calculator-card" id="rectangleAreaCard">
+        <h2 class="card-title">Rectangle Area</h2>
+
+        <div class="formula-section">
+          <p>To find the area of a rectangle:</p>
+          <div class="formula">A = length × width</div>
+          <ul>
+            <li>• l = length</li>
+            <li>• w = width</li>
+            <li>• A = area</li>
+          </ul>
+        </div>
+
+        <div class="input-section">
+          <label for="rectangleLength">Length:</label>
+          <input
+            type="number"
+            id="rectangleLength"
+            placeholder="Enter length"
+            step="any"
+            min="0"
+          />
+          <label for="rectangleWidth">Width:</label>
+          <input
+            type="number"
+            id="rectangleWidth"
+            placeholder="Enter width"
+            step="any"
+            min="0"
+          />
+        </div>
+
+        <button onclick="calculateRectangleArea()">Calculate</button>
+
+        <div id="rectangleAreaResult" class="result-section">
+          <strong>Result:</strong>
+          <div id="rectangleAreaComputation" class="computation"></div>
+        </div>
+      </div>
+
+      <div class="calculator-card" id="triangleAreaCard">
+        <h2 class="card-title">Triangle Area</h2>
+
+        <div class="formula-section">
+          <p>To find the area of a triangle:</p>
+          <div class="formula">Area = ½ × base × height</div>
+          <ul>
+            <li>• base = length of base side</li>
+            <li>• height = perpendicular height</li>
+          </ul>
+        </div>
+
+        <div class="input-section">
+          <label for="triangleBase">Base:</label>
+          <input
+            type="number"
+            id="triangleBase"
+            placeholder="Enter base length"
+            step="any"
+            min="0"
+          />
+          <label for="triangleHeight">Height:</label>
+          <input
+            type="number"
+            id="triangleHeight"
+            placeholder="Enter height"
+            step="any"
+            min="0"
+          />
+        </div>
+
+        <button onclick="calculateTriangleArea()">Calculate</button>
+
+        <div id="triangleAreaResult" class="result-section">
+          <strong>Result:</strong>
+          <div id="triangleAreaComputation" class="computation"></div>
+        </div>
+      </div>
+
+      <div class="calculator-card" id="cylinderBaseCard">
+        <h2 class="card-title">Cylinder Base Area</h2>
+
+        <div class="formula-section">
+          <p>The area of the base of a right cylinder:</p>
+          <div class="formula">A<sub>B</sub> = πr²</div>
+          <ul>
+            <li>• r = radius of the base</li>
+            <li>• π ≈ 3.14159</li>
+            <li>• A<sub>B</sub> = base area</li>
+          </ul>
+        </div>
+
+        <div class="input-section">
+          <label for="cylinderBaseRadius">Radius:</label>
+          <input
+            type="number"
+            id="cylinderBaseRadius"
+            placeholder="Enter radius"
+            step="any"
+            min="0"
+          />
+        </div>
+
+        <button onclick="calculateCylinderBase()">Calculate</button>
+
+        <div id="cylinderBaseResult" class="result-section">
+          <strong>Result:</strong>
+          <div id="cylinderBaseComputation" class="computation"></div>
+        </div>
+      </div>
+
+      <div class="calculator-card" id="cylinderSurfaceCard">
+        <h2 class="card-title">Cylinder Surface Area</h2>
+
+        <div class="formula-section">
+          <p>To find the total surface area:</p>
+          <div class="formula">A = 2πrh + 2πr²</div>
+          <ul>
+            <li>• r = radius of base</li>
+            <li>• h = height of cylinder</li>
+            <li>• A = total surface area</li>
+          </ul>
+        </div>
+
+        <div class="input-section">
+          <label for="cylinderSurfRadius">Radius:</label>
+          <input
+            type="number"
+            id="cylinderSurfRadius"
+            placeholder="Enter radius"
+            step="any"
+            min="0"
+          />
+          <label for="cylinderSurfHeight">Height:</label>
+          <input
+            type="number"
+            id="cylinderSurfHeight"
+            placeholder="Enter height"
+            step="any"
+            min="0"
+          />
+        </div>
+
+        <button onclick="calculateCylinderSurface()">Calculate</button>
+
+        <div id="cylinderSurfaceResult" class="result-section">
+          <strong>Result:</strong>
+          <div id="cylinderSurfaceComputation" class="computation"></div>
+        </div>
+      </div>
+
+      <div class="calculator-card" id="cylinderLateralCard">
+        <h2 class="card-title">Cylinder Lateral Area</h2>
+
+        <div class="formula-section">
+          <p>To find the lateral surface area:</p>
+          <div class="formula">A<sub>L</sub> = 2πrh</div>
+          <ul>
+            <li>• r = radius of base</li>
+            <li>• h = height of cylinder</li>
+            <li>• A<sub>L</sub> = lateral area</li>
+          </ul>
+        </div>
+
+        <div class="input-section">
+          <label for="cylinderLatRadius">Radius:</label>
+          <input
+            type="number"
+            id="cylinderLatRadius"
+            placeholder="Enter radius"
+            step="any"
+            min="0"
+          />
+          <label for="cylinderLatHeight">Height:</label>
+          <input
+            type="number"
+            id="cylinderLatHeight"
+            placeholder="Enter height"
+            step="any"
+            min="0"
+          />
+        </div>
+
+        <button onclick="calculateCylinderLateral()">Calculate</button>
+
+        <div id="cylinderLateralResult" class="result-section">
+          <strong>Result:</strong>
+          <div id="cylinderLateralComputation" class="computation"></div>
+        </div>
+      </div>
+
+      <div class="calculator-card" id="cylinderHeightCard">
+        <h2 class="card-title">Cylinder Height</h2>
+
+        <div class="formula-section">
+          <p>To find the height of a right cylinder given its volume:</p>
+          <div class="formula">h = V/(πr²)</div>
+          <ul>
+            <li>• r = radius</li>
+            <li>• V = volume</li>
+            <li>• h = height</li>
+          </ul>
+        </div>
+
+        <div class="input-section">
+          <label for="cylinderHeightRadius">Radius:</label>
+          <input
+            type="number"
+            id="cylinderHeightRadius"
+            placeholder="Enter radius"
+            step="any"
+            min="0"
+          />
+          <label for="cylinderHeightVolume">Volume:</label>
+          <input
+            type="number"
+            id="cylinderHeightVolume"
+            placeholder="Enter volume"
+            step="any"
+            min="0"
+          />
+        </div>
+
+        <button onclick="calculateCylinderHeight()">Calculate</button>
+
+        <div id="cylinderHeightResult" class="result-section">
+          <strong>Result:</strong>
+          <div id="cylinderHeightComputation" class="computation"></div>
+        </div>
+      </div>
+
+      <div class="calculator-card" id="cylinderRadiusCard">
+        <h2 class="card-title">Cylinder Radius</h2>
+
+        <div class="formula-section">
+          <p>To find the radius of a right cylinder:</p>
+          <div class="formula">r = √(V/(πh))</div>
+          <ul>
+            <li>• V = volume</li>
+            <li>• h = height</li>
+            <li>• r = radius</li>
+          </ul>
+        </div>
+
+        <div class="input-section">
+          <label for="cylinderRadiusHeight">Height:</label>
+          <input
+            type="number"
+            id="cylinderRadiusHeight"
+            placeholder="Enter height"
+            step="any"
+            min="0"
+          />
+          <label for="cylinderRadiusVolume">Volume:</label>
+          <input
+            type="number"
+            id="cylinderRadiusVolume"
+            placeholder="Enter volume"
+            step="any"
+            min="0"
+          />
+        </div>
+
+        <button onclick="calculateCylinderRadius()">Calculate</button>
+
+        <div id="cylinderRadiusResult" class="result-section">
+          <strong>Result:</strong>
+          <div id="cylinderRadiusComputation" class="computation"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const pi = Math.PI;
+
+      function calculateCircleArea() {
+        try {
+          const inputValue = parseFloat(
+            document.getElementById("circleValue").value
+          );
+          const measurementType = document.querySelector(
+            'input[name="circleMeasurement"]:checked'
+          ).value;
+
+          if (isNaN(inputValue)) throw "Please enter a valid number";
+          if (inputValue <= 0) throw "Value must be greater than zero";
+
+          let area, computationSteps;
+          if (measurementType === "radius") {
+            area = pi * inputValue * inputValue;
+            computationSteps = `
+                        A = πr²<br>
+                        A = π × (${inputValue})²<br>
+                        A = ${pi.toFixed(5)} × ${(
+              inputValue * inputValue
+            ).toFixed(2)}<br>
+                        A = <strong>${area.toFixed(2)}</strong>
+                    `;
+          } else {
+            const radius = inputValue / 2;
+            area = pi * radius * radius;
+            computationSteps = `
+                        d = 2r → r = d/2 = ${inputValue}/2 = ${radius}<br><br>
+                        A = πr²<br>
+                        A = π × (${radius})²<br>
+                        A = ${pi.toFixed(5)} × ${(radius * radius).toFixed(
+              2
+            )}<br>
+                        A = <strong>${area.toFixed(2)}</strong>
+                    `;
+          }
+
+          document.getElementById("circleAreaComputation").innerHTML =
+            computationSteps;
+          document.getElementById("circleAreaResult").style.display = "block";
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      function calculateSquareAreaSide() {
+        try {
+          const side = parseFloat(document.getElementById("squareSide").value);
+
+          if (isNaN(side))
+            throw "Please enter a valid number for the side length";
+          if (side <= 0) throw "Side length must be greater than zero";
+
+          const squareArea = side * side;
+          const computationSteps = `
+                    A = a²<br>
+                    A = ${side} × ${side}<br>
+                    A = <strong>${squareArea.toFixed(2)}</strong>
+                `;
+
+          document.getElementById("squareAreaSideComputation").innerHTML =
+            computationSteps;
+          document.getElementById("squareAreaSideResult").style.display =
+            "block";
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      function calculateSquareAreaDiagonal() {
+        try {
+          const diagonal = parseFloat(
+            document.getElementById("squareDiagonal").value
+          );
+
+          if (isNaN(diagonal))
+            throw "Please enter a valid number for the diagonal length";
+          if (diagonal <= 0) throw "Diagonal length must be greater than zero";
+
+          const diagArea = (diagonal * diagonal) / 2;
+          const computationSteps = `
+                    A = d²/2<br>
+                    A = (${diagonal})²/2<br>
+                    A = ${(diagonal * diagonal).toFixed(2)}/2<br>
+                    A = <strong>${diagArea.toFixed(2)}</strong>
+                `;
+
+          document.getElementById("squareAreaDiagonalComputation").innerHTML =
+            computationSteps;
+          document.getElementById("squareAreaDiagonalResult").style.display =
+            "block";
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      function calculateRectangleArea() {
+        try {
+          const length = parseFloat(
+            document.getElementById("rectangleLength").value
+          );
+          const width = parseFloat(
+            document.getElementById("rectangleWidth").value
+          );
+
+          if (isNaN(length) || isNaN(width))
+            throw "Please enter valid numbers for both length and width";
+          if (length <= 0 || width <= 0)
+            throw "Both length and width must be greater than zero";
+
+          const rectangleArea = length * width;
+          const computationSteps = `
+                    A = length × width<br>
+                    A = ${length} × ${width}<br>
+                    A = <strong>${rectangleArea.toFixed(2)}</strong>
+                `;
+
+          document.getElementById("rectangleAreaComputation").innerHTML =
+            computationSteps;
+          document.getElementById("rectangleAreaResult").style.display =
+            "block";
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      function calculateTriangleArea() {
+        try {
+          const base = parseFloat(
+            document.getElementById("triangleBase").value
+          );
+          const height = parseFloat(
+            document.getElementById("triangleHeight").value
+          );
+
+          if (isNaN(base) || isNaN(height))
+            throw "Please enter valid numbers for both base and height";
+          if (base <= 0 || height <= 0)
+            throw "Both base and height must be greater than zero";
+
+          const triangleArea = 0.5 * base * height;
+          const computationSteps = `
+                    Area = ½ × base × height<br>
+                    Area = ½ × ${base} × ${height}<br>
+                    Area = ${(0.5 * base * height).toFixed(2)}<br>
+                    <strong>Area = ${triangleArea.toFixed(2)}</strong>
+                `;
+
+          document.getElementById("triangleAreaComputation").innerHTML =
+            computationSteps;
+          document.getElementById("triangleAreaResult").style.display = "block";
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      function calculateCylinderBase() {
+        try {
+          const radius = parseFloat(
+            document.getElementById("cylinderBaseRadius").value
+          );
+
+          if (isNaN(radius)) throw "Please enter a valid number for the radius";
+          if (radius <= 0) throw "Radius must be greater than zero";
+
+          const baseArea = pi * radius * radius;
+          const computationSteps = `
+                    A<sub>B</sub> = πr²<br>
+                    A<sub>B</sub> = ${pi.toFixed(5)} × ${radius}²<br>
+                    A<sub>B</sub> = ${pi.toFixed(5)} × ${(
+            radius * radius
+          ).toFixed(2)}<br>
+                    A<sub>B</sub> = <strong>${baseArea.toFixed(2)}</strong>
+                `;
+
+          document.getElementById("cylinderBaseComputation").innerHTML =
+            computationSteps;
+          document.getElementById("cylinderBaseResult").style.display = "block";
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      function calculateCylinderSurface() {
+        try {
+          const radius = parseFloat(
+            document.getElementById("cylinderSurfRadius").value
+          );
+          const height = parseFloat(
+            document.getElementById("cylinderSurfHeight").value
+          );
+
+          if (isNaN(radius) || isNaN(height))
+            throw "Please enter valid numbers for both radius and height";
+          if (radius <= 0 || height <= 0)
+            throw "Both radius and height must be greater than zero";
+
+          const latArea = 2 * pi * radius * height;
+          const baseAreas = 2 * pi * radius * radius;
+          const totalArea = latArea + baseAreas;
+          const computationSteps = `
+                    A = 2πrh + 2πr²<br><br>
+                    <strong>Lateral Area:</strong><br>
+                    2πrh = 2 × π × ${radius} × ${height}<br>
+                    = 2 × ${pi.toFixed(5)} × ${radius} × ${height}<br>
+                    = ${latArea.toFixed(2)}<br><br>
+                    <strong>Base Areas:</strong><br>
+                    2πr² = 2 × π × ${radius}²<br>
+                    = 2 × ${pi.toFixed(5)} × ${(radius * radius).toFixed(2)}<br>
+                    = ${baseAreas.toFixed(2)}<br><br>
+                    <strong>Total Surface Area:</strong><br>
+                    ${latArea.toFixed(2)} + ${baseAreas.toFixed(2)}<br>
+                    = <strong>${totalArea.toFixed(2)}</strong>
+                `;
+
+          document.getElementById("cylinderSurfaceComputation").innerHTML =
+            computationSteps;
+          document.getElementById("cylinderSurfaceResult").style.display =
+            "block";
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      function calculateCylinderLateral() {
+        try {
+          const radius = parseFloat(
+            document.getElementById("cylinderLatRadius").value
+          );
+          const height = parseFloat(
+            document.getElementById("cylinderLatHeight").value
+          );
+
+          if (isNaN(radius) || isNaN(height))
+            throw "Please enter valid numbers for both radius and height";
+          if (radius <= 0 || height <= 0)
+            throw "Both radius and height must be greater than zero";
+
+          const lateralArea = 2 * pi * radius * height;
+          const computationSteps = `
+                    A<sub>L</sub> = 2πrh<br>
+                    A<sub>L</sub> = 2 × π × ${radius} × ${height}<br>
+                    A<sub>L</sub> = 2 × ${pi.toFixed(
+                      5
+                    )} × ${radius} × ${height}<br>
+                    A<sub>L</sub> = <strong>${lateralArea.toFixed(2)}</strong>
+                `;
+
+          document.getElementById("cylinderLateralComputation").innerHTML =
+            computationSteps;
+          document.getElementById("cylinderLateralResult").style.display =
+            "block";
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      function calculateCylinderHeight() {
+        try {
+          const radius = parseFloat(
+            document.getElementById("cylinderHeightRadius").value
+          );
+          const volume = parseFloat(
+            document.getElementById("cylinderHeightVolume").value
+          );
+
+          if (isNaN(radius) || isNaN(volume))
+            throw "Please enter valid numbers for both radius and volume";
+          if (radius <= 0 || volume <= 0)
+            throw "Both radius and volume must be greater than zero";
+
+          const baseArea = pi * radius * radius;
+          const height = volume / baseArea;
+          const computationSteps = `
+                    h = V/(πr²)<br>
+                    h = ${volume}/(π × ${radius}²)<br>
+                    h = ${volume}/(${pi.toFixed(5)} × ${(
+            radius * radius
+          ).toFixed(2)})<br>
+                    h = ${volume}/${baseArea.toFixed(2)}<br>
+                    h = <strong>${height.toFixed(2)}</strong>
+                `;
+
+          document.getElementById("cylinderHeightComputation").innerHTML =
+            computationSteps;
+          document.getElementById("cylinderHeightResult").style.display =
+            "block";
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      function calculateCylinderRadius() {
+        try {
+          const height = parseFloat(
+            document.getElementById("cylinderRadiusHeight").value
+          );
+          const volume = parseFloat(
+            document.getElementById("cylinderRadiusVolume").value
+          );
+
+          if (isNaN(height) || isNaN(volume))
+            throw "Please enter valid numbers for both height and volume";
+          if (height <= 0 || volume <= 0)
+            throw "Both height and volume must be greater than zero";
+
+          const denominator = pi * height;
+          const radius = Math.sqrt(volume / denominator);
+          const computationSteps = `
+                    r = √(V/(πh))<br>
+                    r = √(${volume}/(π × ${height}))<br>
+                    r = √(${volume}/${denominator.toFixed(5)})<br>
+                    r = √(${(volume / denominator).toFixed(5)})<br>
+                    r = <strong>${radius.toFixed(2)}</strong>
+                `;
+
+          document.getElementById("cylinderRadiusComputation").innerHTML =
+            computationSteps;
+          document.getElementById("cylinderRadiusResult").style.display =
+            "block";
+        } catch (error) {
+          alert(error);
+        }
+      }
+
+      const savedTheme =
+        localStorage.getItem("theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+      }
+    </script>
+  </body>
+</html>

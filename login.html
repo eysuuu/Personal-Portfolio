@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="icon" href="image/logo.jpg" sizes="128x128" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+        transition: background-color 0.3s, color 0.2s, transform 0.3s,
+          opacity 0.3s;
+      }
+
+      body {
+        background-color: white;
+        color: black;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+      }
+
+      body.dark-mode {
+        background-color: black;
+        color: white;
+      }
+
+      .loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        animation: fadeOut 0.5s ease-out 1.3s forwards;
+      }
+
+      body.dark-mode .loader {
+        background-color: black;
+      }
+
+      .loader-text {
+        font-size: 5rem;
+        font-weight: bold;
+        position: relative;
+      }
+
+      .loader-text span {
+        display: inline-block;
+        opacity: 0;
+      }
+
+      .loader-text span:nth-child(1) {
+        animation: fadeIn 0.5s ease-out 0.1s forwards;
+      }
+
+      .loader-text span:nth-child(2) {
+        animation: fadeIn 0.5s ease-out 0.25s forwards;
+      }
+
+      .loader-text span:nth-child(3) {
+        animation: fadeIn 0.5s ease-out 0.4s forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        color: #333;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 1001;
+        backdrop-filter: blur(5px);
+        transition: all 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      body.dark-mode .theme-toggle {
+        color: white;
+        background-color: rgba(0, 0, 0, 0.3);
+        box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.1);
+      }
+
+      .login-container {
+        display: flex;
+        max-width: 900px;
+        width: 100%;
+        height: auto;
+        min-height: 520px;
+        background-color: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease-out 1.5s forwards;
+      }
+
+      body.dark-mode .login-container {
+        background-color: #1e1e1e;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      }
+
+      .login-image {
+        flex: 1;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+      }
+
+      body.dark-mode .login-image {
+        background-color: black;
+      }
+
+      .login-image img {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+
+      .light-mode-img {
+        opacity: 1;
+      }
+
+      .dark-mode-img {
+        position: absolute;
+        top: 20;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+      }
+
+      body.dark-mode .light-mode-img {
+        opacity: 0;
+      }
+
+      body.dark-mode .dark-mode-img {
+        opacity: 1;
+      }
+
+      .login-form {
+        flex: 1;
+        padding: 3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .login-form::before {
+        content: "";
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.03);
+        z-index: 0;
+      }
+
+      body.dark-mode .login-form::before {
+        background-color: rgba(255, 255, 255, 0.03);
+      }
+
+      .login-form::after {
+        content: "";
+        position: absolute;
+        bottom: -80px;
+        left: -80px;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.02);
+        z-index: 0;
+      }
+
+      body.dark-mode .login-form::after {
+        background-color: rgba(255, 255, 255, 0.02);
+      }
+
+      .greeting {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: #666;
+        margin-bottom: 0.8rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      body.dark-mode .greeting {
+        color: #bbb;
+      }
+
+      .login-title {
+        font-size: 2.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #222;
+        position: relative;
+        z-index: 1;
+      }
+
+      body.dark-mode .login-title {
+        color: #f5f5f5;
+      }
+
+      .login-subtitle {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 2.5rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      body.dark-mode .login-subtitle {
+        color: #bbb;
+      }
+
+      .form-group {
+        margin-bottom: 1.8rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 0.95rem;
+        margin-bottom: 0.6rem;
+        color: #444;
+        font-weight: 500;
+        transition: transform 0.3s;
+      }
+
+      body.dark-mode .form-group label {
+        color: #ddd;
+      }
+
+      .input-wrapper {
+        position: relative;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 0.9rem 1.2rem;
+        border: 1.5px solid #e6e6e6;
+        border-radius: 8px;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+        background-color: #fafafa;
+      }
+
+      body.dark-mode .form-group input {
+        background-color: #333;
+        border-color: #444;
+        color: white;
+      }
+
+      .form-group input:focus {
+        border-color: #5b5b5b;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+        background-color: white;
+      }
+
+      body.dark-mode .form-group input:focus {
+        border-color: #888;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        background-color: #2a2a2a;
+      }
+
+      .input-icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+
+      body.dark-mode .input-icon {
+        color: #aaa;
+      }
+
+      .input-error {
+        color: #d32f2f;
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+        display: none;
+      }
+
+      body.dark-mode .input-error {
+        color: #ff6b6b;
+      }
+
+      .form-extras {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.8rem;
+        font-size: 0.9rem;
+      }
+
+      .remember-me {
+        display: flex;
+        align-items: center;
+      }
+
+      .remember-me input {
+        margin-right: 6px;
+        cursor: pointer;
+      }
+
+      .forgot-password {
+        color: #5b5b5b;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      body.dark-mode .forgot-password {
+        color: #bbb;
+      }
+
+      .forgot-password:hover {
+        color: #000;
+        text-decoration: underline;
+      }
+
+      body.dark-mode .forgot-password:hover {
+        color: #fff;
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 0.8rem;
+        background-color: #333;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      body.dark-mode .login-btn {
+        background-color: #333;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .login-btn::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.6s;
+        z-index: -1;
+      }
+
+      .login-btn:hover {
+        background-color: #444;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      body.dark-mode .login-btn:hover {
+        background-color: #444;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+      }
+
+      .login-btn:hover::after {
+        left: 100%;
+      }
+
+      .login-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .register-link {
+        margin-top: 1.5rem;
+        text-align: center;
+        font-size: 0.95rem;
+        color: #666;
+      }
+
+      body.dark-mode .register-link {
+        color: #aaa;
+      }
+
+      .register-link a {
+        color: #333;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      body.dark-mode .register-link a {
+        color: #ddd;
+      }
+
+      .register-link a:hover {
+        text-decoration: underline;
+      }
+
+      #login-error,
+      #login-success {
+        padding: 0.7rem 1rem;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+        animation: fadeIn 0.3s ease;
+        background-color: #ede9fe;
+        border-left: 4px solid #5b21b6;
+        color: #4c1d95;
+      }
+
+      body.dark-mode #login-error,
+      body.dark-mode #login-success {
+        background-color: rgba(91, 33, 182, 0.15);
+        border-left: 4px solid #7c3aed;
+        color: #d8b4fe;
+      }
+
+      @media (max-width: 1024px) {
+        .login-container {
+          max-width: 800px;
+        }
+
+        .login-form {
+          padding: 2.5rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .login-container {
+          max-width: 500px;
+          flex-direction: column;
+        }
+
+        .login-image {
+          display: none;
+        }
+
+        .login-form {
+          padding: 2rem;
+          width: 100%;
+        }
+
+        .login-title {
+          font-size: 1.8rem;
+        }
+
+        .loader-text {
+          font-size: 4rem;
+        }
+
+        .theme-toggle {
+          top: 0.8rem;
+          right: 0.8rem;
+          font-size: 1.3rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .login-container {
+          max-width: 95%;
+          border-radius: 15px;
+        }
+
+        .login-form {
+          padding: 1.8rem 1.5rem;
+        }
+
+        .form-extras {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.8rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .login-form {
+          padding: 1.5rem 1.2rem;
+        }
+
+        .greeting {
+          font-size: 1rem;
+        }
+
+        .login-title {
+          font-size: 1.5rem;
+          margin-bottom: 0.3rem;
+        }
+
+        .login-subtitle {
+          font-size: 0.9rem;
+          margin-bottom: 2rem;
+        }
+
+        .form-group {
+          margin-bottom: 1.2rem;
+        }
+
+        .form-group input {
+          padding: 0.7rem 1rem 0.7rem 0.7rem;
+          font-size: 0.95rem;
+        }
+
+        .login-btn {
+          padding: 0.7rem;
+        }
+
+        .register-link {
+          margin-top: 1.2rem;
+          font-size: 0.85rem;
+        }
+
+        .loader-text {
+          font-size: 3rem;
+        }
+
+        .theme-toggle {
+          top: 0.6rem;
+          right: 0.6rem;
+          font-size: 1.2rem;
+          padding: 0.4rem;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .login-form {
+          padding: 1.2rem 1rem;
+        }
+
+        .greeting {
+          font-size: 0.9rem;
+        }
+
+        .login-title {
+          font-size: 1.3rem;
+        }
+
+        .login-subtitle {
+          font-size: 0.8rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+          font-size: 0.8rem;
+        }
+
+        .form-group input {
+          padding: 0.6rem;
+          font-size: 0.9rem;
+        }
+      }
+
+      @media (max-height: 600px) and (orientation: landscape) {
+        .login-container {
+          flex-direction: row;
+          height: 85vh;
+          max-height: 400px;
+        }
+
+        .login-image {
+          display: none;
+        }
+
+        .login-form {
+          width: 100%;
+          padding: 1.5rem;
+        }
+
+        .form-group {
+          margin-bottom: 1rem;
+        }
+
+        .greeting {
+          font-size: 1rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .login-title {
+          font-size: 1.5rem;
+        }
+
+        .login-subtitle {
+          margin-bottom: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader">
+      <div class="loader-text">
+        <span>A</span>
+        <span>C</span>
+        <span>E</span>
+      </div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle">
+      <span id="themeIcon">◑</span>
+    </button>
+
+    <div class="login-container">
+      <div class="login-image">
+        <img
+          src="image/workingwhite.png"
+          alt="Login Image"
+          class="light-mode-img"
+        />
+        <img src="image/working.png" alt="Login Image" class="dark-mode-img" />
+      </div>
+      <div class="login-form">
+        <div class="greeting" id="greeting">Good morning!</div>
+        <h1 class="login-title">Hi! I'm Ace Flores</h1>
+        <p class="login-subtitle">Welcome back! Please enter your details.</p>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+              />
+              <i class="bx bx-envelope input-icon"></i>
+            </div>
+            <div id="email-error" class="input-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+              />
+              <i class="bx bx-lock-alt input-icon" id="togglePassword"></i>
+            </div>
+            <div id="password-error" class="input-error"></div>
+          </div>
+
+          <div class="form-extras">
+            <div class="remember-me">
+              <input type="checkbox" id="remember" name="remember" />
+              <label for="remember">Remember me</label>
+            </div>
+            <a href="#" class="forgot-password">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="login-btn">Sign In</button>
+
+          <div class="register-link">
+            Don't have an account? <a href="#">Register here</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const themeToggle = document.getElementById("themeToggle");
+      const themeIcon = document.getElementById("themeIcon");
+      const body = document.body;
+      const greetingElement = document.getElementById("greeting");
+
+      function setGreeting(isDarkMode) {
+        const hour = new Date().getHours();
+        let timeGreeting;
+
+        if (hour >= 5 && hour < 12) {
+          timeGreeting = "Good morning!";
+        } else if (hour >= 12 && hour < 18) {
+          timeGreeting = "Good afternoon!";
+        } else {
+          timeGreeting = "Good morning!";
+        }
+
+        if (isDarkMode) {
+          greetingElement.textContent = "Good night!";
+        } else {
+          greetingElement.textContent = timeGreeting;
+        }
+      }
+
+      const savedTheme =
+        localStorage.getItem("theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+
+      if (savedTheme === "dark") {
+        body.classList.add("dark-mode");
+        themeIcon.textContent = "◐";
+        setGreeting(true);
+      } else {
+        themeIcon.textContent = "◑";
+        setGreeting(false);
+      }
+
+      themeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        const isDarkMode = body.classList.contains("dark-mode");
+
+        if (isDarkMode) {
+          localStorage.setItem("theme", "dark");
+          themeIcon.textContent = "◐";
+          setGreeting(true);
+        } else {
+          localStorage.setItem("theme", "light");
+          themeIcon.textContent = "◑";
+          setGreeting(false);
+        }
+      });
+
+      const passwordInput = document.getElementById("password");
+      const togglePassword = document.getElementById("togglePassword");
+
+      togglePassword.addEventListener("click", () => {
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          togglePassword.classList.remove("bx-lock-alt");
+          togglePassword.classList.add("bx-show");
+        } else {
+          passwordInput.type = "password";
+          togglePassword.classList.remove("bx-show");
+          togglePassword.classList.add("bx-lock-alt");
+        }
+      });
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          clearAllErrors();
+
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+          let isValid = true;
+
+          const demoEmail = "aceflores@gmail.com";
+          const demoPassword = "aceflores";
+
+          if (email === "") {
+            showFieldError("email", "Email is required");
+            isValid = false;
+          } else if (email !== demoEmail) {
+            showFieldError(
+              "email",
+              "Email not found. Please check your email address."
+            );
+            isValid = false;
+          }
+
+          if (password === "") {
+            showFieldError("password", "Password is required");
+            isValid = false;
+          } else if (email === demoEmail && password !== demoPassword) {
+            showFieldError("password", "Incorrect password. Please try again.");
+            isValid = false;
+          }
+
+          if (isValid) {
+            console.log("Login successful:", { email });
+
+            showSuccessMessage();
+
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 1000);
+          }
+        });
+
+      function showFieldError(fieldId, message) {
+        const errorElement = document.getElementById(`${fieldId}-error`);
+        errorElement.textContent = message;
+        errorElement.style.display = "block";
+
+        const field = document.getElementById(fieldId);
+        field.style.borderColor = "#ff3333";
+        field.style.boxShadow = "0 0 0 2px rgba(255, 51, 51, 0.2)";
+      }
+
+      function clearFieldError(fieldId) {
+        const errorElement = document.getElementById(`${fieldId}-error`);
+        errorElement.textContent = "";
+        errorElement.style.display = "none";
+
+        const field = document.getElementById(fieldId);
+        field.style.borderColor = "";
+        field.style.boxShadow = "";
+      }
+
+      function clearAllErrors() {
+        clearFieldError("email");
+        clearFieldError("password");
+
+        const errorElement = document.getElementById("login-error");
+        if (errorElement) {
+          errorElement.remove();
+        }
+
+        const successElement = document.getElementById("login-success");
+        if (successElement) {
+          successElement.remove();
+        }
+      }
+
+      function showSuccessMessage() {
+        const successElement = document.createElement("div");
+        successElement.id = "login-success";
+
+        successElement.textContent = "Login successful!";
+
+        const form = document.getElementById("loginForm");
+        form.insertBefore(successElement, form.firstChild);
+
+        const loginButton = document.querySelector(".login-btn");
+        loginButton.textContent = "Success ✓";
+        loginButton.style.backgroundColor = " #4c1d95";
+        loginButton.disabled = true;
+      }
+
+      document.getElementById("email").addEventListener("input", function () {
+        clearFieldError("email");
+      });
+
+      document
+        .getElementById("password")
+        .addEventListener("input", function () {
+          clearFieldError("password");
+        });
+    </script>
+  </body>
+</html>

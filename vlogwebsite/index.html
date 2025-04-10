@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ace Flores</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: white;
+        padding: 60px 50px;
+      }
+      html{
+        scroll-behavior: smooth;
+      }
+      .nav-bar {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        background-color: transparent;
+
+        padding-top: 12px;
+        padding-left: 53px;
+        padding-right: 53px;
+        padding-bottom: 40px;
+        z-index: 1000; 
+      }
+
+      .name h1 a {
+        color: #181C14;
+        height: auto;
+        font-size: 40px;
+        text-decoration: none;
+        position: relative;
+      }
+      .menu {
+        display: flex;
+      }
+      .menu li {
+        padding-left: 30px;
+      }
+      .menu li a {
+        display: inline-block;
+        text-decoration: none;
+        color: black;
+        text-align: center;
+        transition: 0.15s ease-in-out;
+        position: relative;
+        text-transform: uppercase;
+      }
+      .menu li a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background-color: black;
+        transition: 0.15s ease-in-out;
+      }
+      .menu li a:hover:after {
+        width: 100%;
+      }
+      .open-menu,
+      .close-menu {
+        position: absolute;
+        color: black;
+        cursor: pointer;
+        font-size: 1.5rem;
+        display: none;
+      }
+      .open-menu {
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+      }
+      .close-menu {
+        top: 20px;
+        right: 20px;
+      }
+      #check {
+        display: none;
+      }
+      @media (max-width: 610px) {
+        .menu {
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 80%;
+          height: 100vh;
+          position: fixed;
+          top: 0;
+          right: -100%;
+          z-index: 100;
+          background-color: aqua;
+          transition: all 0.2s ease-in-out;
+        }
+        .menu li {
+          margin-top: 40px;
+        }
+        .menu li a {
+          padding: 10px;
+        }
+        .open-menu,
+        .close-menu {
+          display: block;
+        }
+        #check:checked ~ .menu {
+          right: 0;
+        }
+      }
+
+      .me-container {
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+scroll-margin-top: 50px;
+}
+
+
+@media (max-width: 834px) and (orientation: portrait) {
+  .me-container {
+    height: 80vh;
+  }
+}
+
+
+@media (max-width: 480px) and (orientation: portrait) {
+  .me-container {
+    height: 70vh; 
+  }
+}
+
+.me {
+  background-image: url("./img/background.jpg");
+  background-attachment: fixed;
+  background-position: center; 
+  background-repeat: no-repeat;
+  background-size: cover; 
+  color: white;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; 
+}
+
+.me h1 {
+  font-size: 6vw; 
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.2;
+  max-width: 90%; 
+  text-align: center; 
+  position: relative;
+  animation: slideIn 1s ease-out; 
+}
+
+.tagline {
+  font-size: 1.2vw; 
+  font-weight: 400;
+  margin-top: 10px; 
+  text-align: center; 
+  max-width: 90%; 
+  color: white;
+  animation: slideIn 1.5s ease-out; 
+}
+
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-100%); 
+    opacity: 0; 
+  }
+  100% {
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .me h1 {
+    font-size: 6vw;
+  }
+
+  .tagline {
+    font-size: 3vw; 
+  }
+
+  .me {
+    background-size: cover; 
+  }
+}
+
+
+@media (max-width: 768px) {
+  .me h1 {
+    font-size: 8vw; 
+  }
+
+  .tagline {
+    font-size: 4vw; 
+  }
+
+  .me {
+    background-size: cover; 
+  }
+}
+
+@media (max-width: 480px) {
+  .me h1 {
+    font-size: 10vw; 
+  }
+
+  .tagline {
+    font-size: 5vw; 
+  }
+
+  .me {
+    background-size: cover;
+  }
+}
+
+
+
+     
+
+      .container {
+  max-width: 1200px;
+  margin: 100px auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.main-video-container {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  margin-top: 20px; 
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 10px 15px;
+  display: none;
+  max-width: 90%;
+  text-align: center;
+  position: relative; 
+}
+
+.main-video-container.active {
+  display: flex; 
+}
+
+.main-video {
+  margin-bottom: 7px;
+  border-radius: 5px;
+  width: 100%; 
+  height: auto;
+  aspect-ratio: 1 / 2; 
+  max-width: 60%; 
+}
+
+.main-vid-title {
+  font-size: 20px;
+  color: #181C14;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  text-align: center;
+}
+
+
+.vlog-title {
+  text-align: center;
+  font-size: 48px;
+  font-family: 'Poppins', sans-serif;
+  margin-top:0;
+  margin-bottom: 0;
+  color: #181C14;
+  font-weight: 600;
+  width: 100%; 
+  padding: 10px 0; 
+}
+
+
+@media (max-width: 480px) {
+  .main-video-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .main-video {
+    width: 100%;
+    aspect-ratio: 1 / 2;
+  }
+
+  .vlog-title {
+    font-size: 32px;
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 840px) {
+  .main-video-container {
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  .main-video {
+    width: 60%;
+    aspect-ratio: 1 / 2;
+  }
+
+  .vlog-title {
+    font-size: 40px;
+    text-align: center;
+  }
+}
+
+
+
+
+.video-list-container {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start; 
+  padding: 15px;
+  height: 300px; 
+  width: 100%; 
+  overflow-x: auto; 
+  background-color: #fff;
+  margin-top: 0px;
+  scroll-snap-type: x mandatory; 
+  flex-wrap: nowrap; 
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1; 
+}
+
+
+.video-list-container::-webkit-scrollbar {
+  width: 8px; 
+  height: 8px; 
+}
+
+.video-list-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1; 
+}
+
+.video-list-container::-webkit-scrollbar-thumb {
+  background-color: #888; 
+  border-radius: 10px; 
+  border: 2px solid #f1f1f1; 
+}
+
+.video-list-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555; 
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  gap: 8px; 
+  width: 150px; 
+  height: auto;
+  min-width: 150px; 
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  
+  scroll-snap-align: start;
+}
+
+.list.active {
+  background-color: #181C14;
+}
+
+.list.active .list-title {
+  color: #fff;
+}
+
+.list-video {
+  width: 150px; 
+  height: 90px; 
+  border-radius: 5px;
+  object-fit: cover; 
+}
+
+.list-title {
+  font-size: 14px; 
+  color:#181C14;
+  text-align: center;
+  transition: color 0.3s ease;
+  font-family: "Poppins", sans-serif;
+  font-weight: 450;
+}
+
+.list:hover .list-title {
+  color: #333;
+}
+
+
+
+
+@media (max-width: 390px) {
+  .video-list-container {
+    gap: 8px; 
+    overflow-x: scroll; 
+  }
+
+  .list {
+    width: 120px; 
+    height: 160px; 
+    min-width: 120px; 
+  }
+
+  .list-video {
+    width: 100px; 
+    height: 70px; 
+  }
+
+  .list-title {
+    font-size: 10px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .video-list-container {
+    gap: 10px; 
+    overflow-x: scroll;
+  }
+
+  .list {
+    width: 130px; 
+    height: 180px; 
+    min-width: 130px; 
+  }
+
+  .list-video {
+    width: 110px; 
+    height: 80px; 
+  }
+
+  .list-title {
+    font-size: 12px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .video-list-container {
+    gap: 12px; 
+    overflow-x: scroll; 
+  }
+
+  .list {
+    width: 140px; 
+    height: 200px; 
+  }
+
+  .list-video {
+    width: 120px; 
+    height: 90px; 
+  }
+
+  .list-title {
+    font-size: 13px; 
+  }
+}
+
+@media (max-width: 1024px) {
+  .video-list-container {
+    gap: 15px; 
+  }
+
+  .list {
+    width: 160px;
+    height: 240px; 
+  }
+
+  .list-video {
+    width: 130px; 
+    height: 100px; 
+  }
+
+  .list-title {
+    font-size: 16px; 
+  }
+}
+
+
+@media (min-width: 1024px) {
+  .video-list-container {
+    gap: 20px; 
+  }
+
+  .list {
+    width: 180px; 
+    height: 270px; 
+  }
+
+  .list-video {
+    width: 150px; 
+    height: 120px; 
+  }
+
+  .list-title {
+    font-size: 18px; 
+  }
+}
+
+
+#video1:checked ~ .container .main-video1,
+#video2:checked ~ .container .main-video2,
+#video3:checked ~ .container .main-video3,
+#video4:checked ~ .container .main-video4,
+#video5:checked ~ .container .main-video5,
+#video6:checked ~ .container .main-video6,
+#video7:checked ~ .container .main-video7 {
+  display: block;
+}
+
+
+#video1:not(:checked) ~ .container .main-video1,
+#video2:not(:checked) ~ .container .main-video2,
+#video3:not(:checked) ~ .container .main-video3,
+#video4:not(:checked) ~ .container .main-video4,
+#video5:not(:checked) ~ .container .main-video5,
+#video6:not(:checked) ~ .container .main-video6,
+#video7:not(:checked) ~ .container .main-video7 {
+  display: none;
+}
+
+
+#video1:not(:checked) ~ .container .main-video1,
+#video2:not(:checked) ~ .container .main-video2,
+#video3:not(:checked) ~ .container .main-video3,
+#video4:not(:checked) ~ .container .main-video4,
+#video5:not(:checked) ~ .container .main-video5,
+#video6:not(:checked) ~ .container .main-video6,
+#video7:not(:checked) ~ .container .main-video7 {
+
+  animation-play-state: paused;
+}
+
+
+@media (max-width: 320px) {
+  .video-list-container {
+    gap: 5px; 
+    overflow-x: scroll; 
+  }
+
+  .list {
+    width: 100px; 
+    height: 150px; 
+    min-width: 100px;
+  }
+
+  .list-video {
+    width: 90px;
+    height: 60px; 
+  }
+
+  .list-title {
+    font-size: 9px; 
+  }
+}
+
+
+
+      
+ 
+
+
+
+@media (max-width: 840px) {
+  .vlog-title {
+    font-size: 36px; 
+    margin-top: 30px;
+    margin-bottom: -150px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .vlog-title {
+    font-size: 24px; 
+    margin-top: 20px; 
+    margin-bottom: -100px; 
+  }
+}
+
+
+@media (max-width: 834px) {
+  .vlog-title {
+    font-size: 34px; 
+    margin-top: 25px; 
+    margin-bottom: -120px; 
+  }
+}
+
+.about-me {
+  display: flex;
+  justify-content: flex-end;
+  padding: 150px;
+  background-color: aliceblue;
+
+}
+
+.text-content {
+
+  flex: 1;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+  padding-right: 20px;
+scroll-margin-top: 50px;
+}
+
+.text-content h1 {
+  font-size: 50px;
+  margin-bottom: 100px;
+  width: 400px; 
+  text-align: center; 
+  text-transform: uppercase;
+}
+
+.text-content p {
+  font-size: 18px;
+  text-transform: uppercase;
+ text-align: justify;
+
+
+}
+
+.about-me img {
+  float: right; 
+  max-width: 100%; 
+  height: auto;
+  width: 800px;
+}
+
+
+@media (max-width: 1024px) and (orientation: portrait) {
+  .about-me {
+    flex-direction: column; 
+    justify-content: center;
+    padding: 80px;
+  }
+
+  .text-content {
+    align-items: center;
+    padding-right: 0;
+    margin-bottom: 20px; 
+  }
+
+  .about-me img {
+    width: 100%; 
+    max-width: 100%; 
+    float: none; 
+  }
+
+  .text-content h1 {
+    font-size: 40px; 
+    margin-bottom: 50px; 
+  }
+
+  .text-content p {
+    font-size: 14px; 
+  }
+}
+
+
+@media (max-width: 768px) {
+  .about-me {
+    flex-direction: column; 
+    padding: 40px; 
+  }
+
+  .text-content {
+    align-items: center; 
+    padding-right: 0; 
+    margin-bottom: 20px;
+  }
+
+  .about-me img {
+    width: 100%; 
+    max-width: 100%; 
+    float: none;
+  }
+
+  .text-content h1 {
+    font-size: 30px; 
+    margin-bottom: 30px; 
+  }
+
+  .text-content p {
+    font-size: 12px; 
+  }
+}
+
+
+@media (max-width: 480px) {
+  .about-me {
+    padding: 20px; 
+  }
+
+  .text-content h1 {
+    font-size: 24px; 
+    margin-bottom: 20px; 
+  }
+
+  .text-content p {
+    font-size: 11px; 
+  }
+}
+
+
+.gallery-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 20px 1px 1px 1px;
+  padding: 50px;
+  width: 100%;
+}
+
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+
+@media (max-width: 1024px) and (orientation: portrait) {
+  .gallery-container {
+    grid-template-columns: repeat(3, 1fr); 
+  }
+}
+
+
+@media (max-width: 768px) {
+  .gallery-container {
+    grid-template-columns: repeat(2, 1fr); 
+    padding: 30px; 
+  }
+}
+
+
+@media (max-width: 480px) {
+  .gallery-container {
+    grid-template-columns: 1fr; 
+    padding: 15px; 
+  }
+}
+
+.gallery-container h1 {
+  text-align: center;
+  margin-top: 30px;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 600;
+  font-size: 48px;
+}
+
+
+@media (max-width: 768px) {
+  .gallery-container h1 {
+    font-size: 36px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-container h1 {
+    font-size: 28px; 
+  }
+}
+
+
+
+.footer {
+    margin: 60px 150px 1px 150px;
+    padding: 25px;
+    background-color: #A0E9FF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; 
+    scroll-margin-top: 50px;
+}
+
+.footer-content {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; 
+}
+
+.footer-title-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.footer-title {
+    margin-bottom: 20px;
+    color: #181C14;
+    width: 100%;
+    max-width: 800px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+}
+
+.footer-icons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+
+.footer-icon {
+    width: 45px;
+    height: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.footer-icon:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.footer-image {
+    width: auto;
+    max-width: 500px;
+    height: 400px;
+    object-fit: cover;
+    margin: 0px;
+}
+
+
+@media (max-width: 1200px) {
+    .footer {
+        margin: 60px 50px 1px 50px; 
+    }
+
+    .footer-title {
+        font-size: 40px; 
+    }
+
+    .footer-image {
+        max-width: 400px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 992px) {
+    .footer {
+        flex-direction: column; 
+        align-items: center;
+    }
+
+    .footer-title {
+        font-size: 36px;
+    }
+
+    .footer-image {
+        max-width: 300px;
+        height: 250px;
+    }
+
+    .footer-icons {
+        justify-content: center;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer {
+        margin: 20px 20px 1px 20px; 
+        width: calc(100% - 40px); 
+    }
+
+    .footer-title {
+        font-size: 32px;
+    }
+
+    .footer-image {
+        max-width: 250px;
+        height: 200px;
+    }
+
+    .footer-icons {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        margin: 20px 10px 1px 10px; 
+        width: calc(100% - 20px); 
+    }
+
+    .footer-title {
+        font-size: 28px; 
+    }
+
+    .footer-image {
+        max-width: 200px;
+        height: 150px;
+    }
+
+    .footer-icons {
+        gap: 8px; 
+    }
+}
+
+
+
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul class="nav-bar">
+          <li class="name">
+            <h1><a href="#"></a></h1>
+          </li>
+
+          <input type="checkbox" id="check" />
+          <span class="menu">
+            <li><a href="#ako">Home</a></li>
+            <li><a href="#vlog">Vlog</a></li>
+            <li><a href="#contentsum">About Content</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#footer">Follow me!</a></li>
+            <label for="check" class="close-menu"
+              ><i class="fas fa-times"></i
+            ></label>
+          </span>
+          <label for="check" class="open-menu"
+            ><i class="fas fa-bars"></i
+          ></label>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="me-container" id="ako">
+      <div class="me">
+        <h1>ACE FLORES</h1>
+        <p class="tagline">Vlogging Games & Project Website in 7 Days</p> 
+      </div>
+    </div>
+    
+
+
+    </div>
+
+
+
+
+
+
+    <div class="container-vid" id="vlog" style="scroll-margin-top: 50px;">
+
+
+    <input type="radio" name="video" id="video1" checked hidden />
+    <input type="radio" name="video" id="video2" hidden />
+    <input type="radio" name="video" id="video3" hidden />
+    <input type="radio" name="video" id="video4" hidden />
+    <input type="radio" name="video" id="video5" hidden />
+    <input type="radio" name="video" id="video6" hidden />
+    <input type="radio" name="video" id="video7" hidden />
+
+    <div class="container" >
+      <h1 class="vlog-title">MY VLOG</h1>
+      <div class="main-video-container main-video1">
+        <video
+          src="images/day1vlog.mp4"
+          loop
+          controls
+          class="main-video"
+        ></video>
+        <h3 class="main-vid-title">Day 1 Coding while looking back at the past</h3>
+      </div>
+
+      <div class="main-video-container main-video2">
+        <video
+          src="images/day2vlog.mp4"
+          loop
+          controls
+          class="main-video"
+        ></video>
+        <h3 class="main-vid-title">Day 2 Coding while thinking about our sweetest memories</h3>
+      </div>
+
+      <div class="main-video-container main-video3">
+        <video src="images/day3vlog.mp4" loop controls class="main-video"></video>
+        <h3 class="main-vid-title">Day 3 Playing games with my bestie</h3>
+      </div>
+
+      <div class="main-video-container main-video4">
+        <video src="images/day4vlog.mp4" loop controls class="main-video"></video>
+        <h3 class="main-vid-title">Day 4 layouting my website</h3>
+      </div>
+
+      <div class="main-video-container main-video5">
+        <video src="images/day5vlog.mp4" loop controls class="main-video"></video>
+        <h3 class="main-vid-title">Day 5 Night grind website</h3>
+      </div>
+
+      <div class="main-video-container main-video6">
+        <video src="images/day6vlog.mp4" loop controls class="main-video"></video>
+        <h3 class="main-vid-title">Day 6 A man who can't be move</h3>
+      </div>
+
+      <div class="main-video-container main-video7">
+        <video src="images/day7vlog.mp4" loop controls class="main-video"></video>
+        <h3 class="main-vid-title">
+          Day 7 Last day of vlog</h3>
+      </div>
+
+  
+      <div class="video-list-container">
+        <label for="video1" class="list">
+          <video
+            src="images/day1vlog.mp4"
+            class="list-video"
+          ></video>
+          <h3 class="list-title">Day 1 </h3>
+        </label>
+
+        <label for="video2" class="list">
+          <video
+            src="images/day2vlog.mp4"
+            class="list-video"
+          ></video>
+          <h3 class="list-title">Day 2</h3>
+        </label>
+
+        <label for="video3" class="list">
+          <video src="images/day3vlog.mp4" class="list-video"></video>
+          <h3 class="list-title">Day 3</h3>
+        </label>
+
+        <label for="video4" class="list">
+          <video src="images/day4vlog.mp4" class="list-video"></video>
+          <h3 class="list-title">Day 4</h3>
+        </label>
+
+        <label for="video5" class="list">
+          <video src="images/day5vlog.mp4" class="list-video"></video>
+          <h3 class="list-title">Day 5 </h3>
+        </label>
+        
+        <label for="video6" class="list">
+          <video src="images/day6vlog.mp4" class="list-video"></video>
+          <h3 class="list-title">Day 6 </h3>
+        </label>
+
+        <label for="video7" class="list">
+          <video src="images/day7vlog.mp4" class="list-video"></video>
+          <h3 class="list-title">Day 7</h3>
+        </label>
+      </div>
+    </div>
+
+
+    <div class="about-me">
+      <div class="text-content" id="contentsum">
+        <h1>summary of content</h1>.
+        <p>This week was a blend of coding, nostalgia, and personal growth. 
+          From reminiscing about the past and sweet memories while coding to bonding with my bestie over games, every moment felt meaningful. Late-night website grinds and designing layouts showcased creativity and dedication. Reflecting on resilience, I embraced challenges with determination. The week ended with gratitude, marking the end of a heartfelt journey filled with inspiration and progress.</p>
+      </div>
+      <img src="img/giphy-unscreen.gif" alt="Image description">
+    </div>
+    
+
+    <div class="gallery-container" id="gallery">
+      <h1>#GALLERY OUTPUT</h1>
+      <div class="gallery-item">
+        <img src="img/img1.png" alt="Image 1">
+      </div>
+      <div class="gallery-item">
+        <img src="img/img2.png" alt="Image 1">
+      </div>
+      <div class="gallery-item">
+        <img src="img/img3.png" alt="Image 1">
+      </div>
+      <div class="gallery-item">
+        <img src="img/img4.png" alt="Image 1">
+      </div>
+      <div class="gallery-item">
+        <img src="img/img5.jpg" alt="Image 1">
+      </div>
+      <div class="gallery-item">
+        <img src="img/img6.png" alt="Image 1">
+      </div>
+      <div class="gallery-item">
+        <img src="img/img7.png" alt="Image 1">
+      </div>
+    </div>
+    
+    <div class="footer" id="footer">
+      <div class="footer-content">
+          <div class="footer-title-section">
+              <h2 class="footer-title">#FOLLOW ME!</h2>
+              <div class="footer-icons">
+                 <a href="https://www.facebook.com/ace.flores.560" target="_blank"> <img src="img/fblogo-removebg-preview.png" alt="Icon 1" class="footer-icon"></a>
+                  <a href="https://x.com/Ace_Flores2004" target="_blank"><img src="img/twitar-removebg-preview.png" alt="Icon 2" class="footer-icon">
+                <a href="https://www.instagram.com/eyss_floress/" target="_blank">  <img src="img/insgaram-removebg-preview.png" alt="Icon 3" class="footer-icon"></a>
+              </div>
+          </div>
+          <img src="img/robotofooter.gif" alt="Footer Image" class="footer-image">
+      </div>
+      <p class="footer-text">© 2024 Ace Lorenz R Flores. All Rights Reserve</p>
+  </div>
+  
+   
+  
+  </body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(
+            to bottom right,
+            rgba(0, 0, 0, 0.9),
+            rgba(0, 0, 0, 0)
+          ),
+          url(images/back.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .container-forgot {
+        display: flex;
+        flex-direction: row;
+        width: 90%;
+        max-width: 900px;
+        background: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .image-section {
+        flex: 1;
+        background: url("./images/Forgot password-rafiki.png") no-repeat
+          center/cover;
+        height: 500px;
+        width: auto;
+      }
+      .forgot-section {
+        flex: 1;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .forgot-section h2 {
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 600;
+      }
+      .icon {
+        width: 150px;
+        height: auto;
+        margin-bottom: 10px;
+      }
+      .input-group {
+        margin-bottom: 15px;
+        width: 100%;
+      }
+      .input-group label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .input-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .btn {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        background: #b82132;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .btn:hover {
+        background: #a11d2c;
+      }
+
+      .btn back-btn {
+        background-color: white;
+      }
+
+      .back-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+        text-decoration: none;
+        font-size: 13px;
+        color: #ef233c;
+        font-weight: 500;
+        transition: transform 0.3s ease, color 0.3s ease;
+        will-change: transform;
+      }
+
+      .back-btn i {
+        font-size: 20px;
+        margin-right: 4px;
+        transition: transform 0.3s ease;
+        will-change: transform;
+      }
+
+      .back-btn:hover {
+        transform: translateX(-4px);
+      }
+
+      .back-btn:hover i {
+        transform: translateX(-2px);
+      }
+
+      /* Modal Styles with Animations */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .modal.show {
+        display: flex;
+        opacity: 1;
+      }
+
+      .modal-content {
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      .modal.show .modal-content {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .check-icon {
+        width: 80px;
+        height: 80px;
+        background-color: #b82132;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: pop-in 0.4s ease-out forwards;
+      }
+
+      @keyframes pop-in {
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .check-icon svg {
+        width: 40px;
+        height: 40px;
+        fill: none;
+        stroke: white;
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+        animation: draw-check 0.6s ease-in-out 0.2s forwards;
+      }
+
+      @keyframes draw-check {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      .modal h3 {
+        margin-bottom: 10px;
+        color: black;
+        font-size: 24px;
+        opacity: 0;
+        animation: fade-in 0.3s ease-out 0.5s forwards;
+      }
+
+      .modal p {
+        color: black;
+        margin-bottom: 25px;
+        opacity: 0;
+        animation: fade-in 0.3s ease-out 0.7s forwards;
+      }
+
+      @keyframes fade-in {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .modal-btn {
+        padding: 12px 30px;
+        background: #b82132;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-block;
+        text-decoration: none;
+        margin-top: 10px;
+        opacity: 0;
+        animation: fade-in 0.3s ease-out 0.9s forwards;
+      }
+
+      .modal-btn:hover {
+        background: #a11d2c;
+      }
+
+      @media (max-width: 768px) {
+        .container-forgot {
+          flex-direction: column;
+          width: 95%;
+        }
+        .image-section {
+          height: 200px;
+        }
+        .forgot-section {
+          padding: 20px;
+        }
+        .icon {
+          width: 100px;
+        }
+        .input-group input {
+          width: 100%;
+        }
+        .btn {
+          width: 100%;
+        }
+        .modal-content {
+          padding: 30px;
+          width: 85%;
+        }
+        .check-icon {
+          width: 60px;
+          height: 60px;
+        }
+        .check-icon svg {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-forgot">
+      <div class="image-section"></div>
+      <div class="forgot-section">
+        <img src="./images/datamesian.PNG" alt="Forgot Icon" class="icon" />
+        <h2>Forgot Password</h2>
+        <form id="forgotForm">
+          <div class="input-group">
+            <label for="email">Enter your email to reset your password</label>
+            <input type="text" id="email" required />
+          </div>
+          <button type="submit" class="btn submit-btn">Submit</button>
+          <a href="login.html" class="back-btn">
+            <i class="bx bx-left-arrow-alt"></i> Back to Login
+          </a>
+        </form>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+      <div class="modal-content">
+        <div class="check-icon">
+          <svg viewBox="0 0 24 24">
+            <polyline points="4 12 9 17 20 6"></polyline>
+          </svg>
+        </div>
+        <h3>Reset Link Sent!</h3>
+        <p>
+          Password reset link has been sent to your email. Please check your
+          inbox.
+        </p>
+        <button class="modal-btn" id="okayBtn">Okay</button>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        function adjustLayout() {
+          const container = document.querySelector(".container-forgot");
+          const imageSection = document.querySelector(".image-section");
+          const forgotSection = document.querySelector(".forgot-section");
+          const inputField = document.querySelector(".input-group input");
+          const buttons = document.querySelectorAll(".btn");
+          const icon = document.querySelector(".icon");
+
+          if (window.innerWidth <= 768) {
+            container.style.flexDirection = "column";
+            container.style.width = "95%";
+            imageSection.style.height = "200px";
+            forgotSection.style.padding = "20px";
+            inputField.style.width = "100%";
+            buttons.forEach((btn) => (btn.style.width = "100%"));
+            icon.style.width = "100px";
+          } else {
+            container.style.flexDirection = "row";
+            container.style.width = "90%";
+            imageSection.style.height = "500px";
+            forgotSection.style.padding = "40px";
+            inputField.style.width = "100%";
+            buttons.forEach((btn) => (btn.style.width = "100%"));
+            icon.style.width = "150px";
+          }
+        }
+
+        // Form submission handler
+        const forgotForm = document.getElementById("forgotForm");
+        const successModal = document.getElementById("successModal");
+        const okayBtn = document.getElementById("okayBtn");
+
+        forgotForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Show the success modal with animations
+          successModal.classList.add("show");
+
+          // Reset animations when showing modal again
+          const animatedElements = document.querySelectorAll(
+            ".check-icon, .check-icon svg, .modal h3, .modal p, .modal-btn"
+          );
+          animatedElements.forEach((el) => {
+            el.style.animation = "none";
+            void el.offsetWidth; // Trigger reflow
+            el.style.animation = null;
+          });
+        });
+
+        okayBtn.addEventListener("click", function () {
+          // Hide the modal with fade out effect
+          successModal.classList.remove("show");
+
+          // Redirect after animation completes
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 300);
+        });
+
+        // Close modal when clicking outside
+        successModal.addEventListener("click", function (e) {
+          if (e.target === successModal) {
+            successModal.classList.remove("show");
+          }
+        });
+
+        adjustLayout();
+        window.addEventListener("resize", adjustLayout);
+      });
+    </script>
+  </body>
+</html>

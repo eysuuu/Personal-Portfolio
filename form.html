@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Form</title>
+    <link rel="icon" href="image/logo.jpg" sizes="128x128" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Registration Form Styles */
+      body {
+        font-family: "Poppins", sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        color: black;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      body.dark-mode {
+        background-color: black;
+        color: #f5f5f5;
+      }
+
+      .navigation-back {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        margin: 0;
+      }
+
+      .nav-back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        text-decoration: none;
+        color: inherit;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 8px 16px;
+        background-color: white;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      body.dark-mode .nav-back-link {
+        background-color: black;
+        color: white;
+      }
+
+      .nav-back-link:hover {
+        transform: translateX(-4px);
+      }
+
+      .nav-back-link .nav-arrow {
+        font-size: 18px;
+        color: inherit;
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+
+      h1 {
+        color: inherit;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      h2 {
+        color: inherit;
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 1.1em;
+      }
+
+      .form-section {
+        margin-top: 70px;
+        margin-bottom: 25px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: white;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+
+      body.dark-mode .form-section {
+        background-color: #1e1e1e;
+        border-color: #444;
+      }
+
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+      }
+
+      .form-group {
+        flex: 1;
+        min-width: 200px;
+        margin-right: 20px;
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: inherit;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="date"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-color: white;
+        color: black;
+        transition: background-color 0.3s ease, border-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      body.dark-mode input[type="text"],
+      body.dark-mode input[type="number"],
+      body.dark-mode input[type="email"],
+      body.dark-mode input[type="tel"],
+      body.dark-mode input[type="date"] {
+        background-color: #333;
+        border-color: #555;
+        color: white;
+      }
+
+      .button-group {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: white;
+        color: black;
+        padding: 10px 25px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease, color 0.3s ease,
+          border-color 0.3s ease;
+      }
+
+      body.dark-mode button {
+        background-color: #333;
+        color: white;
+        border-color: #555;
+      }
+
+      .button-icon {
+        width: 20px;
+        height: 20px;
+        filter: brightness(0) invert(0);
+        transition: filter 0.2s ease;
+      }
+
+      body.dark-mode .button-icon {
+        filter: brightness(0) invert(1);
+      }
+
+      button:hover {
+        background-color: black;
+        color: white;
+      }
+
+      body.dark-mode button:hover {
+        background-color: #555;
+      }
+
+      button:hover .button-icon {
+        filter: brightness(0) invert(1);
+      }
+
+      .error-message {
+        color: #d9534f;
+        font-size: 0.8em;
+        margin-top: 5px;
+        display: none;
+      }
+
+      input.error {
+        border-color: #d9534f;
+      }
+
+      /* ID Card Styles - Unchanged for dark mode */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      .id-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f5f5f5;
+        padding: 20px;
+      }
+
+      .id-container {
+        display: none;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 70px;
+      }
+
+      .id-card {
+        width: 300px;
+        height: 460px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      .front-id {
+        display: flex;
+        flex-direction: column;
+        border: 2px solid black;
+        background-color: white;
+      }
+
+      .header {
+        background-color: #b30000;
+        color: white;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo {
+        width: 100px;
+        height: 85px;
+        margin-right: -10px;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .logo img {
+        width: 110%;
+        height: 110%;
+        object-fit: cover;
+        margin-left: 4px;
+      }
+
+      .school-name {
+        text-align: center;
+      }
+
+      .school-name h1 {
+        font-size: 10px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: white;
+      }
+
+      .school-name p {
+        line-height: 1.5;
+      }
+
+      .school-name .address {
+        font-size: 8px;
+      }
+
+      .school-name .contact {
+        font-size: 8px;
+      }
+
+      .id-content {
+        padding: 4px 12px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .validity {
+        text-align: center;
+        font-weight: 800;
+        font-size: 10px;
+        margin-bottom: 10px;
+        margin-top: 15px;
+        color: black;
+      }
+
+      .photo-container {
+        width: 100px;
+        height: auto;
+        border: 2px solid #b30000;
+        margin: 0 auto 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .photo-container img {
+        width: 100%;
+        height: auto;
+      }
+
+      .student-details {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 8px;
+        margin-bottom: 15px;
+        color: black;
+      }
+
+      .student-details .label {
+        font-weight: bold;
+        text-align: right;
+        font-size: 9px;
+        margin-right: 30px;
+        color: black;
+      }
+
+      .student-details .value {
+        font-weight: bold;
+        font-size: 13px;
+        margin-right: 25px;
+        margin-left: -28px;
+        color: black;
+      }
+
+      .signature-container {
+        border: 2px solid #000;
+        height: 45px;
+        width: 150px;
+        margin: 8px auto;
+      }
+
+      .signature-label {
+        text-align: center;
+        font-size: 11px;
+        font-weight: bold;
+        color: black;
+      }
+
+      .footer {
+        background-color: #b30000;
+        color: white;
+        padding: 8px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: auto;
+      }
+
+      .back-id {
+        border: 2px solid #000;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+      }
+
+      .important-header {
+        background-color: #000;
+        color: white;
+        text-align: center;
+        padding: 0px 8px;
+        font-size: 16px;
+        margin-top: 15px;
+      }
+
+      .info-section {
+        padding: 8px 12px;
+        border-bottom: 2px solid black;
+        text-align: center;
+        font-size: 11px;
+        line-height: 1.4;
+        color: black;
+      }
+
+      .info-sections {
+        padding: 4px 12px;
+        border-bottom: 2px solid black;
+        text-align: center;
+        font-size: 11px;
+        line-height: 1.4;
+        color: black;
+      }
+
+      .emergency-contact {
+        padding: 25px 15px;
+        border-bottom: 2px solid black;
+        text-align: center;
+        color: black;
+      }
+
+      .emergency-contact h3 {
+        font-size: 18px;
+        margin-bottom: 4px;
+        color: black;
+      }
+
+      .emergency-contact p {
+        font-size: 11px;
+        margin-bottom: 4px;
+        color: black;
+      }
+
+      .president-section {
+        padding: 60px 12px 2px 12px;
+        text-align: center;
+        border-bottom: 2px solid black;
+      }
+
+      .president-name {
+        font-weight: bold;
+        text-decoration: underline;
+        margin-bottom: 4px;
+        font-size: 12px;
+        color: black;
+      }
+
+      .president-title {
+        font-size: 9px;
+        font-weight: 700;
+        color: black;
+      }
+
+      .back-footer {
+        background-color: #000;
+        color: white;
+        text-align: center;
+        padding: 2px 8px;
+        font-size: 12px;
+        position: block;
+        margin-top: 15px;
+        font-weight: bold;
+      }
+
+      .show-id .form-container {
+        display: none;
+      }
+
+      .show-id .id-container {
+        display: flex;
+      }
+
+      /* Toggle button styling */
+      .toggle-button {
+        background-color: white;
+        color: black;
+        margin: 20px auto;
+        display: block;
+        border: 1px solid #ddd;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      body.dark-mode .toggle-button {
+        background-color: #333;
+        color: white;
+        border-color: #555;
+      }
+
+      .toggle-button:hover {
+        background-color: black;
+        color: white;
+      }
+
+      body.dark-mode .toggle-button:hover {
+        background-color: #555;
+      }
+
+      .toggle-button:hover img {
+        filter: brightness(0) invert(1);
+      }
+
+      /* Dark mode toggle button */
+      .dark-mode-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: white;
+        color: black;
+        border: 1px solid #ddd;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      body.dark-mode .dark-mode-toggle {
+        background-color: black;
+        color: white;
+        border-color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="navigation-back">
+      <a href="index.html" class="nav-back-link">
+        <i class="bx bx-arrow-back nav-arrow"></i>
+        <span class="nav-back-text">Back</span>
+      </a>
+    </h1>
+
+    <div class="form-container">
+      <!-- PERSONAL DETAILS section -->
+      <div class="form-section">
+        <h2>PERSONAL DETAILS</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="firstName" required pattern="[A-Za-z\s]+" />
+            <div class="error-message" id="firstNameError">
+              First name is required (letters only, no numbers or special
+              characters)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Middle Name</label>
+            <input type="text" id="middleName" pattern="[A-Za-z\s]*" />
+            <div class="error-message" id="middleNameError">
+              Middle name can only contain letters (no numbers or special
+              characters)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Surname</label>
+            <input type="text" id="surname" required pattern="[A-Za-z\s]+" />
+            <div class="error-message" id="surnameError">
+              Surname is required (letters only, no numbers or special
+              characters)
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>StudentID</label>
+            <input
+              type="text"
+              id="studentId"
+              required
+              pattern="[0-9]{6}"
+              maxlength="6"
+            />
+            <div class="error-message" id="studentIdError">
+              Student ID is required (exactly 6 numbers)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Course</label>
+            <input type="text" id="course" required pattern="[A-Za-z\s]+" />
+            <div class="error-message" id="courseError">
+              Course is required (letters only, no numbers or special
+              characters)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Age</label>
+            <input type="number" id="age" required min="16" max="99" />
+            <div class="error-message" id="ageError">
+              Age must be between 16 and 99
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="phone" required pattern="[0-9]{10,11}" />
+            <div class="error-message" id="phoneError">
+              Valid phone number required (10-11 digits)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Birth Date</label>
+            <input type="date" id="birthDate" required />
+            <div class="error-message" id="birthDateError">
+              Birth date is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              id="email"
+              required
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            />
+            <div class="error-message" id="emailError">
+              Valid email address is required (must contain @)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADDRESS section -->
+      <div class="form-section">
+        <h2>ADDRESS</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label>House Number</label>
+            <input
+              type="text"
+              id="houseNumber"
+              required
+              pattern="[0-9]{1,6}"
+              maxlength="6"
+            />
+            <div class="error-message" id="houseNumberError">
+              House number is required (maximum 6 numbers, no letters or special
+              characters)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Street</label>
+            <input type="text" id="street" required pattern="[A-Za-z0-9\s]+" />
+            <div class="error-message" id="streetError">
+              Street is required (no special characters)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Brgy.</label>
+            <input
+              type="text"
+              id="barangay"
+              required
+              pattern="[A-Za-z0-9\s]+"
+            />
+            <div class="error-message" id="barangayError">
+              Barangay is required (no special characters)
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" id="city" required pattern="[A-Za-z\s]+" />
+            <div class="error-message" id="cityError">
+              City is required (letters only, no numbers or special characters)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Postal</label>
+            <input
+              type="text"
+              id="postal"
+              required
+              pattern="[0-9]{4}"
+              maxlength="4"
+            />
+            <div class="error-message" id="postalError">
+              Postal code must be exactly 4 digits (numbers only)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMERGENCY section -->
+      <div class="form-section">
+        <h2>IN CASE OF EMERGENCY</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Guardian Name</label>
+            <input
+              type="text"
+              id="guardianName"
+              required
+              pattern="[A-Za-z\s]+"
+            />
+            <div class="error-message" id="guardianNameError">
+              Guardian name is required (letters only, no numbers or special
+              characters)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input
+              type="tel"
+              id="guardianPhone"
+              required
+              pattern="[0-9]{10,11}"
+            />
+            <div class="error-message" id="guardianPhoneError">
+              Valid phone number required (10-11 digits)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GUARDIAN ADDRESS section -->
+      <div class="form-section">
+        <h2>GUARDIAN ADDRESS</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label>House Number</label>
+            <input
+              type="text"
+              id="guardianHouseNumber"
+              required
+              pattern="[0-9]{1,6}"
+              maxlength="6"
+            />
+            <div class="error-message" id="guardianHouseNumberError">
+              House number is required (maximum 6 numbers, no letters or special
+              characters)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Street</label>
+            <input
+              type="text"
+              id="guardianStreet"
+              required
+              pattern="[A-Za-z0-9\s]+"
+            />
+            <div class="error-message" id="guardianStreetError">
+              Street is required (no special characters)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Brgy.</label>
+            <input
+              type="text"
+              id="guardianBarangay"
+              required
+              pattern="[A-Za-z0-9\s]+"
+            />
+            <div class="error-message" id="guardianBarangayError">
+              Barangay is required (no special characters)
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>City</label>
+            <input
+              type="text"
+              id="guardianCity"
+              required
+              pattern="[A-Za-z\s]+"
+            />
+            <div class="error-message" id="guardianCityError">
+              City is required (letters only, no numbers or special characters)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Postal</label>
+            <input
+              type="text"
+              id="guardianPostal"
+              required
+              pattern="[0-9]{4}"
+              maxlength="4"
+            />
+            <div class="error-message" id="guardianPostalError">
+              Postal code must be exactly 4 digits (numbers only)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="registerButton">
+          <img src="image/register.png" alt="Register" class="button-icon" />
+          REGISTER
+        </button>
+        <button type="button" id="showIdButton">
+          <img src="image/ide.png" alt="Show ID" class="button-icon" />
+          Show ID
+        </button>
+      </div>
+    </div>
+
+    <div class="id-container">
+      <div class="id-card front-id">
+        <div class="header">
+          <div class="logo">
+            <img src="image/datamesian.PNG" alt="School Logo" />
+          </div>
+          <div class="school-name">
+            <h1>DATAMEX<br />COLLEGE OF SAINT ADELINE</h1>
+            <p class="address">
+              375 Teodoro St. Cor. 10th Ave. Brgy. 62, Caloocan City
+            </p>
+            <p class="contact">Tel. No. : 8361970/83673208</p>
+          </div>
+        </div>
+
+        <div class="id-content">
+          <div class="validity">VALID UNTIL S.Y. 2022-2024</div>
+
+          <div class="photo-container">
+            <img src="image/ace.jpg" alt="Student Photo" />
+          </div>
+
+          <div class="student-details">
+            <div class="label">Student No.:</div>
+            <div class="value" id="id-studentId">123456</div>
+
+            <div class="label">Name:</div>
+            <div class="value" id="id-name">Pedro S. Dela Cruz</div>
+
+            <div class="label">Course:</div>
+            <div class="value" id="id-course">BSIT</div>
+          </div>
+
+          <div class="signature-container"></div>
+          <div class="signature-label">STUDENT'S SIGNATURE</div>
+        </div>
+
+        <div class="footer">STUDENT</div>
+      </div>
+
+      <div class="id-card back-id">
+        <div class="important-header">IMPORTANT</div>
+
+        <div class="info-section">
+          <p>
+            This ID is non-transferable and shall be<br />confiscated when used
+            by others.
+          </p>
+        </div>
+
+        <div class="info-sections">
+          <p>Wear this ID's Card when entering DCSA premises.</p>
+        </div>
+
+        <div class="info-section">
+          <p>
+            If found please return to:<br />375 Teodoro St. Cor. 10th Ave. Brgy.
+            62,<br />Caloocan City<br />Tel. No. : 8361970/83673208
+          </p>
+        </div>
+
+        <div class="emergency-contact">
+          <p>In case of emergency, please notify:</p>
+          <h3 id="id-guardianName">Lukring Dela Cruz</h3>
+          <p id="id-guardianAddress">65 Malabo Linaw Malabon.</p>
+          <p style="font-weight: 700" id="id-guardianPhone">09123456789</p>
+        </div>
+
+        <div class="president-section">
+          <p class="president-name">MR.FRIDERICK C. IBAY</p>
+          <p class="president-title">PRESIDENT</p>
+        </div>
+
+        <div class="back-footer">COLLEGE OF SAINT ADELINE</div>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      id="toggleViewButton"
+      class="toggle-button"
+      style="display: none"
+    >
+      <img
+        src="image/left-arrow.png"
+        alt=""
+        style="
+          width: 16px;
+          height: 16px;
+          margin-right: 6px;
+          vertical-align: middle;
+        "
+      />
+      Back to Form
+    </button>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get all required inputs
+        const requiredInputs = document.querySelectorAll("input[required]");
+        const registerButton = document.getElementById("registerButton");
+        const showIdButton = document.getElementById("showIdButton");
+        const toggleViewButton = document.getElementById("toggleViewButton");
+
+        // Disable Show ID button initially
+        showIdButton.disabled = true;
+
+        // Load saved data if available
+        loadSavedData();
+
+        // Add event listeners for validation
+        requiredInputs.forEach((input) => {
+          // Validate on blur (when user leaves the field)
+          input.addEventListener("blur", function () {
+            validateField(this);
+            checkFormCompletion();
+          });
+
+          // Clear error when user starts typing
+          input.addEventListener("input", function () {
+            if (this.checkValidity()) {
+              clearError(this);
+            }
+            checkFormCompletion();
+          });
+        });
+
+        // Check if form is fully completed
+        function checkFormCompletion() {
+          let isComplete = true;
+          requiredInputs.forEach((input) => {
+            if (!input.value || !input.checkValidity()) {
+              isComplete = false;
+            }
+          });
+          showIdButton.disabled = !isComplete;
+        }
+
+        // Form submission handler
+        registerButton.addEventListener("click", function () {
+          let isValid = true;
+
+          // Validate all required fields
+          requiredInputs.forEach((input) => {
+            if (!validateField(input)) {
+              isValid = false;
+            }
+          });
+
+          if (isValid) {
+            saveData();
+            alert("Registration successful!");
+            showIdCard();
+          } else {
+            alert("Please fix the errors in the form before submitting.");
+          }
+        });
+
+        // Show ID button handler
+        showIdButton.addEventListener("click", function () {
+          let hasData = false;
+          requiredInputs.forEach((input) => {
+            if (input.value) hasData = true;
+          });
+
+          if (hasData) {
+            saveData();
+            showIdCard();
+          } else {
+            alert("Please fill in the form first");
+          }
+        });
+
+        // Toggle view button handler
+        toggleViewButton.addEventListener("click", function () {
+          document.body.classList.remove("show-id");
+          toggleViewButton.style.display = "none";
+        });
+
+        // Validation function
+        function validateField(field) {
+          const errorElement = document.getElementById(`${field.id}Error`);
+
+          if (!field.checkValidity()) {
+            // Show error
+            field.classList.add("error");
+            if (errorElement) {
+              errorElement.style.display = "block";
+
+              // Custom error messages for specific cases
+              if (field.validity.valueMissing) {
+                errorElement.textContent = `${field.labels[0].textContent} is required`;
+              } else if (field.validity.patternMismatch) {
+                if (field.id === "studentId") {
+                  errorElement.textContent =
+                    "Student ID must be exactly 6 numbers";
+                } else if (field.id.includes("postal")) {
+                  errorElement.textContent =
+                    "Postal code must be exactly 4 digits";
+                } else if (field.id.includes("Phone")) {
+                  errorElement.textContent =
+                    "Phone number must be 10-11 digits";
+                } else if (field.id === "email") {
+                  errorElement.textContent =
+                    "Email must contain @ and be valid";
+                } else if (field.id.includes("HouseNumber")) {
+                  errorElement.textContent =
+                    "House number must be 1-6 numbers only";
+                } else if (
+                  field.id.includes("Name") ||
+                  field.id === "guardianName"
+                ) {
+                  errorElement.textContent =
+                    "Must contain letters only, no numbers or special characters";
+                } else if (field.id === "course") {
+                  errorElement.textContent = "Course must contain letters only";
+                } else if (field.id === "city" || field.id === "guardianCity") {
+                  errorElement.textContent = "City must contain letters only";
+                } else if (
+                  field.id.includes("Street") ||
+                  field.id.includes("Barangay")
+                ) {
+                  errorElement.textContent = "No special characters allowed";
+                }
+              } else if (
+                field.validity.rangeUnderflow ||
+                field.validity.rangeOverflow
+              ) {
+                errorElement.textContent = "Age must be between 16 and 99";
+              } else if (field.validity.typeMismatch) {
+                errorElement.textContent = "Please enter a valid email address";
+              }
+            }
+            return false;
+          } else {
+            // Clear error
+            clearError(field);
+            return true;
+          }
+        }
+
+        // Clear error function
+        function clearError(field) {
+          field.classList.remove("error");
+          const errorElement = document.getElementById(`${field.id}Error`);
+          if (errorElement) {
+            errorElement.style.display = "none";
+          }
+        }
+
+        // Save form data to localStorage
+        function saveData() {
+          const formData = {
+            firstName: document.getElementById("firstName").value,
+            middleName: document.getElementById("middleName").value,
+            surname: document.getElementById("surname").value,
+            studentId: document.getElementById("studentId").value,
+            course: document.getElementById("course").value,
+            age: document.getElementById("age").value,
+            phone: document.getElementById("phone").value,
+            birthDate: document.getElementById("birthDate").value,
+            email: document.getElementById("email").value,
+            houseNumber: document.getElementById("houseNumber").value,
+            street: document.getElementById("street").value,
+            barangay: document.getElementById("barangay").value,
+            city: document.getElementById("city").value,
+            postal: document.getElementById("postal").value,
+            guardianName: document.getElementById("guardianName").value,
+            guardianPhone: document.getElementById("guardianPhone").value,
+            guardianHouseNumber: document.getElementById("guardianHouseNumber")
+              .value,
+            guardianStreet: document.getElementById("guardianStreet").value,
+            guardianBarangay: document.getElementById("guardianBarangay").value,
+            guardianCity: document.getElementById("guardianCity").value,
+            guardianPostal: document.getElementById("guardianPostal").value,
+          };
+
+          localStorage.setItem(
+            "studentRegistrationData",
+            JSON.stringify(formData)
+          );
+        }
+
+        // Load saved data from localStorage
+        function loadSavedData() {
+          const savedData = localStorage.getItem("studentRegistrationData");
+          if (savedData) {
+            const formData = JSON.parse(savedData);
+            for (const key in formData) {
+              const input = document.getElementById(key);
+              if (input) {
+                input.value = formData[key];
+              }
+            }
+            checkFormCompletion();
+          }
+        }
+
+        // Show the ID card with filled data
+        function showIdCard() {
+          // Get form values
+          const firstName = document.getElementById("firstName").value;
+          const middleName = document.getElementById("middleName").value;
+          const surname = document.getElementById("surname").value;
+          const studentId = document.getElementById("studentId").value;
+          const course = document.getElementById("course").value;
+          const guardianName = document.getElementById("guardianName").value;
+          const guardianPhone = document.getElementById("guardianPhone").value;
+
+          // Construct guardian address
+          const guardianHouseNumber = document.getElementById(
+            "guardianHouseNumber"
+          ).value;
+          const guardianStreet =
+            document.getElementById("guardianStreet").value;
+          const guardianBarangay =
+            document.getElementById("guardianBarangay").value;
+          const guardianCity = document.getElementById("guardianCity").value;
+          const guardianPostal =
+            document.getElementById("guardianPostal").value;
+
+          const guardianAddress = `${guardianHouseNumber} ${guardianStreet}, ${guardianBarangay}, ${guardianCity} ${guardianPostal}`;
+
+          // Construct full name
+          let fullName = firstName;
+          if (middleName) fullName += ` ${middleName.charAt(0)}.`;
+          fullName += ` ${surname}`;
+
+          // Update ID card
+          document.getElementById("id-studentId").textContent = studentId;
+          document.getElementById("id-name").textContent = fullName;
+          document.getElementById("id-course").textContent = course;
+          document.getElementById("id-guardianName").textContent = guardianName;
+          document.getElementById("id-guardianAddress").textContent =
+            guardianAddress;
+          document.getElementById("id-guardianPhone").textContent =
+            guardianPhone;
+
+          // Show ID card and hide form
+          document.body.classList.add("show-id");
+          toggleViewButton.style.display = "block";
+        }
+      });
+
+      const savedTheme =
+        localStorage.getItem("theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+      }
+    </script>
+  </body>
+</html>

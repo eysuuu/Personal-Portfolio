@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <title>History</title>
+
+    <style>
+      /* Import Google Font - Poppins */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+      /* Base styles reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* Sidebar styles */
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 78px;
+        background: #b82132;
+        padding: 6px 14px;
+        z-index: 99;
+        transition: all 0.5s ease;
+      }
+
+      /* Expanded sidebar state */
+      .sidebar.open {
+        width: 250px;
+      }
+
+      /* Logo container styles */
+      .logo-details {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      /* Logo image styles */
+      .logo-details .logo-icon {
+        width: auto;
+        height: 60px;
+        margin-top: 50px;
+      }
+
+      /* Logo container positioning */
+      .sidebar .logo-details {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+
+      /* Sidebar icon visibility transitions */
+      .sidebar .logo-details .icon {
+        opacity: 0;
+        transition: all 0.5s ease;
+      }
+
+      /* Sidebar logo text styles */
+      .sidebar .logo-details .logo_name {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 600;
+        opacity: 0;
+        transition: all 0.2s ease-in;
+      }
+
+      /* Show elements when sidebar is open */
+      .sidebar.open .logo-details .icon,
+      .sidebar.open .logo-details .logo_name {
+        opacity: 1;
+      }
+
+      /* Sidebar toggle button styles */
+      .sidebar .logo-details #btn {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        font-size: 22px;
+        transition: all 0.4s ease;
+        font-size: 23px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.5s ease;
+      }
+
+      /* Button position when sidebar is open */
+      .sidebar.open .logo-details #btn {
+        text-align: right;
+      }
+
+      /* Sidebar icon base styles */
+      .sidebar i {
+        color: #fff;
+        height: 60px;
+        min-width: 50px;
+        font-size: 28px;
+        text-align: center;
+        line-height: 60px;
+      }
+
+      /* Navigation list styles */
+      .sidebar .nav-list {
+        padding-top: 10px;
+        margin-top: 60px;
+        height: 100%;
+      }
+
+      /* Navigation item styles */
+      .sidebar li {
+        position: relative;
+        margin: 8px 0;
+        list-style: none;
+      }
+
+      /* Tooltip styles for collapsed sidebar */
+      .sidebar li .tooltip {
+        position: absolute;
+        top: -20px;
+        left: calc(100% + 15px);
+        z-index: 3;
+        background: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 400;
+        opacity: 0;
+        white-space: nowrap;
+        pointer-events: none;
+        transition: 0s;
+      }
+
+      /* Tooltip hover effects */
+      .sidebar li:hover .tooltip {
+        opacity: 1;
+        pointer-events: auto;
+        transition: all 0.4s ease;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      /* Hide tooltips when sidebar is open */
+      .sidebar.open li .tooltip {
+        display: none;
+      }
+
+      /* Navigation link styles */
+      .sidebar li a {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        border-radius: 12px;
+        align-items: center;
+        text-decoration: none;
+        transition: all 0.4s ease;
+        background: #b82132;
+      }
+
+      /* Navigation link hover effects */
+      .sidebar li a:hover {
+        background: #fff;
+      }
+
+      /* Navigation text styles */
+      .sidebar li a .links_name {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 400;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.4s;
+      }
+
+      /* Show navigation text when sidebar is open */
+      .sidebar.open li a .links_name {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* Navigation hover text color change */
+      .sidebar li a:hover .links_name,
+      .sidebar li a:hover i {
+        transition: all 0.2s ease;
+        color: #11101d;
+      }
+
+      /* Navigation icon styles */
+      .sidebar li i {
+        height: 50px;
+        line-height: 50px;
+        font-size: 18px;
+        border-radius: 12px;
+      }
+
+      /* Mobile styles - collapsed sidebar */
+      @media (max-width: 1024px) {
+        .sidebar {
+          width: 100%;
+          height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 14px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          flex-direction: row;
+          background: #b82132;
+          z-index: 100;
+        }
+
+        .sidebar #btn {
+          font-size: 25px;
+          cursor: pointer;
+          position: relative;
+          top: 45% !important;
+          right: 1px !important;
+          padding: 5px 5px;
+          transform: translateY(-50%);
+          z-index: 101;
+          color: white;
+        }
+
+        .logo-details {
+          flex: 1;
+          text-align: center;
+          position: relative;
+        }
+
+        .logo_name {
+          margin-top: 20px;
+        }
+
+        .logo-details .logo-icon {
+          height: 70px !important;
+          width: auto;
+          margin-top: 1px;
+          padding-bottom: 5px;
+        }
+
+        .nav-list {
+          display: none;
+        }
+      }
+
+      /* Tablet size adjustments */
+      @media (max-width: 768px) {
+        .sidebar #btn {
+          right: 30px;
+        }
+        .logo-details .logo-icon {
+          height: 40px;
+          width: auto;
+          padding-bottom: 5px;
+        }
+      }
+
+      /* Small mobile adjustments */
+      @media (max-width: 600px) {
+        .sidebar {
+          height: 50px;
+          padding: 0 10px;
+        }
+        .sidebar #btn {
+          font-size: 22px;
+          right: 20px;
+        }
+        .logo-details .logo-icon {
+          height: 60px !important;
+          width: auto;
+          margin-bottom: 6px;
+        }
+      }
+
+      /* Extra small mobile adjustments */
+      @media (max-width: 450px) {
+        .sidebar {
+          height: 45px;
+          padding: 30px 0px !important;
+        }
+        .sidebar #btn {
+          font-size: 20px;
+          right: 10px;
+        }
+        .logo-details .logo-icon {
+          height: 30px;
+          width: auto;
+          margin-top: 1px;
+        }
+      }
+
+      /* Mobile styles - expanded sidebar */
+      @media (max-width: 1024px) {
+        .sidebar.open {
+          height: auto;
+          width: 100%;
+          flex-direction: column;
+          align-items: center;
+          padding: 100px 0px 390px 0px;
+        }
+
+        .sidebar.open .nav-list {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin-bottom: 30px;
+          margin-right: 20px;
+          margin-top: 10px;
+        }
+
+        .sidebar.open li {
+          width: 100%;
+          text-align: center;
+        }
+
+        .sidebar.open li a {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .sidebar.open li a:hover {
+          background: none;
+        }
+
+        .sidebar.open #btn {
+          position: absolute;
+          top: 1px;
+          left: 200px;
+        }
+
+        .logo-details .logo-icon {
+          height: 30px;
+          width: auto;
+        }
+      }
+
+      /* Tablet expanded sidebar adjustments */
+      @media (max-width: 768px) {
+        .sidebar.open {
+          padding: 120px 0px;
+        }
+        .sidebar.open #btn {
+          left: 200px !important;
+        }
+
+        .sidebar.open li a {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* Small mobile expanded sidebar adjustments */
+      @media (max-width: 600px) {
+        .sidebar.open {
+          padding: 100px 0px 250px 0px;
+        }
+        .sidebar.open #btn {
+          left: 100px;
+        }
+        .sidebar.open li a {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* Extra small mobile expanded sidebar adjustments */
+      @media (max-width: 450px) {
+        .sidebar.open {
+          padding: 40px 0px 20vh 0px !important;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .sidebar.open #btn {
+          left: 100px;
+        }
+        .sidebar.open ul {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .sidebar.open li {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .sidebar.open li a {
+          width: 100%;
+          display: flex;
+        }
+      }
+
+      /* Main content area styles */
+      .history {
+        margin-left: 78px;
+        padding: 20px;
+        margin-top: 10px;
+      }
+
+      /* Main content adjustments for mobile */
+      @media (max-width: 1024px) {
+        .history {
+          margin-left: 0;
+          margin-top: 60px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .history {
+          margin-top: 50px;
+        }
+      }
+
+      @media (max-width: 450px) {
+        .history {
+          margin-top: 45px;
+        }
+      }
+
+      /* History container styles */
+      .historyContainer {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      /* Section heading styles */
+      h2 {
+        color: black;
+        margin-bottom: 20px;
+        margin-top: 30px;
+        font-size: 28px;
+      }
+
+      /* Table container styles */
+      .table-responsive {
+        overflow-x: auto;
+        margin-bottom: 30px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+      }
+
+      /* Table base styles */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+      }
+
+      /* Table cell styles */
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      /* Table header styles */
+      th {
+        background-color: #b82132;
+        color: white;
+        font-weight: 500;
+      }
+
+      /* Remove border from last row */
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      /* Archive button styles */
+      .archive-btn {
+        background-color: #b82132;
+        border: 1px solid #b82132;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 5px 10px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* Archive button hover effects */
+      .archive-btn:hover {
+        background-color: #a11d2c;
+        color: white;
+      }
+
+      /* Archive text styles */
+      .archive-text {
+        font-size: 14px;
+      }
+
+      /* Archive icon styles */
+      .archive-icon {
+        font-size: 16px;
+      }
+
+      /* Section header container styles */
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      /* View archived button styles */
+      .view-archived {
+        background-color: #b82132;
+        border: 1px solid #b82132;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        padding: 8px 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* View archived link styles */
+      .view-archived a {
+        color: white;
+        text-decoration: none;
+      }
+
+      /* View icon styles */
+      .view-icon {
+        font-size: 16px;
+      }
+
+      /* View archived hover effects */
+      .view-archived:hover {
+        background-color: #a11d2c;
+        color: white;
+      }
+
+      /* Page heading styles */
+      .utensilshead {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: clamp(35px, 3.5vw, 40px);
+        margin-top: 100px;
+      }
+
+      /* Heading icon styles */
+      .icon {
+        width: 40px;
+        height: auto;
+        margin-left: 10px;
+      }
+
+      /* Tablet responsive adjustments */
+      @media (max-width: 768px) {
+        h2 {
+          font-size: 24px;
+          margin-top: 25px;
+          margin-bottom: 15px;
+        }
+
+        th,
+        td {
+          padding: 8px 10px;
+          font-size: 14px;
+        }
+
+        .archive-btn {
+          padding: 4px 8px;
+        }
+
+        .archive-text {
+          font-size: 12px;
+        }
+
+        .archive-icon {
+          font-size: 14px;
+        }
+
+        .view-archived {
+          padding: 6px 12px;
+          font-size: 14px;
+        }
+
+        .view-icon {
+          font-size: 14px;
+        }
+      }
+
+      /* Small mobile responsive adjustments */
+      @media (max-width: 480px) {
+        h2 {
+          font-size: 20px;
+          margin-top: 20px;
+          margin-bottom: 12px;
+        }
+
+        th,
+        td {
+          padding: 6px 8px;
+          font-size: 12px;
+        }
+
+        .archive-btn {
+          padding: 3px 6px;
+          gap: 3px;
+        }
+
+        .archive-text {
+          font-size: 11px;
+        }
+
+        .archive-icon {
+          font-size: 12px;
+        }
+
+        .view-archived {
+          padding: 5px 8px;
+          font-size: 12px;
+          gap: 5px;
+        }
+
+        .view-icon {
+          font-size: 12px;
+        }
+      }
+
+      /* Extra small mobile responsive adjustments */
+      @media (max-width: 360px) {
+        h2 {
+          font-size: 18px;
+          margin-top: 15px;
+          margin-bottom: 10px;
+        }
+
+        .historyContainer {
+          padding: 15px;
+        }
+
+        .archive-btn {
+          padding: 2px 4px;
+          gap: 2px;
+        }
+
+        .archive-text {
+          font-size: 10px;
+        }
+
+        .archive-icon {
+          font-size: 11px;
+        }
+
+        .view-archived {
+          padding: 4px 8px;
+          font-size: 11px;
+          gap: 3px;
+        }
+
+        .view-icon {
+          font-size: 11px;
+        }
+
+        th,
+        td {
+          padding: 5px 6px;
+          font-size: 11px;
+        }
+      }
+
+      /* Logout modal container styles */
+      .logout-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      /* Show modal state */
+      .logout-modal.show {
+        display: flex;
+        opacity: 1;
+      }
+
+      /* Modal content styles */
+      .logout-modal-content {
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      /* Show modal content state */
+      .logout-modal.show .logout-modal-content {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* Warning icon styles */
+      .logout-warning-icon {
+        width: 80px;
+        height: 80px;
+        background-color: #b82132;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: pop-in 0.4s ease-out forwards;
+      }
+
+      /* Warning icon SVG styles */
+      .logout-warning-icon svg {
+        width: 40px;
+        height: 40px;
+        fill: none;
+        stroke: white;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* Modal heading styles */
+      .logout-modal h3 {
+        margin-bottom: 10px;
+        color: black;
+        font-size: 24px;
+      }
+
+      /* Modal text styles */
+      .logout-modal p {
+        color: black;
+        margin-bottom: 25px;
+      }
+
+      /* Modal footer button container */
+      .logout-modal-footer {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      /* Modal button base styles */
+      .logout-btn-confirm,
+      .logout-btn-cancel {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      /* Confirm button styles */
+      .logout-btn-confirm {
+        background-color: #b82132;
+        color: white;
+      }
+
+      /* Confirm button hover effects */
+      .logout-btn-confirm:hover {
+        background-color: #a11d2c;
+      }
+
+      /* Cancel button styles */
+      .logout-btn-cancel {
+        background-color: #f1f1f1;
+        color: #333;
+      }
+
+      /* Cancel button hover effects */
+      .logout-btn-cancel:hover {
+        background-color: #ddd;
+      }
+
+      /* Mobile modal adjustments */
+      @media (max-width: 480px) {
+        .logout-modal-content {
+          padding: 30px;
+          width: 85%;
+        }
+
+        .logout-modal-footer {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .logout-btn-confirm,
+        .logout-btn-cancel {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar navigation -->
+    <div class="sidebar">
+      <div class="logo-details">
+        <img src="images/datamesian.PNG" alt="Logo" class="logo-icon" />
+        <div class="logo_name">KITCHEN INVENTORY</div>
+        <i class="bx bx-menu" id="btn"></i>
+      </div>
+
+      <!-- Navigation list -->
+      <ul class="nav-list">
+        <li>
+          <a href="index.html">
+            <i class="bx bxs-home"></i>
+            <span class="links_name">Home</span>
+          </a>
+          <span class="tooltip">Home</span>
+        </li>
+        <li>
+          <a href="utensils.html">
+            <i class="fa-solid fa-utensils"></i>
+            <span class="links_name">Utensils</span>
+          </a>
+          <span class="tooltip">Utensils</span>
+        </li>
+        <li>
+          <a href="equipments.html">
+            <i class="fa-solid fa-kitchen-set"></i>
+            <span class="links_name">Equipment</span>
+          </a>
+          <span class="tooltip">Equipment</span>
+        </li>
+        <li>
+          <a href="kitchenapp.html">
+            <i class="fa-solid fa-blender"></i>
+            <span class="links_name">Appliances</span>
+          </a>
+          <span class="tooltip"> Appliances</span>
+        </li>
+        <li>
+          <a href="history.html">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span class="links_name">History</span>
+          </a>
+          <span class="tooltip">History</span>
+        </li>
+        <li>
+          <a href="profile.html">
+            <i class="fa-solid fa-user"></i>
+            <span class="links_name">Profile</span>
+          </a>
+          <span class="tooltip">Profile</span>
+        </li>
+        <li>
+          <a href="contact.html">
+            <i class="bx bxs-contact"></i>
+            <span class="links_name">Contact</span>
+          </a>
+          <span class="tooltip">Contact</span>
+        </li>
+        <li>
+          <a href="#" id="logoutLink">
+            <i class="bx bx-log-out"></i>
+            <span class="links_name">Logout</span>
+          </a>
+          <span class="tooltip">Logout</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Page heading -->
+    <h1 class="utensilshead">
+      History
+      <img src="images/history.png" alt="Icon" class="icon" />
+    </h1>
+
+    <!-- Main content section -->
+    <section class="history">
+      <div class="historyContainer">
+        <!-- Borrowed items section -->
+        <div class="borrowing-section">
+          <div class="section-header">
+            <h2>Borrowed History</h2>
+            <button class="view-archived">
+              <span class="back-text"
+                ><a href="archived.html">View Archived</a></span
+              >
+              <i class="fa-solid fa-box-archive archive-icon"></i>
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="borrowed-items">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Course</th>
+                  <th>Item Name</th>
+                  <th>Quantity</th>
+                  <th>Borrowed Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Returned items section -->
+        <div class="return-section">
+          <div class="section-header">
+            <h2>Returned History</h2>
+          </div>
+          <div class="table-responsive">
+            <table class="returned-items">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Course</th>
+                  <th>Item Name</th>
+                  <th>Total Borrowed</th>
+                  <th>Date Returned</th>
+                  <th>Good</th>
+                  <th>Damage</th>
+                  <th>Missing</th>
+                  <th>Condition Reports</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logout confirmation modal -->
+    <div id="logoutModal" class="logout-modal">
+      <div class="logout-modal-content">
+        <div class="logout-warning-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            />
+          </svg>
+        </div>
+        <h3>Logout Confirmation</h3>
+        <p>Are you sure you want to log out?</p>
+        <div class="logout-modal-footer">
+          <button id="confirmLogout" class="logout-btn-confirm">Logout</button>
+          <button id="cancelLogout" class="logout-btn-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Sidebar toggle functionality
+      let sidebar = document.querySelector(".sidebar");
+      let closeBtn = document.querySelector("#btn");
+
+      closeBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+        menuBtnChange();
+      });
+
+      // Change menu button icon based on sidebar state
+      function menuBtnChange() {
+        if (sidebar.classList.contains("open")) {
+          closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        } else {
+          closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+        }
+      }
+
+      // Logout modal elements
+      const logoutModal = document.querySelector(".logout-modal");
+      const logoutLink = document.getElementById("logoutLink");
+      const confirmLogoutBtn = document.getElementById("confirmLogout");
+      const cancelLogoutBtn = document.getElementById("cancelLogout");
+
+      // Show modal when logout link is clicked
+      logoutLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        logoutModal.classList.add("show");
+      });
+
+      // Hide modal when cancel button is clicked
+      cancelLogoutBtn.addEventListener("click", function () {
+        logoutModal.classList.remove("show");
+      });
+
+      // Handle logout confirmation
+      confirmLogoutBtn.addEventListener("click", function () {
+        logoutModal.classList.remove("show");
+        setTimeout(function () {
+          window.location.href = "login.html";
+        }, 300);
+      });
+
+      // Close modal when clicking outside of it
+      window.addEventListener("click", function (event) {
+        if (event.target == logoutModal) {
+          logoutModal.classList.remove("show");
+        }
+      });
+    </script>
+  </body>
+</html>

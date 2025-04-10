@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <title>Profile</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 78px;
+        background: #b82132;
+        padding: 6px 14px;
+        z-index: 99;
+        transition: all 0.5s ease;
+      }
+
+      .sidebar.open {
+        width: 250px;
+      }
+      .logo-details {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+      }
+      .logo-details .logo-icon {
+        width: auto;
+        height: 60px;
+        margin-top: 50px;
+      }
+      .sidebar .logo-details {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+      .sidebar .logo-details .icon {
+        opacity: 0;
+        transition: all 0.5s ease;
+      }
+      .sidebar .logo-details .logo_name {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 600;
+        opacity: 0;
+        transition: all 0.2s ease-in;
+      }
+      .sidebar.open .logo-details .icon,
+      .sidebar.open .logo-details .logo_name {
+        opacity: 1;
+      }
+      .sidebar .logo-details #btn {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        font-size: 22px;
+        transition: all 0.4s ease;
+        font-size: 23px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.5s ease;
+      }
+      .sidebar.open .logo-details #btn {
+        text-align: right;
+      }
+      .sidebar i {
+        color: #fff;
+        height: 60px;
+        min-width: 50px;
+        font-size: 28px;
+        text-align: center;
+        line-height: 60px;
+      }
+      .sidebar .nav-list {
+        padding-top: 10px;
+        margin-top: 60px;
+        height: 100%;
+      }
+      .sidebar li {
+        position: relative;
+        margin: 8px 0;
+        list-style: none;
+      }
+      .sidebar li .tooltip {
+        position: absolute;
+        top: -20px;
+        left: calc(100% + 15px);
+        z-index: 3;
+        background: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 400;
+        opacity: 0;
+        white-space: nowrap;
+        pointer-events: none;
+        transition: 0s;
+      }
+      .sidebar li:hover .tooltip {
+        opacity: 1;
+        pointer-events: auto;
+        transition: all 0.4s ease;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .sidebar.open li .tooltip {
+        display: none;
+      }
+      .sidebar li a {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        border-radius: 12px;
+        align-items: center;
+        text-decoration: none;
+        transition: all 0.4s ease;
+        background: #b82132;
+      }
+      .sidebar li a:hover {
+        background: #fff;
+      }
+      .sidebar li a .links_name {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 400;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.4s;
+      }
+      .sidebar.open li a .links_name {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .sidebar li a:hover .links_name,
+      .sidebar li a:hover i {
+        transition: all 0.2s ease;
+        color: #11101d;
+      }
+      .sidebar li i {
+        height: 50px;
+        line-height: 50px;
+        font-size: 18px;
+        border-radius: 12px;
+      }
+
+      /*close sidebar */
+      @media (max-width: 1024px) {
+        .sidebar {
+          width: 100%;
+          height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 14px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          flex-direction: row;
+          background: #b82132;
+          z-index: 100;
+        }
+
+        .sidebar #btn {
+          font-size: 25px;
+          cursor: pointer;
+          position: relative;
+          top: 45% !important;
+          right: 1px !important;
+          padding: 5px 5px;
+          transform: translateY(-50%);
+          z-index: 101;
+          color: white;
+        }
+
+        .logo-details {
+          flex: 1;
+          text-align: center;
+          position: relative;
+        }
+
+        .logo_name {
+          margin-top: 20px;
+        }
+
+        .logo-details .logo-icon {
+          height: 70px !important;
+          width: auto;
+          margin-top: 1px;
+          padding-bottom: 5px;
+        }
+
+        .nav-list {
+          display: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sidebar #btn {
+          right: 30px;
+        }
+        .logo-details .logo-icon {
+          height: 40px;
+          width: auto;
+          padding-bottom: 5px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .sidebar {
+          height: 50px;
+          padding: 0 10px;
+        }
+        .sidebar #btn {
+          font-size: 22px;
+          right: 20px;
+        }
+        .logo-details .logo-icon {
+          height: 60px !important;
+          width: auto;
+          margin-bottom: 6px;
+        }
+      }
+
+      @media (max-width: 450px) {
+        .sidebar {
+          height: 45px;
+          padding: 30px 0px !important;
+        }
+        .sidebar #btn {
+          font-size: 20px;
+          right: 10px;
+        }
+        .logo-details .logo-icon {
+          height: 30px;
+          width: auto;
+          margin-top: 1px;
+        }
+      }
+
+      /*open sidebar */
+      @media (max-width: 1024px) {
+        .sidebar.open {
+          height: auto;
+          width: 100%;
+          flex-direction: column;
+          align-items: center;
+          padding: 100px 0px 390px 0px;
+        }
+
+        .sidebar.open .nav-list {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin-bottom: 30px;
+          margin-right: 20px;
+          margin-top: 10px;
+        }
+
+        .sidebar.open li {
+          width: 100%;
+          text-align: center;
+        }
+
+        .sidebar.open li a {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .sidebar.open li a:hover {
+          background: none;
+        }
+
+        .sidebar.open #btn {
+          position: absolute;
+          top: 1px;
+          left: 200px;
+        }
+
+        .logo-details .logo-icon {
+          height: 30px;
+          width: auto;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sidebar.open {
+          padding: 120px 0px;
+        }
+        .sidebar.open #btn {
+          left: 200px !important;
+        }
+
+        .sidebar.open li a {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .sidebar.open {
+          padding: 100px 0px 250px 0px;
+        }
+        .sidebar.open #btn {
+          left: 100px;
+        }
+        .sidebar.open li a {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      @media (max-width: 450px) {
+        .sidebar.open {
+          padding: 40px 0px 20vh 0px !important;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .sidebar.open #btn {
+          left: 100px;
+        }
+        .sidebar.open ul {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .sidebar.open li {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .sidebar.open li a {
+          width: 100%;
+
+          display: flex;
+        }
+      }
+
+      .profile {
+        padding: 20px;
+        margin-left: 78px;
+        margin-top: 40px;
+      }
+
+      .profile-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 30px;
+      }
+
+      .profile-title {
+        text-align: center;
+        font-size: clamp(35px, 3.5vw, 40px);
+
+        margin-bottom: 30px;
+        color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .profile-icon {
+        width: 40px;
+        height: auto;
+        margin-left: 2px;
+      }
+
+      .profile-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+      }
+
+      .profile-image-section {
+        flex: 0 0 250px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .profile-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid #b82132;
+        margin-bottom: 20px;
+      }
+
+      .profile-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .upload-btn-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+      }
+
+      .upload-btn {
+        border: 2px solid #b82132;
+        color: #b82132;
+        background-color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .upload-btn:hover {
+        background-color: #ef233c;
+        color: white;
+      }
+
+      .upload-btn-wrapper input[type="file"] {
+        font-size: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .profile-details {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .profile-info {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .info-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .info-header h2 {
+        font-size: 18px;
+        font-weight: 600;
+        color: black;
+      }
+
+      .edit-btn,
+      .update-btn,
+      .cancel-btn,
+      .change-btn {
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .edit-btn {
+        background-color: #f0f0f0;
+        color: black;
+        border: 1px solid #ddd;
+      }
+
+      .edit-btn:hover {
+        background-color: #e0e0e0;
+      }
+
+      .update-btn {
+        background-color: #b82132;
+        color: white;
+        border: none;
+        margin-right: 10px;
+      }
+
+      .update-btn:hover {
+        background-color: #a11d2c;
+      }
+
+      .cancel-btn {
+        background-color: #f0f0f0;
+        color: black;
+        border: 1px solid #ddd;
+      }
+
+      .cancel-btn:hover {
+        background-color: #e0e0e0;
+      }
+
+      .change-btn {
+        background-color: #b82132;
+        color: white;
+        border: none;
+        margin-top: 15px;
+      }
+
+      .change-btn:hover {
+        background-color: #a11d2c;
+      }
+
+      .info-content p {
+        font-size: 18px;
+        font-weight: 500;
+        color: black;
+      }
+
+      .edit-form {
+        margin-top: 10px;
+      }
+
+      .edit-form input[type="text"],
+      .edit-form input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      .course-display {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .course-label {
+        margin-right: 10px;
+        color: black;
+      }
+
+      .course-selector {
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+
+      .select-label {
+        margin-bottom: 8px;
+        color: black;
+      }
+
+      .course-selector select {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 200px;
+        margin-right: 10px;
+      }
+
+      .password-form .form-group {
+        margin-bottom: 15px;
+      }
+
+      .password-form label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: black;
+      }
+
+      .password-form input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      @media (max-width: 1024px) {
+        .profile {
+          margin-left: 0;
+          padding-top: 80px;
+        }
+
+        .sidebar.open ~ .profile {
+          margin-left: 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .profile-content {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .profile-image-section {
+          flex: 0 0 auto;
+          margin: 0 auto;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .profile-container {
+          padding: 20px 15px;
+        }
+
+        .profile-image {
+          width: 150px;
+          height: 150px;
+        }
+
+        .course-display {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .course-label {
+          margin-bottom: 5px;
+        }
+      }
+
+      @media (max-width: 450px) {
+        .profile {
+          padding-top: 60px;
+        }
+
+        .info-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .course-selector {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .course-selector select {
+          width: 100%;
+          margin-bottom: 10px;
+        }
+      }
+
+      /* Updated Logout Modal Styles */
+      .logout-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .logout-modal.show {
+        display: flex;
+        opacity: 1;
+      }
+
+      .logout-modal-content {
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      .logout-modal.show .logout-modal-content {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .logout-warning-icon {
+        width: 80px;
+        height: 80px;
+        background-color: #b82132;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: pop-in 0.4s ease-out forwards;
+      }
+
+      .logout-warning-icon svg {
+        width: 40px;
+        height: 40px;
+        fill: none;
+        stroke: white;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .logout-modal h3 {
+        margin-bottom: 10px;
+        color: black;
+        font-size: 24px;
+      }
+
+      .logout-modal p {
+        color: black;
+        margin-bottom: 25px;
+      }
+
+      .logout-modal-footer {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .logout-btn-confirm,
+      .logout-btn-cancel {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      .logout-btn-confirm {
+        background-color: #b82132;
+        color: white;
+      }
+
+      .logout-btn-confirm:hover {
+        background-color: #a11d2c;
+      }
+
+      .logout-btn-cancel {
+        background-color: #f1f1f1;
+        color: #333;
+      }
+
+      .logout-btn-cancel:hover {
+        background-color: #ddd;
+      }
+
+      @media (max-width: 480px) {
+        .logout-modal-content {
+          padding: 30px;
+          width: 85%;
+        }
+
+        .logout-modal-footer {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .logout-btn-confirm,
+        .logout-btn-cancel {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <img src="images/datamesian.PNG" alt="Logo" class="logo-icon" />
+        <div class="logo_name">KITCHEN INVENTORY</div>
+        <i class="bx bx-menu" id="btn"></i>
+      </div>
+
+      <ul class="nav-list">
+        <li>
+          <a href="index.html">
+            <i class="bx bxs-home"></i>
+            <span class="links_name">Home</span>
+          </a>
+          <span class="tooltip">Home</span>
+        </li>
+        <li>
+          <a href="utensils.html">
+            <i class="fa-solid fa-utensils"></i>
+            <span class="links_name">Utensils</span>
+          </a>
+          <span class="tooltip">Utensils</span>
+        </li>
+        <li>
+          <a href="equipments.html">
+            <i class="fa-solid fa-kitchen-set"></i>
+            <span class="links_name">Equipments</span>
+          </a>
+          <span class="tooltip">Equipments</span>
+        </li>
+        <li>
+          <a href="kitchenapp.html">
+            <i class="fa-solid fa-blender"></i>
+            <span class="links_name"> Appliances</span>
+          </a>
+          <span class="tooltip"> Appliances</span>
+        </li>
+        <li>
+          <a href="history.html">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span class="links_name">History</span>
+          </a>
+          <span class="tooltip">History</span>
+        </li>
+        <li>
+          <a href="profile.html">
+            <i class="fa-solid fa-user"></i>
+            <span class="links_name">Profile</span>
+          </a>
+          <span class="tooltip">Profile</span>
+        </li>
+        <li>
+          <a href="contact.html">
+            <i class="bx bxs-contact"></i>
+            <span class="links_name">Contact</span>
+          </a>
+          <span class="tooltip">Contact</span>
+        </li>
+        <li>
+          <a href="#" id="logoutLink">
+            <i class="bx bx-log-out"></i>
+            <span class="links_name">Logout</span>
+          </a>
+          <span class="tooltip">Logout</span>
+        </li>
+      </ul>
+    </div>
+
+    <section class="profile">
+      <div class="profile-container">
+        <h1 class="profile-title">
+          Profile
+          <img src="images/user.png" alt="Profile Icon" class="profile-icon" />
+        </h1>
+
+        <div class="profile-content">
+          <div class="profile-image-section">
+            <div class="profile-image">
+              <img
+                src="images/profile-placeholder.png"
+                alt="Profile Image"
+                id="profileImg"
+              />
+            </div>
+            <div class="upload-btn-wrapper">
+              <button class="upload-btn">Upload Photo</button>
+              <input type="file" id="profileImageInput" accept="image/*" />
+            </div>
+          </div>
+
+          <div class="profile-details">
+            <div class="profile-info">
+              <div class="info-header">
+                <h2>FULL NAME</h2>
+                <button class="edit-btn" id="editNameBtn">Edit</button>
+              </div>
+              <div class="info-content" id="nameContent">
+                <p id="fullName">ACE FLORES</p>
+                <div class="edit-form" id="nameEditForm" style="display: none">
+                  <input
+                    type="text"
+                    id="fullNameInput"
+                    placeholder="Enter full name"
+                  />
+                  <button class="update-btn" id="updateNameBtn">Update</button>
+                  <button class="cancel-btn" id="cancelNameBtn">Cancel</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- New Email Field -->
+            <div class="profile-info">
+              <div class="info-header">
+                <h2>EMAIL</h2>
+              </div>
+              <div class="info-content" id="emailContent">
+                <p id="userEmail">aceflores1207@gmail.com</p>
+                <div class="edit-form" id="emailEditForm" style="display: none">
+                  <input
+                    type="email"
+                    id="emailInput"
+                    placeholder="Enter email address"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-info">
+              <div class="info-header">
+                <h2>COURSE</h2>
+              </div>
+              <div class="info-content">
+                <div class="course-display">
+                  <div class="course-label">Current Course:</div>
+                  <p id="currentCourse">H.E - 11 A</p>
+                </div>
+                <div class="course-selector">
+                  <div class="select-label">Select New Course:</div>
+                  <select id="courseSelect">
+                    <optgroup label="H.E">
+                      <option value="H.E - 11 A">H.E - 11 A</option>
+                      <option value="H.E - 11 B">H.E - 11 B</option>
+                      <option value="H.E - 12 A">H.E - 12 A</option>
+                    </optgroup>
+                    <optgroup label="H.M">
+                      <option value="H.M - 1 A">H.M - 1 A</option>
+                      <option value="H.M - 1 B">H.M - 1 B</option>
+                      <option value="H.M - 2 A">H.M - 2 A</option>
+                      <option value="H.M - 2 B">H.M - 2 B</option>
+                      <option value="H.M - 3 A">H.M - 3 A</option>
+                      <option value="H.M - 3 B">H.M - 3 B</option>
+                      <option value="H.M - 3 C">H.M - 3 C</option>
+                      <option value="H.M - 4 A">H.M - 4 A</option>
+                    </optgroup>
+                  </select>
+                  <button class="update-btn" id="updateCourseBtn">
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-info">
+              <div class="info-header">
+                <h2>CHANGE PASSWORD</h2>
+              </div>
+              <div class="info-content">
+                <div class="password-form">
+                  <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input
+                      type="password"
+                      id="newPassword"
+                      placeholder="Enter new password"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      placeholder="Confirm new password"
+                    />
+                  </div>
+                  <button class="change-btn" id="changePasswordBtn">
+                    Change
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="logoutModal" class="logout-modal">
+        <div class="logout-modal-content">
+          <div class="logout-warning-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+          </div>
+          <h3>Logout Confirmation</h3>
+          <p>Are you sure you want to log out?</p>
+          <div class="logout-modal-footer">
+            <button id="confirmLogout" class="logout-btn-confirm">
+              Logout
+            </button>
+            <button id="cancelLogout" class="logout-btn-cancel">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      let sidebar = document.querySelector(".sidebar");
+      let closeBtn = document.querySelector("#btn");
+
+      closeBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+        menuBtnChange(); //calling the function(optional)
+      });
+
+      // following are the code to change sidebar button(optional)
+      function menuBtnChange() {
+        if (sidebar.classList.contains("open")) {
+          closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the icons class
+        } else {
+          closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the icons class
+        }
+      }
+
+      // Handle profile image upload
+      const profileImageInput = document.getElementById("profileImageInput");
+      const profileImg = document.getElementById("profileImg");
+
+      profileImageInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            profileImg.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Handle name edit
+      const editNameBtn = document.getElementById("editNameBtn");
+      const nameContent = document.getElementById("nameContent");
+      const fullName = document.getElementById("fullName");
+      const nameEditForm = document.getElementById("nameEditForm");
+      const fullNameInput = document.getElementById("fullNameInput");
+      const updateNameBtn = document.getElementById("updateNameBtn");
+      const cancelNameBtn = document.getElementById("cancelNameBtn");
+
+      editNameBtn.addEventListener("click", function () {
+        fullNameInput.value = fullName.textContent;
+        fullName.style.display = "none";
+        nameEditForm.style.display = "block";
+      });
+
+      updateNameBtn.addEventListener("click", function () {
+        const newName = fullNameInput.value.trim();
+        if (newName) {
+          fullName.textContent = newName;
+          fullName.style.display = "block";
+          nameEditForm.style.display = "none";
+        }
+      });
+
+      cancelNameBtn.addEventListener("click", function () {
+        fullName.style.display = "block";
+        nameEditForm.style.display = "none";
+      });
+
+      // Handle course update
+      const courseSelect = document.getElementById("courseSelect");
+      const updateCourseBtn = document.getElementById("updateCourseBtn");
+      const currentCourse = document.getElementById("currentCourse");
+
+      updateCourseBtn.addEventListener("click", function () {
+        currentCourse.textContent = courseSelect.value;
+      });
+
+      // Logout Modal Functionality
+      const logoutModal = document.querySelector(".logout-modal");
+      const logoutLink = document.getElementById("logoutLink");
+      const confirmLogoutBtn = document.getElementById("confirmLogout");
+      const cancelLogoutBtn = document.getElementById("cancelLogout");
+
+      // Show modal when logout link is clicked
+      logoutLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        logoutModal.classList.add("show");
+      });
+
+      // Close modal when 'Cancel' is clicked
+      cancelLogoutBtn.addEventListener("click", function () {
+        logoutModal.classList.remove("show");
+      });
+
+      // Redirect to login page when 'Logout' is clicked
+      confirmLogoutBtn.addEventListener("click", function () {
+        logoutModal.classList.remove("show");
+        setTimeout(function () {
+          window.location.href = "login.html";
+        }, 300);
+      });
+
+      // Close modal when clicking outside of it
+      window.addEventListener("click", function (event) {
+        if (event.target == logoutModal) {
+          logoutModal.classList.remove("show");
+        }
+      });
+    </script>
+  </body>
+</html>

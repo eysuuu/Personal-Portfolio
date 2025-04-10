@@ -1,0 +1,3254 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- META TAGS AND TITLE -->
+    <meta charset="UTF-8" />
+    <title>Home</title>
+  
+    <!-- EXTERNAL CSS LINKS -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  
+    <!-- VIEWPORT SETTINGS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- MAIN STYLES -->
+    <style>
+      /* GOOGLE FONT IMPORT */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+      
+      /* GLOBAL RESET AND BASE STYLES */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      
+      /* SIDEBAR STYLES */
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 78px;
+        background: #b82132;
+        padding: 6px 14px;
+        z-index: 99;
+        transition: all 0.5s ease;
+      }
+
+      /* OPEN SIDEBAR STATE */
+      .sidebar.open {
+        width: 250px;
+      }
+      
+      /* LOGO DETAILS STYLES */
+      .logo-details {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      /* LOGO ICON STYLES */
+      .logo-details .logo-icon {
+        width: auto;
+        height: 60px;
+        margin-top: 50px;
+      }
+      
+      /* SIDEBAR LOGO SECTION */
+      .sidebar .logo-details {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+      
+      /* ICON VISIBILITY TRANSITION */
+      .sidebar .logo-details .icon {
+        opacity: 0;
+        transition: all 0.5s ease;
+      }
+      
+      /* LOGO NAME STYLES */
+      .sidebar .logo-details .logo_name {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 600;
+        opacity: 0;
+        transition: all 0.2s ease-in;
+      }
+      
+      /* OPEN SIDEBAR LOGO VISIBILITY */
+      .sidebar.open .logo-details .icon,
+      .sidebar.open .logo-details .logo_name {
+        opacity: 1;
+      }
+      
+      /* SIDEBAR TOGGLE BUTTON */
+      .sidebar .logo-details #btn {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        font-size: 22px;
+        transition: all 0.4s ease;
+        font-size: 23px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.5s ease;
+      }
+      
+      /* OPEN SIDEBAR BUTTON POSITION */
+      .sidebar.open .logo-details #btn {
+        text-align: right;
+      }
+      
+      /* SIDEBAR ICON STYLES */
+      .sidebar i {
+        color: #fff;
+        height: 60px;
+        min-width: 50px;
+        font-size: 28px;
+        text-align: center;
+        line-height: 60px;
+      }
+      
+      /* NAVIGATION LIST STYLES */
+      .sidebar .nav-list {
+        padding-top: 10px;
+        margin-top: 60px;
+        height: 100%;
+      }
+      
+      /* NAVIGATION ITEM STYLES */
+      .sidebar li {
+        position: relative;
+        margin: 8px 0;
+        list-style: none;
+      }
+      
+      /* TOOLTIP STYLES */
+      .sidebar li .tooltip {
+        position: absolute;
+        top: -20px;
+        left: calc(100% + 15px);
+        z-index: 3;
+        background: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 400;
+        opacity: 0;
+        white-space: nowrap;
+        pointer-events: none;
+        transition: 0s;
+      }
+      
+      /* TOOLTIP HOVER EFFECT */
+      .sidebar li:hover .tooltip {
+        opacity: 1;
+        pointer-events: auto;
+        transition: all 0.4s ease;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      
+      /* HIDE TOOLTIP IN OPEN SIDEBAR */
+      .sidebar.open li .tooltip {
+        display: none;
+      }
+      
+      /* NAVIGATION LINK STYLES */
+      .sidebar li a {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        border-radius: 12px;
+        align-items: center;
+        text-decoration: none;
+        transition: all 0.4s ease;
+        background: #b82132;
+      }
+      
+      /* NAVIGATION LINK HOVER EFFECT */
+      .sidebar li a:hover {
+        background: #fff;
+      }
+      
+      /* LINK NAME STYLES */
+      .sidebar li a .links_name {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 400;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.4s;
+      }
+      
+      /* OPEN SIDEBAR LINK NAME VISIBILITY */
+      .sidebar.open li a .links_name {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      
+      /* LINK HOVER TEXT AND ICON COLOR */
+      .sidebar li a:hover .links_name,
+      .sidebar li a:hover i {
+        transition: all 0.2s ease;
+        color: #11101d;
+      }
+      
+      /* NAVIGATION ICON STYLES */
+      .sidebar li i {
+        height: 50px;
+        line-height: 50px;
+        font-size: 18px;
+        border-radius: 12px;
+      }
+      
+      /* MOBILE SIDEBAR STYLES */
+      @media (max-width: 1024px) {
+        .sidebar {
+          width: 100%;
+          height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 14px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          flex-direction: row;
+          background: #b82132;
+          z-index: 100;
+        }
+
+        /* MOBILE TOGGLE BUTTON */
+        .sidebar #btn {
+          font-size: 25px;
+          cursor: pointer;
+          position: relative;
+          top: 45% !important;
+          right: 1px !important;
+          padding: 5px 5px;
+          transform: translateY(-50%);
+          z-index: 101;
+          color: white;
+        }
+
+        /* MOBILE LOGO STYLES */
+        .logo-details {
+          flex: 1;
+          text-align: center;
+          position: relative;
+        }
+
+        .logo_name {
+          margin-top: 20px;
+        }
+
+        .logo-details .logo-icon {
+          height: 70px !important;
+          width: auto;
+          margin-top: 1px;
+          padding-bottom: 5px;
+        }
+
+        /* HIDE NAV LIST IN MOBILE */
+        .nav-list {
+          display: none;
+        }
+      }
+
+      /* TABLET STYLES */
+      @media (max-width: 768px) {
+        .sidebar #btn {
+          right: 30px;
+        }
+        .logo-details .logo-icon {
+          height: 40px;
+          width: auto;
+         padding-bottom: 5px;
+        }
+      }
+
+      /* SMALL MOBILE STYLES */
+      @media (max-width: 600px) {
+        .sidebar {
+          height: 50px;
+          padding: 0 10px;
+        }
+        .sidebar #btn {
+          font-size: 22px;
+          right: 20px;
+        }
+        .logo-details .logo-icon {
+          height: 60px !important;
+          width: auto;
+          margin-bottom:6px;
+        }
+      }
+
+      /* EXTRA SMALL MOBILE STYLES */
+      @media (max-width: 450px) {
+        .sidebar {
+          height: 45px;
+          padding: 30px 0px !important;
+        }
+        .sidebar #btn {
+          font-size: 20px;
+          right: 10px;
+        }
+        .logo-details .logo-icon {
+          height: 30px;
+          width: auto;
+          margin-top: 1px;
+        }
+      }
+
+      /* OPEN SIDEBAR MOBILE STYLES */
+      @media (max-width: 1024px) {
+        .sidebar.open {
+          height: auto;
+          width: 100%;
+          flex-direction: column;
+          align-items: center;
+          padding: 100px 0px 390px 0px;
+        }
+
+        /* OPEN NAV LIST STYLES */
+        .sidebar.open .nav-list {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin-bottom: 30px;
+          margin-right: 20px;
+          margin-top: 10px;
+        }
+
+        /* OPEN NAV ITEM STYLES */
+        .sidebar.open li {
+          width: 100%;
+          text-align: center;
+        }
+
+        /* OPEN LINK STYLES */
+        .sidebar.open li a {
+          width: 100%;
+          justify-content: center;
+        }
+
+        /* OPEN LINK HOVER EFFECT */
+        .sidebar.open li a:hover {
+          background: none;
+        }
+
+        /* OPEN TOGGLE BUTTON POSITION */
+        .sidebar.open #btn {
+          position: absolute;
+          top: 1px;
+          left: 200px;
+        }
+
+        /* OPEN LOGO ICON STYLES */
+        .logo-details .logo-icon {
+          height: 30px;
+          width: auto;
+        }
+      }
+
+      /* TABLET OPEN SIDEBAR STYLES */
+      @media (max-width: 768px) {
+        .sidebar.open {
+          padding: 120px 0px;
+        }
+        .sidebar.open #btn {
+          left: 200px !important;
+        }
+
+        .sidebar.open li a {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* SMALL MOBILE OPEN SIDEBAR STYLES */
+      @media (max-width: 600px) {
+        .sidebar.open {
+          padding: 100px 0px 250px 0px;
+        }
+        .sidebar.open #btn {
+          left: 100px;
+        }
+        .sidebar.open li a {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* EXTRA SMALL MOBILE OPEN SIDEBAR STYLES */
+      @media (max-width: 450px) {
+        .sidebar.open {
+          padding: 40px 0px 20vh 0px !important;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .sidebar.open #btn {
+          left: 100px;
+        }
+        .sidebar.open ul {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .sidebar.open li {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .sidebar.open li a {
+          width: 100%;
+          display: flex;
+        }
+      }
+
+      /* SEARCH IMAGE STYLES */
+      .search-image {
+        width: 350px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      /* HIDE TOOLTIP ON VERY SMALL SCREENS */
+      @media (max-width: 420px) {
+        .sidebar li .tooltip {
+          display: none;
+        }
+      }
+
+      /* SEARCH SECTION STYLES */
+      .search-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50px;
+        text-align: center;
+      }
+      
+      /* SEARCH TITLE STYLES */
+      .search-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      
+      /* SEARCH BAR STYLES */
+      .search-bar {
+        display: flex;
+        align-items: center;
+        border: 2px solid #b82132;
+        border-radius: 82px;
+        overflow: hidden;
+        width: 100%;
+        max-width: 500px;
+        margin-top: 30px;
+      }
+      
+      /* SEARCH INPUT STYLES */
+      .search-bar input {
+        width: 100%;
+        padding: 10px 15px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+      }
+      
+      /* TABLET SEARCH STYLES */
+      @media (max-width: 768px) {
+        .search-title {
+          font-size: 2rem;
+        }
+        .search-bar {
+          border-radius: 50px;
+          width: 90%;
+        }
+        .search-bar input {
+          font-size: 14px;
+          padding: 8px 12px;
+        }
+      }
+      
+      /* MOBILE SEARCH STYLES */
+      @media (max-width: 480px) {
+        .search-title {
+          font-size: 1.8rem;
+        }
+        .search-bar {
+          border-radius: 40px;
+          width: 75%;
+        }
+        .search-bar input {
+          font-size: 14px;
+          padding: 8px 10px;
+        }
+      }
+
+      /* STOCK INDICATOR STYLES */
+      .stock-indicator {
+        display:flex ;
+        gap: 15px;
+        font-size: 17px;
+        font-weight: 500;
+        margin-left: 8px;
+        margin-top: 60px;
+      }
+
+      /* STOCK INDICATOR SPAN STYLES */
+      .stock-indicator span {
+        display: flex;
+        align-items: center;
+      }
+
+      /* UTENSILS SECTION STYLES */
+      .utensils-section {
+        margin-top: 40px;
+        width: 100%;
+        max-width: 1200px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* SECTION TITLE STYLES */
+      .section-title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-top: 38px;
+      }
+
+      /* SECTION HEADING STYLES */
+      .section-title h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: black;
+        margin: 0;
+      }
+
+      /* SEE ALL LINK STYLES */
+      .see-all {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-top: 38px;
+      }
+
+      /* SEE ALL LINK HOVER EFFECT */
+      .see-all a {
+        text-decoration: none;
+        color: #b82132;
+        font-weight: 500;
+        font-size: 16px;
+        display: inline-block;
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+
+      /* SEE ALL LINK HOVER STATE */
+      .see-all a:hover {
+        color: #b82132;
+        transform: translateX(5px);
+      }
+
+      /* CARD GRID STYLES */
+      .utensils-cards,
+      .equipment-cards,
+      .supplies-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 20px;
+        margin-top: 50px;
+        padding-top: 40px;
+      }
+
+      /* CARD STYLES */
+      .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        overflow: hidden;
+        padding: 15px;
+        text-align: center;
+        background: white;
+        transition: box-shadow 0.3s ease;
+      }
+
+      /* CARD HOVER EFFECT */
+      .card:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      /* CARD IMAGE STYLES */
+      .card img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-bottom: 10px;
+      }
+
+      /* CARD TITLE STYLES */
+      .card h3 {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+
+      /* CARD BUTTONS CONTAINER */
+      .card-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      /* CARD BUTTON STYLES */
+      .card-buttons button {
+        flex: 1;
+        font-size: 13px;
+        padding: 0px 8px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      /* RETURN BUTTON STYLES */
+      .return-btn {
+        background: #4779c4;
+        color: #fff;
+      }
+
+      /* RETURN BUTTON HOVER EFFECT */
+      .return-btn:hover {
+        background: #0056b3;
+      }
+
+      /* EQUIPMENT AND SUPPLIES SECTIONS */
+      .equipment-section,
+      .supplies-section {
+        position: relative;
+        margin-top: 30px;
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* SECTION ENTRANCE ANIMATION */
+      .utensils-section,
+      .equipment-section,
+      .supplies-section {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+
+      /* SHOW STATE FOR SECTIONS */
+      .show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ITEM INDICATOR STYLES */
+      .item-indicator {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 6px;
+        color: white;
+        display: inline-block;
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+
+      /* GREEN INDICATOR (IN STOCK) */
+      .green {
+        background: #4caf50;
+      }
+
+      /* ORANGE INDICATOR (LOW STOCK) */
+      .orange {
+        background: #dab600;
+      }
+
+      /* RED INDICATOR (OUT OF STOCK) */
+      .red {
+        background: #f0750f;
+      }
+
+      /* LARGE DESKTOP STYLES */
+      @media (min-width: 1025px) and (max-width:1400px) {
+        /* CARD GRID ADJUSTMENTS */
+        .utensils-cards,
+        .equipment-cards,
+        .supplies-cards {
+          grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+          gap: 15px;
+          margin-top: 40px;
+          padding-top: 30px;
+          padding-left: 100px;
+          padding-right: 20px;
+        }
+
+        /* SECTION TITLE ADJUSTMENTS */
+        .section-title h2 {
+          font-size: 22px;
+          margin-left: 100px;
+        }
+
+        /* SEE ALL LINK ADJUSTMENTS */
+        .see-all a {
+          font-size: 14px;
+          margin-right: 40px;
+        }
+
+        /* CARD TITLE ADJUSTMENTS */
+        .card h3 {
+          font-size: 16px;
+        }
+
+        /* CARD BUTTON ADJUSTMENTS */
+        .card-buttons button {
+          font-size: 12px;
+        }
+      }
+
+      /* TABLET STYLES */
+      @media (max-width: 1024px) {
+        /* CARD GRID ADJUSTMENTS */
+        .utensils-cards,
+        .equipment-cards,
+        .supplies-cards {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 25px;
+          margin-top: 40px;
+          padding-top: 30px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
+        /* SECTION TITLE ADJUSTMENTS */
+        .section-title h2 {
+          font-size: 22px;
+          margin-left: 22px;
+        }
+
+        /* SEE ALL LINK ADJUSTMENTS */
+        .see-all a {
+          font-size: 14px;
+          margin-right: 22px;
+        }
+
+        /* CARD TITLE ADJUSTMENTS */
+        .card h3 {
+          font-size: 16px;
+        }
+
+        /* CARD PADDING ADJUSTMENTS */
+        .card {
+          padding: 15px 10px;
+        }
+
+        /* CARD BUTTON ADJUSTMENTS */
+        .card-buttons button {
+          font-size: 12px;
+          padding: 0px 8px;
+        }
+      }
+
+      /* MEDIUM TABLET STYLES */
+      @media (min-width: 671px) and (max-width: 768px) {
+        /* CARD GRID ADJUSTMENTS */
+        .utensils-cards,
+        .equipment-cards,
+        .supplies-cards {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 35px; 
+          margin-top: 30px;
+          padding: 40px 10px 0;
+        }
+
+        /* SECTION TITLE ADJUSTMENTS */
+        .section-title h2 {
+          font-size: 20px;
+          margin-bottom: 20px;
+        }
+
+        /* SEE ALL LINK ADJUSTMENTS */
+        .see-all a {
+          font-size: 13px;
+          margin-bottom: 20px;
+        }
+
+        /* CARD PADDING ADJUSTMENTS */
+        .card {
+          padding: 15px 12px; 
+        }
+
+        /* CARD TITLE ADJUSTMENTS */
+        .card h3 {
+          font-size: 14px;
+        }
+
+        /* CARD BUTTONS CONTAINER ADJUSTMENTS */
+        .card-buttons {
+          display: flex;
+          justify-content: center;
+          gap: 10px; 
+          width: 100%;
+        }
+
+        /* CARD BUTTON ADJUSTMENTS */
+        .card-buttons button {
+          font-size: 11px; 
+          padding: 3px 12px; 
+          border-radius: 8px; 
+          flex: 1; 
+        }
+
+        /* CARD IMAGE ADJUSTMENTS */
+        .card img {
+          width: 80px;
+          height: 80px;
+        }
+      }
+
+      /* SMALL TABLET STYLES */
+      @media (min-width: 470px) and (max-width: 539px) {
+        /* CARD GRID ADJUSTMENTS */
+        .utensils-cards,
+        .equipment-cards,
+        .supplies-cards {
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+          gap: 25px;
+          margin-top: 40px;
+          padding: 30px 10px 0;
+        }
+
+        /* SECTION TITLE ADJUSTMENTS */
+        .section-title h2 {
+          font-size: 18px;
+          margin-bottom: 18px;
+        }
+
+        /* SEE ALL LINK ADJUSTMENTS */
+        .see-all a {
+          font-size: 12px;
+          margin-bottom: 18px;
+        }
+
+        /* CARD PADDING ADJUSTMENTS */
+        .card {
+          padding: 12px 10px; 
+        }
+
+        /* CARD TITLE ADJUSTMENTS */
+        .card h3 {
+          font-size: 13px; 
+        }
+
+        /* CARD BUTTONS CONTAINER ADJUSTMENTS */
+        .card-buttons {
+          display: flex;
+          justify-content: center;
+          gap: 8px; 
+          width: 100%;
+        }
+
+        /* CARD BUTTON ADJUSTMENTS */
+        .card-buttons button {
+          font-size: 11px;
+          padding: 2px 10px; 
+          flex: 1;
+        }
+
+        /* CARD IMAGE ADJUSTMENTS */
+        .card img {
+          width: 70px; 
+          height: 70px;
+        }
+      }
+
+      /* SMALL MOBILE STYLES */
+      @media (max-width: 384px) {
+        /* CARD GRID ADJUSTMENTS */
+        .utensils-cards,
+        .equipment-cards,
+        .supplies-cards {
+          gap: 6px;
+          margin-top: 30px;
+          padding-top: 40px;
+        }
+
+        /* SECTION TITLE ADJUSTMENTS */
+        .section-title h2 {
+          font-size: 16px;
+          margin-bottom: 15px;
+        }
+
+        /* SEE ALL LINK ADJUSTMENTS */
+        .see-all a {
+          font-size: 12px;
+        }
+
+        /* CARD PADDING ADJUSTMENTS */
+        .card {
+          padding: 15px 8px;
+        }
+
+        /* CARD TITLE ADJUSTMENTS */
+        .card h3 {
+          font-size: 12px;
+        }
+
+        /* CARD BUTTON ADJUSTMENTS */
+        .card-buttons button {
+          font-size: 10px;
+          padding: 0px 15px;
+        }
+
+        /* CARD IMAGE ADJUSTMENTS */
+        .card img {
+          width: 60px;
+          height: 60px;
+        }
+      }
+
+      /* MODAL STYLES */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* MODAL VISIBLE STATE */
+      .modal.show {
+        display: flex;
+      }
+
+      /* MODAL CONTENT STYLES */
+      .modal-content {
+        background-color: white;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 400px;
+        padding: 20px 20px;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      /* MODAL CLOSE BUTTON */
+      .modal-close, .modal-close-pw {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #999;
+        transition: color 0.3s ease;
+      }
+
+      /* MODAL CLOSE HOVER EFFECT */
+      .modal-close:hover, .modal-close-pw:hover {
+        color: #b82132;
+      }
+
+      /* MODAL HEADER STYLES */
+      .modal-header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      /* MODAL BODY STYLES */
+      .modal-body {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      /* MODAL INPUT GROUP STYLES */
+      .modal-input {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      /* MODAL LABEL STYLES */
+      .modal-input label {
+        font-weight: 500;
+      }
+
+      /* MODAL INPUT STYLES */
+      .modal-input input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+      }
+
+      /* QUANTITY CONTROL STYLES */
+      .quantity-control {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      /* QUANTITY BUTTON STYLES */
+      .quantity-control button {
+        background: white;
+        color: white;
+        border: none;
+        padding: 5px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      /* QUANTITY INPUT STYLES */
+      .quantity-control input {
+        width: 50px;
+        text-align: center;
+      }
+
+      /* MODAL FOOTER STYLES */
+      .modal-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      /* MODAL BUTTON STYLES */
+      .modal-footer button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      /* MODAL SUBMIT BUTTON STYLES */
+      .modal-submit, .modal-confirm-pw {
+        background: #4779c4;
+        color: #fff;
+      }
+
+      /* MODAL SUBMIT HOVER EFFECT */
+      .modal-submit:hover, .modal-confirm-pw:hover {
+        background: #0056b3;
+      }
+
+      /* MODAL CANCEL BUTTON STYLES */
+      .modal-cancel, .modal-cancel-pw {
+        color: black;
+      }
+
+      /* MODAL CANCEL HOVER EFFECT */
+      .modal-cancel:hover, .modal-cancel-pw:hover {
+        background:#ddd;
+      }
+
+      /* RETURN MODAL STYLES */
+      .return-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* RETURN MODAL VISIBLE STATE */
+      .return-modal.show {
+        display: flex;
+      }
+
+      /* RETURN MODAL CONTENT STYLES */
+      .return-modal-content {
+        background-color: white;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 600px;
+        padding: 30px;
+        position: relative;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      /* RETURN MODAL CLOSE BUTTON */
+      .return-modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #888;
+        transition: all 0.3s ease;
+      }
+
+      /* RETURN MODAL CLOSE HOVER EFFECT */
+      .return-modal-close:hover {
+        color: #b82132;
+      }
+
+      /* RETURN MODAL HEADER STYLES */
+      .return-modal-header {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      /* RETURN MODAL HEADING STYLES */
+      .return-modal-header h2 {
+        color: black;
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+      }
+
+      /* RETURN MODAL BODY STYLES */
+      .return-modal-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      /* RETURN MODAL INPUT GROUP STYLES */
+      .return-modal-input {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 15px;
+      }
+
+      /* RETURN MODAL LABEL STYLES */
+      .return-modal-input label {
+        font-weight: 600;
+        color: black;
+        font-size: 0.9rem;
+      }
+
+      /* RETURN MODAL INPUT STYLES */
+      .return-modal-input input, 
+      .return-modal-input textarea {
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: border-color 0.3s ease;
+      }
+
+      /* RETURN MODAL ROW STYLES */
+      .return-modal-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 15px;
+      }
+
+      /* CONDITION GRID STYLES */
+      .return-condition-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        padding: 15px;
+        border-radius: 10px;
+      }
+
+      /* CONDITION ITEM STYLES */
+      .return-condition-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* CONDITION ITEM LABEL STYLES */
+      .return-condition-item label {
+        font-size: 0.8rem;
+        color: black;
+      }
+
+      /* CONDITION ITEM INPUT STYLES */
+      .return-condition-item input {
+        width: 70px;
+        text-align: center;
+        padding: 6px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+      }
+
+      /* CONDITION REPORT SECTION STYLES */
+      .return-modal-condition-report {
+        text-align: center;
+        width: 100%;
+      }
+
+      /* CONDITION REPORT INPUT STYLES */
+      .return-modal-condition-report .return-modal-input {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* RETURN MODAL FOOTER STYLES */
+      .return-modal-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      /* RETURN MODAL BUTTON STYLES */
+      .return-modal-footer button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      /* RETURN SUBMIT BUTTON STYLES */
+      .return-modal-submit {
+        background: #4779c4;
+        color: #fff;
+      }
+
+      /* RETURN SUBMIT HOVER EFFECT */
+      .return-modal-submit:hover {
+        background: #0056b3;
+      }
+
+      /* RETURN CANCEL BUTTON STYLES */
+      .return-modal-cancel {
+        background: #f0f0f0;
+        color: #333;
+      }
+
+      /* RETURN CANCEL HOVER EFFECT */
+      .return-modal-cancel:hover {
+        background: #ddd;
+      }
+
+      /* TABLET RETURN MODAL STYLES */
+      @media (max-width: 768px) {
+        .return-modal-content {
+            padding: 25px;
+        }
+        
+        .return-modal-row {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .return-condition-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 10px;
+        }
+        
+        .return-modal-header h2 {
+            font-size: 1.6rem;
+        }
+      }
+
+      /* MOBILE RETURN MODAL STYLES */
+      @media (max-width: 480px) {
+        .return-modal-content {
+            padding: 20px;
+            width: 95%;
+        }
+        
+        .return-modal-header h2 {
+            font-size: 1.4rem;
+        }
+        
+        .return-condition-grid {
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+        
+        .return-condition-item {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .return-condition-item input {
+            width: 60px;
+        }
+        
+        .return-modal-footer {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .return-modal-footer button {
+            width: 100%;
+        }
+      }
+
+      /* SMALL MOBILE RETURN MODAL STYLES */
+      @media (max-width: 360px) {
+        .return-modal-content {
+            padding: 15px;
+        }
+        
+        .return-modal-header h2 {
+            font-size: 1.3rem;
+        }
+        
+        .return-modal-input label {
+            font-size: 0.85rem;
+        }
+        
+        .return-modal-input input, 
+        .return-modal-input textarea {
+            padding: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .return-condition-item label {
+            font-size: 0.75rem;
+        }
+        
+        .return-condition-item input {
+            width: 50px;
+            padding: 5px;
+        }
+      }
+
+      /* MODAL ANIMATION STYLES */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      /* MODAL VISIBLE STATE WITH ANIMATION */
+      .modal.show {
+        display: flex;
+        opacity: 1;
+      }
+
+      /* MODAL CONTENT ANIMATION */
+      .modal-content {
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      /* MODAL CONTENT VISIBLE STATE WITH ANIMATION */
+      .modal.show .modal-content {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* WARNING ICON STYLES */
+      .warning-icon {
+        width: 80px;
+        height: 80px;
+        background-color: #b82132;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: pop-in 0.4s ease-out forwards;
+      }
+
+      /* WARNING ICON SVG STYLES */
+      .warning-icon svg {
+        width: 40px;
+        height: 40px;
+        fill: none;
+        stroke: white;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* MODAL HEADING STYLES */
+      .modal h3 {
+        margin-bottom: 10px;
+        color: black;
+        font-size: 24px;
+      }
+
+      /* MODAL PARAGRAPH STYLES */
+      .modal p {
+        color: black;
+        margin-bottom: 25px;
+      }
+
+      /* FADE IN ANIMATION */
+      @keyframes fade-in {
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* MODAL BUTTON STYLES */
+      .modal-btn {
+        padding: 12px 30px;
+        background: #b82132;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-block;
+        text-decoration: none;
+        margin-top: 10px;
+        opacity: 0;
+        animation: fade-in 0.3s ease-out 0.9s forwards;
+      }
+
+      /* MODAL BUTTON HOVER EFFECT */
+      .modal-btn:hover {
+        background: #a11d2c;
+      }
+
+      /* MODAL FOOTER BUTTONS CONTAINER */
+      .modal-footer {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      /* CONFIRM BUTTON STYLES */
+      .btn-confirm,
+      .btn-cancel {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      /* CONFIRM BUTTON COLORS */
+      .btn-confirm {
+        background-color: #b82132;
+        color: white;
+      }
+
+      /* CONFIRM BUTTON HOVER EFFECT */
+      .btn-confirm:hover {
+        background-color: #a11d2c;
+      }
+
+      /* CANCEL BUTTON COLORS */
+      .btn-cancel {
+        background-color: #f1f1f1;
+        color: #333;
+      }
+
+      /* CANCEL BUTTON HOVER EFFECT */
+      .btn-cancel:hover {
+        background-color: #ddd;
+      }
+
+      /* MOBILE MODAL STYLES */
+      @media (max-width: 480px) {
+        .modal-content {
+          padding: 30px;
+          width: 85%;
+        }
+
+        .modal-footer {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .btn-confirm,
+        .btn-cancel {
+          width: 100%;
+        }
+      }
+
+      /* CONDITION MODAL STYLES */
+      .condition-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+      }
+
+      /* CONDITION MODAL VISIBLE STATE */
+      .condition-modal.show {
+        display: flex;
+      }
+
+      /* CONDITION MODAL CONTENT STYLES */
+      .condition-modal-content {
+        background-color: white;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        padding: 20px;
+        position: relative;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* CONDITION MODAL CLOSE BUTTON */
+      .condition-modal-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        color: #999;
+        background: none;
+        border: none;
+      }
+
+      /* CONDITION MODAL HEADER STYLES */
+      .condition-modal-header {
+        margin-bottom: 20px;
+      }
+
+      /* CONDITION MODAL HEADING STYLES */
+      .condition-modal-header h2 {
+        font-size: 18px;
+        margin: 0;
+        color: black;
+        font-weight: 500;
+      }
+
+      /* CONDITION MODAL BODY STYLES */
+      .condition-modal-body {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      /* CONDITION MODAL INPUT GROUP */
+      .condition-modal-input {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
+
+      /* CONDITION ITEM NAME INPUT */
+      #conditionItemName {
+        padding: 8px;
+        border: 1px solid #eee;
+        border-radius: 3px;
+        font-size: 14px;
+        color: black;
+        margin-bottom: 5px;
+        text-align: center;
+      }
+
+      /* CONDITION REPORT TEXTAREA */
+      #conditionReport {
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 3px;
+        min-height: 100px;
+        resize: vertical;
+        font-size: 14px;
+      }
+
+      /* CONDITION MODAL FOOTER */
+      .condition-modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 15px;
+      }
+
+      /* CONDITION MODAL SUBMIT BUTTON */
+      .condition-modal-submit {
+        background: #4779c4;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      /* CONDITION REPORT BUTTON STYLES */
+      .condition-report-btn {
+        background: #4779c4;
+        color: white;
+        width: 100%;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 10px;
+        font-size: 13px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background 0.3s ease;
+      }
+
+      /* CONDITION REPORT BUTTON HOVER EFFECT */
+      .condition-report-btn:hover {
+        background: #0056b3;
+      }
+
+      /* TABLET CONDITION REPORT BUTTON */
+      @media (max-width: 820px) {
+        .condition-report-btn {
+          font-size: 12px;
+          padding: 10px 12px;
+        }
+      }
+
+      /* MOBILE CONDITION REPORT BUTTON */
+      @media (max-width: 480px) {
+        .condition-report-btn {
+          font-size: 11px;
+          padding: 10px 10px;
+          margin-top: 15px;
+        }
+      }
+
+      /* LOGOUT MODAL STYLES */
+      .logout-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      /* LOGOUT MODAL VISIBLE STATE */
+      .logout-modal.show {
+        display: flex;
+        opacity: 1;
+      }
+
+      /* LOGOUT MODAL CONTENT STYLES */
+      .logout-modal-content {
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      /* LOGOUT MODAL CONTENT VISIBLE STATE */
+      .logout-modal.show .logout-modal-content {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* LOGOUT WARNING ICON STYLES */
+      .logout-warning-icon {
+        width: 80px;
+        height: 80px;
+        background-color: #b82132;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: pop-in 0.4s ease-out forwards;
+      }
+
+      /* LOGOUT WARNING ICON SVG */
+      .logout-warning-icon svg {
+        width: 40px;
+        height: 40px;
+        fill: none;
+        stroke: white;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* LOGOUT MODAL HEADING */
+      .logout-modal h3 {
+        margin-bottom: 10px;
+        color: black;
+        font-size: 24px;
+      }
+
+      /* LOGOUT MODAL MESSAGE */
+      .logout-modal p {
+        color: black;
+        margin-bottom: 25px;
+      }
+
+      /* LOGOUT MODAL FOOTER */
+      .logout-modal-footer {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      /* LOGOUT CONFIRM BUTTON */
+      .logout-btn-confirm,
+      .logout-btn-cancel {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      /* LOGOUT CONFIRM BUTTON COLORS */
+      .logout-btn-confirm {
+        background-color: #b82132;
+        color: white;
+      }
+
+      /* LOGOUT CONFIRM HOVER EFFECT */
+      .logout-btn-confirm:hover {
+        background-color: #a11d2c;
+      }
+
+      /* LOGOUT CANCEL BUTTON COLORS */
+      .logout-btn-cancel {
+        background-color: #f1f1f1;
+        color: #333;
+      }
+
+      /* LOGOUT CANCEL HOVER EFFECT */
+      .logout-btn-cancel:hover {
+        background-color: #ddd;
+      }
+
+      /* MOBILE LOGOUT MODAL STYLES */
+      @media (max-width: 480px) {
+        .logout-modal-content {
+          padding: 30px;
+          width: 85%;
+        }
+
+        .logout-modal-footer {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .logout-btn-confirm,
+        .logout-btn-cancel {
+          width: 100%;
+        }
+      }
+
+      /* FOOTER STYLES */
+      .footer {
+        text-align: center;
+        padding: 15px 0;
+        font-size: clamp(1rem, 1vw, 1.9rem);
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        margin-top: 40px;
+      }
+
+      /* FOOTER PARAGRAPH STYLES */
+      .footer p{
+        color: black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- SIDEBAR STRUCTURE -->
+    <div class="sidebar">
+      <!-- LOGO SECTION -->
+      <div class="logo-details">
+        <img src="images/datamesian.PNG" alt="Logo" class="logo-icon" />
+        <div class="logo_name">KITCHEN INVENTORY</div>
+        <i class="bx bx-menu" id="btn"></i>
+      </div>
+
+      <!-- NAVIGATION MENU -->
+      <ul class="nav-list">
+        <!-- HOME LINK -->
+        <li>
+          <a href="index.html">
+            <i class="bx bxs-home"></i>
+            <span class="links_name">Home</span>
+          </a>
+          <span class="tooltip">Home</span>
+        </li>
+        
+        <!-- UTENSILS LINK -->
+        <li>
+          <a href="utensils.html">
+            <i class="fa-solid fa-utensils"></i>
+            <span class="links_name">Utensils</span>
+          </a>
+          <span class="tooltip">Utensils</span>
+        </li>
+        
+        <!-- EQUIPMENTS LINK -->
+        <li>
+          <a href="equipments.html">
+            <i class="fa-solid fa-kitchen-set"></i>
+            <span class="links_name">Equipments</span>
+          </a>
+          <span class="tooltip">Equipments</span>
+        </li>
+        
+        <!-- APPLIANCES LINK -->
+        <li>
+          <a href="kitchenapp.html">
+            <i class="fa-solid fa-blender"></i>
+            <span class="links_name">Appliances</span>
+          </a>
+          <span class="tooltip">Appliances</span>
+        </li>
+        
+        <!-- HISTORY LINK -->
+        <li>
+          <a href="history.html">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span class="links_name">History</span>
+          </a>
+          <span class="tooltip">History</span>
+        </li>
+        
+        <!-- PROFILE LINK -->
+        <li>
+          <a href="profile.html">
+            <i class="fa-solid fa-user"></i>
+            <span class="links_name">Profile</span>
+          </a>
+          <span class="tooltip">Profile</span>
+        </li>
+        
+        <!-- CONTACT LINK -->
+        <li>
+          <a href="contact.html">
+            <i class='bx bxs-contact'></i>
+            <span class="links_name">Contact</span>
+          </a>
+          <span class="tooltip">Contact</span>
+        </li>
+        
+        <!-- LOGOUT LINK -->
+        <li>
+          <a href="#" id="logoutLink">
+            <i class="bx bx-log-out"></i>
+            <span class="links_name">Logout</span>
+          </a>
+          <span class="tooltip">Logout</span>
+        </li>
+      </ul>
+    </div>
+    <!-- END SIDEBAR -->
+
+    <!-- MAIN CONTENT SECTION -->
+    <section class="home-section">
+      <!-- SEARCH SECTION -->
+      <div class="search-section">
+        <!-- SEARCH IMAGE -->
+        <img
+          src="images/Chef-cuate.png"
+          alt="Inventory Icon"
+          class="search-image"
+        />
+        
+        <!-- SEARCH TITLE -->
+        <h2
+          style="
+            text-align: center;
+            font-weight: 400;
+            margin-bottom: 20px;
+            font-size: clamp(1rem, 5vw, 1.9rem);
+          "
+        >
+          Access utensils and equipment in the inventory
+        </h2>
+
+        <!-- SEARCH BAR -->
+        <div class="search-bar">
+          <input type="text" placeholder="Search..." />
+          <i class="bx bx-search-alt-2" style="padding: 15px 15px"></i>
+        </div>
+
+        <!-- STOCK INDICATOR LEGEND -->
+        <div class="stock-indicator">
+          <span class="in-stock">Green 🟢 – Item is in stock</span>
+          <span class="low-stock">Yellow 🟡 – Item is low on stock</span>
+          <span class="out-stock">Orange 🟠  – Item is out of stock</span>
+        </div>
+
+        <!-- UTENSILS SECTION -->
+        <div class="utensils-section">
+          <!-- SECTION HEADER -->
+          <div class="section-header">
+              <div class="section-title">
+                  <h2>Utensils</h2>
+              </div>
+              <div class="see-all">
+                  <a href="utensils.html">See All <i class="bx bx-right-arrow-alt"></i></a>
+              </div>
+          </div>
+          
+          <!-- UTENSILS CARDS GRID -->
+          <div class="utensils-cards">
+            <!-- SPOON CARD -->
+            <div class="card">
+              <img src="allkitchentools/spoon.png" alt="Soup Spoon" />
+              <h3>Spoon</h3>
+              <div class="item-indicator green">35/35</div>
+              <div class="card-buttons">
+                <button>Borrow</button>
+                <button class="return-btn">Return Item</button>
+              </div>
+            </div>
+            
+            <!-- FORK CARD -->
+            <div class="card">
+              <img src="allkitchentools/fork.png" alt="Dessert Spoon" />
+              <h3>Fork</h3>
+              <div class="item-indicator green">40/40</div>
+              <div class="card-buttons">
+                <button>Borrow</button>
+                <button class="return-btn">Return Item</button>
+              </div>
+            </div>
+    
+            <!-- TWO TINE FORK CARD -->
+            <div class="card">
+              <img src="allkitchentools/twotinefork.png" alt="Mixer" />
+              <h3>Two Tine Fork</h3>
+              <div class="item-indicator green">14/14</div>
+              <div class="card-buttons">
+                <button>Borrow</button>
+                <button class="return-btn">Return Item</button>
+              </div>
+            </div>
+    
+            <!-- DINNER KNIFE CARD -->
+            <div class="card">
+              <img src="allkitchentools/dinnerknife.png" alt="Dessert Spoon" />
+              <h3>Dinner Knife</h3>
+              <div class="item-indicator green">14/14</div>
+              <div class="card-buttons">
+                <button>Borrow</button>
+                <button class="return-btn">Return Item</button>
+              </div>
+            </div>
+            
+            <!-- SMALL GLASS WINE CARD -->
+            <div class="card">
+              <img src="allkitchentools/shot.png" alt="Dinner Fork" />
+              <h3>Small Glass Wine</h3>
+              <div class="item-indicator green">4/4</div>
+              <div class="card-buttons">
+                <button>Borrow</button>
+                <button class="return-btn">Return Item</button>
+              </div>
+            </div>
+           </div>
+          </div>
+
+        <!-- EQUIPMENT SECTION -->
+        <div class="equipment-section">
+          <!-- SECTION HEADER -->
+          <div class="section-header">
+            <div class="section-title">
+              <h2>Equipment</h2>
+            </div>
+            <div class="see-all">
+              <a href="equipments.html">See All <i class="bx bx-right-arrow-alt"></i></a>
+            </div>
+          </div>
+          
+          <!-- EQUIPMENT CARDS GRID -->
+          <div class="equipment-cards">
+            <!-- BAKING SHEET CARD -->
+            <div class="card">
+              <img src="allequipments/bakingsheet.png" alt="Soup Spoon" />
+              <h3>Baking Sheet</h3>
+              <div class="item-indicator green">10/10</div>
+              <div class="card-buttons">
+                <button>Borrow</button>
+                <button class="return-btn">Return Item</button>
+              </div>
+            </div>
+    
+            <!-- CAKE STAND CARD -->
+            <div class="card">
+              <img src="allequipments/cakestand.png" alt="Soup Spoon" />
+              <h3>Cake Stand</h3>
+              <div class="item-indicator green">10/10</div>
+              <div class="card-buttons">
+                <button>Borrow</button>
+                <button class="return-btn">Return Item</button>
+              </div>
+            </div>
+    
+            <!-- MUFFIN PAN CARD -->
+            <div class="card">
+              <img src="allequipments/muffinpan.png" alt="Soup Spoon" />
+              <h3>Muffin Pan Small</h3>
+              <div class="item-indicator green">7/7</div>
+              <div class="card-buttons">
+                <button>Borrow</button>
+                <button class="return-btn">Return Item</button>
+              </div>
+            </div>
+    
+            <!-- PIE PAN CARD -->
+            <div class="card">
+              <img src="allequipments/pieplate.png" alt="Soup Spoon" />
+              <h3>Pie Pan Large</h3>
+              <div class="item-indicator green">4/4</div>
+              <div class="card-buttons">
+                <button>Borrow</button>
+                <button class="return-btn">Return Item</button>
+              </div>
+            </div>
+    
+            <!-- ROUND BAKING PAN CARD -->
+            <div class="card">
+              <img src="allequipments/roundbaking.png" alt="Soup Spoon" />
+              <h3>Round Baking Pan</h3>
+              <div class="item-indicator green">1/1</div>
+              <div class="card-buttons">
+                <button>Borrow</button>
+                <button class="return-btn">Return Item</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- APPLIANCES SECTION -->
+        <div class="supplies-section">
+          <!-- SECTION HEADER -->
+          <div class="section-header">
+            <div class="section-title">
+              <h2>Appliances</h2>
+            </div>
+            <div class="see-all">
+              <a href="kitchenapp.html">See All <i class="bx bx-right-arrow-alt"></i></a>
+            </div>
+          </div>
+          
+          <!-- APPLIANCES CARDS GRID -->
+          <div class="supplies-cards">
+            <!-- REFRIGERATOR CARD -->
+            <div class="card">
+              <img src="allappliances/refrigerator.png" alt="Whisk" />
+              <h3>Refrigerator</h3>
+              <div class="item-indicator green">1/1</div>
+              <button class="condition-report-btn">Condition Report</button>
+            </div>
+    
+            <!-- CHILLER CARD -->
+            <div class="card">
+              <img src="allappliances/chiller.png" alt="Whisk" />
+              <h3>chiller</h3>
+              <div class="item-indicator green">1/1</div>
+              <button class="condition-report-btn">Condition Report</button>
+            </div>
+    
+            <!-- WALL FAN CARD -->
+            <div class="card">
+              <img src="allappliances/wallfan.png" alt="Whisk" />
+              <h3>Wall Fan</h3>
+              <div class="item-indicator green">30/30</div>
+              <button class="condition-report-btn">Condition Report</button>
+            </div>
+    
+            <!-- CEILING FAN CARD -->
+            <div class="card">
+              <img src="allappliances/ceiling-fan.png" alt="Whisk" />
+              <h3>Ceilling Fan</h3>
+              <div class="item-indicator green">15/15</div>
+              <button class="condition-report-btn">Condition Report</button>
+            </div>
+    
+            <!-- STAND FAN CARD -->
+            <div class="card">
+              <img src="allappliances/standfan.png" alt="Whisk" />
+              <h3>Stand Fan</h3>
+              <div class="item-indicator green">1/1</div>
+              <button class="condition-report-btn">Condition Report</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- MODALS SECTION -->
+        
+        <!-- BORROW MODAL -->
+        <div id="borrowModal" class="modal">
+          <div class="modal-content">
+              <span class="modal-close">&times;</span>
+              <div class="modal-header">
+                  <h2>Borrow Item</h2>
+              </div>
+              <div class="modal-body">
+                <div class="modal-input">
+                  <label for="studentName">Student Name</label>
+                  <input type="text" id="studentName" value="EYSUUUU" readonly>
+                </div>
+                <div class="modal-input">
+                  <label for="studentCourse">Course</label>
+                  <input type="text" id="studentCourse" value="H.M - 2 A" readonly>
+                </div>
+                <div class="modal-input">
+                  <label for="itemName">Item Name</label>
+                  <input type="text" id="itemName" readonly>
+                </div>
+                <div class="modal-input">
+                  <label for="borrowDate">Borrow Date & Time</label>
+                  <input type="text" id="borrowDate" readonly>
+                </div>
+                <div class="modal-input">
+                  <label>Quantity</label>
+                  <div class="quantity-control">
+                      <button id="decreaseQuantity" type="button">➖</button>
+                      <input type="number" id="quantity" value="1" min="1" readonly>
+                      <button id="increaseQuantity" type="button">➕ </button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="modal-footer">
+                  <button class="modal-cancel">Cancel</button>
+                  <button class="modal-submit">Borrow</button>
+              </div>
+          </div>
+        </div>
+
+        <!-- PASSWORD CONFIRMATION MODAL -->
+        <div id="passwordModal" class="modal">
+          <div class="modal-content">
+              <span class="modal-close-pw">&times;</span>
+              <div class="modal-header">
+                  <h2>Verify your identity to borrow this item</h2>
+              </div>
+              <div class="modal-body">
+                  <div class="modal-input">
+                      <label for="password">Enter your password to proceed</label>
+                      <input type="password" id="password" placeholder="Enter password to confirm" required >
+                      <p id="passwordError" class="error-message" style="color: red; display: none;">Incorrect password. Please try again.</p>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button class="modal-cancel-pw">Cancel</button>
+                  <button class="modal-confirm-pw">Confirm</button>
+              </div>
+          </div>
+        </div>
+
+        <!-- RETURN MODAL -->
+        <div id="returnModal" class="return-modal">
+          <div class="return-modal-content">
+              <span class="return-modal-close">&times;</span>
+              <div class="return-modal-header">
+                  <h2>Return Item</h2>
+              </div>
+              
+              <div class="return-modal-row">
+                  <div class="return-modal-input">
+                      <label for="studentNameReturn">Student Name</label>
+                      <input type="text" id="studentNameReturn" value="Ace Flores" readonly>
+                  </div>
+                  <div class="return-modal-input">
+                      <label for="studentCourseReturn">Course</label>
+                      <input type="text" id="studentCourseReturn" value="H.M - 2 A" readonly>
+                  </div>
+              </div>
+
+              <div class="return-modal-row">
+                  <div class="return-modal-input">
+                      <label for="itemNameReturn">Item Name</label>
+                      <input type="text" id="itemNameReturn" readonly>
+                  </div>
+                  <div class="return-modal-input">
+                      <label for="totalBorrowedReturn">Total Borrowed</label>
+                      <input type="text" id="totalBorrowedReturn" value="" readonly>
+                  </div>
+              </div>
+
+              <div class="return-modal-row">
+                  <div class="return-modal-input">
+                      <label for="dateReturnedReturn">Date Returned</label>
+                      <input type="text" id="dateReturnedReturn" readonly>
+                  </div>
+                  <div class="return-modal-input">
+                      <label>Item Condition</label>
+                      <div class="return-condition-grid">
+                          <div class="return-condition-item">
+                              <label>Good</label>
+                              <input type="number" id="conditionGood" min="0" value="0" >
+                          </div>
+                          <div class="return-condition-item">
+                              <label>Damaged</label>
+                              <input type="number" id="conditionDamaged" min="0" value="0">
+                          </div>
+                          <div class="return-condition-item">
+                              <label>Missing</label>
+                              <input type="number" id="conditionMissing" min="0" value="0">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="return-modal-condition-report">
+                  <div class="return-modal-input">
+                      <label for="conditionReport">Condition Report</label>
+                      <textarea id="conditionReport" rows="5" placeholder="Enter additional notes about the item's condition..."></textarea>
+                  </div>
+              </div>
+
+              <div class="return-modal-footer">
+                <button class="return-modal-cancel">Cancel</button>
+                <button class="return-modal-submit">Return Item</button>
+              </div>
+          </div>
+        </div>
+
+        <!-- CONDITION MODAL -->
+        <div id="conditionModal" class="condition-modal">
+          <div class="condition-modal-content">
+            <span class="condition-modal-close">&times;</span>
+            <div class="condition-modal-header">
+              <h2>Condition Report</h2>
+            </div>
+            <div class="condition-modal-body">
+              <div class="condition-modal-input">
+                <label for="conditionItemName">Item Name</label>
+                <input type="text" id="conditionItemName" readonly />
+              </div>
+              <div class="condition-modal-input">
+                <label for="conditionReport">Report Details</label>
+                <textarea
+                  id="conditionReport"
+                  placeholder="Kindly report here if the appliance has any issues."
+                ></textarea>
+              </div>
+            </div>
+            <div class="condition-modal-footer">
+              <button class="condition-modal-submit">Submit Report</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOGOUT MODAL -->
+        <div id="logoutModal" class="logout-modal">
+          <div class="logout-modal-content">
+            <div class="logout-warning-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+            </div>
+            <h3>Logout Confirmation</h3>
+            <p>Are you sure you want to log out?</p>
+            <div class="logout-modal-footer">
+              <button id="confirmLogout" class="logout-btn-confirm">Logout</button>
+              <button id="cancelLogout" class="logout-btn-cancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+          <p>&copy; 2025 Kitchen Inventory. All Rights Reserved.</p>
+        </footer>
+    </section>
+    <!-- END MAIN CONTENT -->
+
+    <!-- MAIN JAVASCRIPT -->
+    <script>
+      // SIDEBAR TOGGLE FUNCTIONALITY
+      let sidebar = document.querySelector(".sidebar");
+      let closeBtn = document.querySelector("#btn");
+    
+      // TOGGLE SIDEBAR ON BUTTON CLICK
+      closeBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+        menuBtnChange(); // Update button icon
+      });
+    
+      // FUNCTION TO CHANGE MENU BUTTON ICON
+      function menuBtnChange() {
+        if (sidebar.classList.contains("open")) {
+          closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        } else {
+          closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+        }
+      }
+    
+      // SCROLL ANIMATION FOR SECTIONS
+      document.addEventListener("DOMContentLoaded", function () {
+        const sections = document.querySelectorAll(".utensils-section, .equipment-section, .supplies-section");
+    
+        // INTERSECTION OBSERVER FOR SCROLL ANIMATIONS
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show"); 
+              observer.unobserve(entry.target); 
+            }
+          });
+        }, { threshold: 0.3 }); // Trigger when 30% visible
+    
+        // OBSERVE ALL SECTIONS
+        sections.forEach(section => observer.observe(section));
+      });
+
+      // INVENTORY MANAGEMENT SYSTEM
+      document.addEventListener("DOMContentLoaded", function () {
+        // STORAGE EVENT LISTENER FOR CROSS-PAGE SYNC
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'borrowedItems') {
+                borrowedItems = JSON.parse(event.newValue) || {};
+                updateAllItemIndicators();
+            }
+        });
+
+        // LOAD BORROWED ITEMS FROM LOCAL STORAGE
+        let borrowedItems = JSON.parse(localStorage.getItem("borrowedItems")) || {};
+
+        // MODAL ELEMENTS REFERENCES
+        const borrowModal = document.getElementById("borrowModal");
+        const passwordModal = document.getElementById("passwordModal");
+        const returnModal = document.getElementById("returnModal");
+        const conditionModal = document.getElementById("conditionModal") || null;
+
+        // BORROW MODAL ELEMENTS
+        const closeBtn = borrowModal.querySelector(".modal-close");
+        const cancelBtn = borrowModal.querySelector(".modal-cancel");
+        const borrowBtns = document.querySelectorAll(".card-buttons > button:not(.return-btn)");
+        const submitBtn = borrowModal.querySelector(".modal-submit");
+
+        const studentNameInput = borrowModal.querySelector("#studentName");
+        const studentCourseInput = borrowModal.querySelector("#studentCourse");
+        const itemNameInput = borrowModal.querySelector("#itemName");
+        const quantityInput = borrowModal.querySelector("#quantity");
+        const borrowDateInput = borrowModal.querySelector("#borrowDate");
+        const decreaseBtn = borrowModal.querySelector("#decreaseQuantity");
+        const increaseBtn = borrowModal.querySelector("#increaseQuantity");
+
+        // PASSWORD MODAL ELEMENTS
+        const closePwBtn = passwordModal.querySelector(".modal-close-pw");
+        const cancelPwBtn = passwordModal.querySelector(".modal-cancel-pw");
+        const confirmPwBtn = passwordModal.querySelector(".modal-confirm-pw");
+        const passwordInput = passwordModal.querySelector("#password");
+        const passwordError = passwordModal.querySelector("#passwordError");
+
+        // RETURN MODAL ELEMENTS
+        const returnCloseBtn = returnModal.querySelector(".return-modal-close");
+        const returnCancelBtn = returnModal.querySelector(".return-modal-cancel");
+        const returnBtns = document.querySelectorAll(".return-btn");
+        const returnSubmitBtn = returnModal.querySelector(".return-modal-submit");
+
+        const studentNameReturnInput = returnModal.querySelector("#studentNameReturn");
+        const studentCourseReturnInput = returnModal.querySelector("#studentCourseReturn");
+        const itemNameReturnInput = returnModal.querySelector("#itemNameReturn");
+        const totalBorrowedInput = returnModal.querySelector("#totalBorrowedReturn");
+        const dateReturnedInput = returnModal.querySelector("#dateReturnedReturn");
+        const conditionGoodInput = returnModal.querySelector("#conditionGood");
+        const conditionDamagedInput = returnModal.querySelector("#conditionDamaged");
+        const conditionMissingInput = returnModal.querySelector("#conditionMissing");
+        const conditionReportInput = returnModal.querySelector("#conditionReport");
+
+        // CONDITION MODAL ELEMENTS (IF EXISTS)
+        let conditionModalClose, conditionModalSubmit, conditionItemNameInput, conditionReportTextarea;
+        if (conditionModal) {
+            conditionModalClose = conditionModal.querySelector(".condition-modal-close");
+            conditionModalSubmit = conditionModal.querySelector(".condition-modal-submit");
+            conditionItemNameInput = conditionModal.querySelector("#conditionItemName");
+            conditionReportTextarea = conditionModal.querySelector("#conditionReport");
+        }
+
+        // CREATE VALIDATION CONTAINER FOR RETURN MODAL
+        const validationContainer = document.createElement("div");
+        validationContainer.className = "validation-container";
+        validationContainer.style.cssText = `
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #6c757d;
+            display: none;
+            align-items: center;
+        `;
+
+        const validationIcon = document.createElement("span");
+        validationIcon.style.cssText = `
+            margin-right: 8px;
+            font-size: 18px;
+        `;
+
+        const validationText = document.createElement("span");
+        validationText.style.cssText = `
+            font-size: 14px;
+        `;
+
+        validationContainer.appendChild(validationIcon);
+        validationContainer.appendChild(validationText);
+        document.querySelector(".return-condition-grid").parentNode.appendChild(validationContainer);
+
+        // CORRECT PASSWORD FOR VERIFICATION
+        const CORRECT_PASSWORD = "admin123";
+
+        // FUNCTION: SAVE BORROWED ITEMS TO LOCAL STORAGE
+        function saveBorrowedItems() {
+            localStorage.setItem("borrowedItems", JSON.stringify(borrowedItems));
+            // Dispatch storage event for current page
+            const event = new Event('storage');
+            event.key = 'borrowedItems';
+            event.newValue = JSON.stringify(borrowedItems);
+            window.dispatchEvent(event);
+        }
+
+        // FUNCTION: UPDATE DATE AND TIME IN FORMS
+        function updateDateTime() {
+            const now = new Date();
+            borrowDateInput.value = now.toLocaleString();
+            dateReturnedInput.value = now.toLocaleString();
+        }
+
+        // FUNCTION: GET TOTAL QUANTITY OF AN ITEM
+        function getTotalQuantity(itemName) {
+            const card = Array.from(document.querySelectorAll(".card")).find(
+                card => card.querySelector("h3").textContent === itemName
+            );
+            
+            if (card) {
+                const indicator = card.querySelector(".item-indicator");
+                const [, totalStr] = indicator.textContent.split("/");
+                return parseInt(totalStr);
+            }
+            return 0;
+        }
+
+        // FUNCTION: UPDATE ALL ITEM INDICATORS
+        function updateAllItemIndicators() {
+            const cards = document.querySelectorAll(".card");
+            cards.forEach((card) => {
+                const itemName = card.querySelector("h3").textContent;
+                const total = getTotalQuantity(itemName);
+                const borrowed = borrowedItems[itemName] ? 
+                    borrowedItems[itemName].reduce((sum, record) => sum + record.quantity, 0) : 0;
+                const current = total - borrowed;
+                
+                const indicator = card.querySelector(".item-indicator");
+                indicator.textContent = `${current}/${total}`;
+                
+                // Update indicator color based on stock level
+                indicator.classList.remove("green", "yellow", "orange");
+                
+                if (current <= 0) {
+                    indicator.classList.add("orange");
+                } else if (total === 1) {
+                    indicator.classList.add("green");
+                } else if (total <= 4) {
+                    if (current <= 1) {
+                        indicator.classList.add("yellow");
+                    } else {
+                        indicator.classList.add("green");
+                    }
+                } else if (current <= Math.max(2, Math.ceil(total * 0.25))) {
+                    indicator.classList.add("yellow");
+                } else {
+                    indicator.classList.add("green");
+                }
+            });
+        }
+
+        // FUNCTION: GET CURRENT QUANTITY OF AN ITEM
+        function getCurrentQuantity(itemName) {
+            const total = getTotalQuantity(itemName);
+            const borrowed = borrowedItems[itemName] ? 
+                borrowedItems[itemName].reduce((sum, record) => sum + record.quantity, 0) : 0;
+            return total - borrowed;
+        }
+
+        // FUNCTION: INITIALIZE ALL ITEM INDICATORS
+        function initializeIndicators() {
+            updateAllItemIndicators();
+        }
+
+        // FUNCTION: OPEN BORROW MODAL
+        function openBorrowModal(itemName) {
+            const currentQuantity = getCurrentQuantity(itemName);
+            if (currentQuantity <= 0) {
+                showErrorAlert(`Cannot borrow ${itemName} - item is out of stock`);
+                return;
+            }
+
+            quantityInput.value = 1;
+            quantityInput.max = currentQuantity;
+            itemNameInput.value = itemName;
+            updateDateTime();
+            borrowModal.classList.add("show");
+        }
+
+        // FUNCTION: CLOSE BORROW MODAL
+        function closeBorrowModal() {
+            borrowModal.classList.remove("show");
+        }
+
+        // FUNCTION: OPEN PASSWORD MODAL
+        function openPasswordModal() {
+            passwordInput.value = "";
+            passwordError.style.display = "none";
+            passwordModal.classList.add("show");
+        }
+
+        // FUNCTION: CLOSE PASSWORD MODAL
+        function closePasswordModal() {
+            localStorage.removeItem("tempBorrowData");
+            passwordModal.classList.remove("show");
+        }
+
+        // FUNCTION: OPEN RETURN MODAL WITH VALIDATION
+        function openReturnModal(itemName) {
+            itemNameReturnInput.value = itemName;
+            totalBorrowedInput.value = "0";
+            dateReturnedInput.value = "";
+            conditionGoodInput.value = "0";
+            conditionDamagedInput.value = "0";
+            conditionMissingInput.value = "0";
+            conditionReportInput.value = "";
+            validationContainer.style.display = "none";
+
+            if (!borrowedItems[itemName] || borrowedItems[itemName].length === 0) {
+                showErrorAlert(`No borrowed records found for ${itemName}. Please borrow first.`);
+                return;
+            }
+
+            const totalBorrowed = borrowedItems[itemName].reduce(
+                (sum, record) => sum + record.quantity,
+                0
+            );
+            totalBorrowedInput.value = totalBorrowed;
+
+            updateDateTime();
+
+            conditionGoodInput.max = totalBorrowed;
+            conditionDamagedInput.max = totalBorrowed;
+            conditionMissingInput.max = totalBorrowed;
+
+            [
+                conditionGoodInput,
+                conditionDamagedInput,
+                conditionMissingInput,
+            ].forEach((input) => {
+                input.addEventListener("input", validateReturnQuantities);
+            });
+
+            returnModal.classList.add("show");
+        }
+
+        // FUNCTION: OPEN CONDITION MODAL (IF EXISTS)
+        function openConditionModal(itemName) {
+            if (!conditionModal) return;
+            conditionItemNameInput.value = itemName;
+            conditionReportTextarea.value = "";
+            conditionModal.classList.add("show");
+        }
+
+        // FUNCTION: CLOSE CONDITION MODAL (IF EXISTS)
+        function closeConditionModal() {
+            if (!conditionModal) return;
+            conditionModal.classList.remove("show");
+        }
+
+        // FUNCTION: VALIDATE RETURN QUANTITIES IN REAL-TIME
+        function validateReturnQuantities() {
+            const goodCount = parseInt(conditionGoodInput.value) || 0;
+            const damagedCount = parseInt(conditionDamagedInput.value) || 0;
+            const missingCount = parseInt(conditionMissingInput.value) || 0;
+            const totalReturned = goodCount + damagedCount + missingCount;
+            const totalBorrowed = parseInt(totalBorrowedInput.value);
+
+            validationContainer.style.display = "block";
+
+            if (totalReturned === 0) {
+                validationIcon.innerHTML = "✗";
+                validationText.textContent = `Return failed (0 of ${totalBorrowed})`;
+                validationContainer.style.backgroundColor = "#f8d7da";
+                validationContainer.style.borderLeftColor = "#dc3545";
+            } 
+            else if (totalReturned > totalBorrowed) {
+                validationIcon.innerHTML = "⚠️";
+                validationText.textContent = `You're returning too many items (${totalReturned} of ${totalBorrowed})`;
+                validationContainer.style.backgroundColor = "#fff3cd";
+                validationContainer.style.borderLeftColor = "#ffc107";
+            } 
+            else if (totalReturned < totalBorrowed) {
+                validationIcon.innerHTML = "ℹ️";
+                validationText.textContent = `Remaining returned (${totalReturned} of ${totalBorrowed})`;
+                validationContainer.style.backgroundColor = "#e7f5ff";
+                validationContainer.style.borderLeftColor = "#0d6efd";
+            } 
+            else {
+                validationIcon.innerHTML = "✓";
+                validationText.textContent = `All items accounted for (${totalReturned} of ${totalBorrowed})`;
+                validationContainer.style.backgroundColor = "#e8f7ee";
+                validationContainer.style.borderLeftColor = "#198754";
+            }
+        }
+        
+        // FUNCTION: CLOSE RETURN MODAL
+        function closeReturnModal() {
+            returnModal.classList.remove("show");
+        }
+
+        // FUNCTION: SHOW SUCCESS ALERT
+        function showSuccessAlert(message) {
+            const alertDiv = document.createElement("div");
+            alertDiv.className = "custom-alert";
+            alertDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                z-index: 2000;
+                animation: slideIn 0.5s, fadeOut 0.5s 2.5s;
+                max-width: 90%;
+                width: auto;
+                font-size: 14px;
+                box-sizing: border-box;
+            `;
+
+            const checkIcon = document.createElement("span");
+            checkIcon.innerHTML = "✓";
+            checkIcon.style.cssText = `
+                font-size: 20px;
+                margin-right: 10px;
+            `;
+
+            const messageText = document.createElement("span");
+            messageText.textContent = message;
+            messageText.style.cssText = `
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 80vw;
+            `;
+
+            alertDiv.appendChild(checkIcon);
+            alertDiv.appendChild(messageText);
+            document.body.appendChild(alertDiv);
+
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.parentNode.removeChild(alertDiv);
+                }
+            }, 3000);
+        }
+
+        // FUNCTION: SHOW INCOMPLETE ALERT
+        function showIncompleteAlert(message) {
+            const alertDiv = document.createElement("div");
+            alertDiv.className = "custom-alert-incomplete";
+            alertDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #e7f5ff;
+                color: #0a58ca;
+                padding: 10px 15px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                z-index: 2000;
+                animation: slideIn 0.5s, fadeOut 0.5s 2.5s;
+                max-width: 90%;
+                width: auto;
+                font-size: 14px;
+                box-sizing: border-box;
+                border-left: 4px solid #0d6efd;
+            `;
+
+            const infoIcon = document.createElement("span");
+            infoIcon.innerHTML = "ℹ️";
+            infoIcon.style.cssText = `
+                font-size: 20px;
+                margin-right: 10px;
+            `;
+
+            const messageText = document.createElement("span");
+            messageText.textContent = message;
+            messageText.style.cssText = `
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 80vw;
+            `;
+
+            alertDiv.appendChild(infoIcon);
+            alertDiv.appendChild(messageText);
+            document.body.appendChild(alertDiv);
+
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.parentNode.removeChild(alertDiv);
+                }
+            }, 3000);
+        }
+        
+        // FUNCTION: SHOW ERROR ALERT
+        function showErrorAlert(message) {
+            const alertDiv = document.createElement("div");
+            alertDiv.className = "custom-alert-error";
+            alertDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #f44336;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                z-index: 2000;
+                animation: slideIn 0.5s, fadeOut 0.5s 2.5s;
+                max-width: 90%;
+                width: auto;
+                font-size: 14px;
+                box-sizing: border-box;
+            `;
+
+            const errorIcon = document.createElement("span");
+            errorIcon.innerHTML = "✗";
+            errorIcon.style.cssText = `
+                font-size: 20px;
+                margin-right: 10px;
+            `;
+
+            const messageText = document.createElement("span");
+            messageText.textContent = message;
+            messageText.style.cssText = `
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 80vw;
+            `;
+
+            alertDiv.appendChild(errorIcon);
+            alertDiv.appendChild(messageText);
+            document.body.appendChild(alertDiv);
+
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.parentNode.removeChild(alertDiv);
+                }
+            }, 3000);
+        }
+
+        // ADD MINIMAL CSS FOR INDICATORS
+        const style = document.createElement("style");
+        style.textContent = `
+            @keyframes slideIn {
+                from { top: -50px; opacity: 0; }
+                to { top: 20px; opacity: 1; }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+            
+            .item-indicator {
+                color: white;
+            }
+            
+            .item-indicator.green {
+                background-color: #28a745;
+            }
+            
+            .item-indicator.yellow {
+                background-color: #edc531
+                color: white;
+            }
+            
+            .item-indicator.orange {
+                background-color: #f0750f;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // INITIALIZE INDICATORS ON PAGE LOAD
+        initializeIndicators();
+
+        // EVENT LISTENERS FOR BORROW BUTTONS
+        borrowBtns.forEach((btn) => {
+            btn.addEventListener("click", function () {
+                const card = this.closest(".card");
+                const itemName = card.querySelector("h3").textContent;
+                openBorrowModal(itemName);
+            });
+        });
+
+        // EVENT LISTENERS FOR RETURN BUTTONS
+        returnBtns.forEach((btn) => {
+            btn.addEventListener("click", function () {
+                const card = this.closest(".card");
+                const itemName = card.querySelector("h3").textContent;
+                openReturnModal(itemName);
+            });
+        });
+
+        // EVENT LISTENERS FOR CONDITION REPORT BUTTONS (IF EXISTS)
+        if (conditionModal) {
+            document.querySelectorAll('.condition-report-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.card');
+                    const itemName = card.querySelector('h3').textContent;
+                    openConditionModal(itemName);
+                });
+            });
+        }
+
+        // CLOSE BUTTONS EVENT LISTENERS
+        closeBtn.addEventListener("click", closeBorrowModal);
+        cancelBtn.addEventListener("click", closeBorrowModal);
+        closePwBtn.addEventListener("click", closePasswordModal);
+        cancelPwBtn.addEventListener("click", closePasswordModal);
+        returnCloseBtn.addEventListener("click", closeReturnModal);
+        returnCancelBtn.addEventListener("click", closeReturnModal);
+        if (conditionModalClose) {
+            conditionModalClose.addEventListener("click", closeConditionModal);
+        }
+
+        // QUANTITY CONTROLS EVENT LISTENERS
+        decreaseBtn.addEventListener("click", () => {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) quantityInput.value = currentValue - 1;
+        });
+
+        increaseBtn.addEventListener("click", () => {
+            let currentValue = parseInt(quantityInput.value);
+            const maxQuantity = parseInt(quantityInput.max);
+            if (currentValue < maxQuantity)
+                quantityInput.value = currentValue + 1;
+        });
+
+        // SUBMIT TO PASSWORD MODAL
+        submitBtn.addEventListener("click", () => {
+            const itemName = itemNameInput.value;
+            const quantity = parseInt(quantityInput.value);
+            const currentQuantity = getCurrentQuantity(itemName);
+
+            if (quantity > currentQuantity) {
+                showErrorAlert(
+                    `Cannot borrow ${quantity} items - only ${currentQuantity} available`
+                );
+                return;
+            }
+
+            const tempBorrowData = {
+                itemName: itemName,
+                quantity: quantity,
+                studentName: studentNameInput.value,
+                studentCourse: studentCourseInput.value,
+                borrowDate: borrowDateInput.value,
+            };
+
+            localStorage.setItem(
+                "tempBorrowData",
+                JSON.stringify(tempBorrowData)
+            );
+
+            closeBorrowModal();
+            openPasswordModal();
+        });
+
+        // PASSWORD CONFIRMATION
+        confirmPwBtn.addEventListener("click", () => {
+            if (!passwordInput.value.trim()) {
+                passwordError.textContent = "Please enter your password";
+                passwordError.style.display = "block";
+                return;
+            }
+
+            if (passwordInput.value === CORRECT_PASSWORD) {
+                const tempBorrowData = JSON.parse(
+                    localStorage.getItem("tempBorrowData")
+                );
+
+                if (tempBorrowData) {
+                    const { itemName, quantity, studentName, studentCourse } =
+                        tempBorrowData;
+
+                    if (!borrowedItems[itemName]) {
+                        borrowedItems[itemName] = [];
+                    }
+
+                    borrowedItems[itemName].push({
+                        quantity: quantity,
+                        studentName: studentName,
+                        studentCourse: studentCourse,
+                        borrowDate: new Date().toLocaleString(),
+                    });
+
+                    saveBorrowedItems();
+                    updateAllItemIndicators();
+
+                    // Updated success message to show quantity
+                    const plural = quantity > 1 ? 's' : '';
+                    showSuccessAlert(
+                        `Successfully borrowed ${quantity} ${itemName}${plural}`
+                    );
+
+                    localStorage.removeItem("tempBorrowData");
+                }
+                closePasswordModal();
+            } else {
+                passwordError.textContent = "Incorrect password. Please try again.";
+                passwordError.style.display = "block";
+                passwordInput.value = "";
+            }
+        });
+
+        // RETURN ITEM SUBMISSION WITH PARTIAL RETURNS ALLOWED
+        returnSubmitBtn.addEventListener("click", () => {
+            const itemName = itemNameReturnInput.value;
+            const goodCount = parseInt(conditionGoodInput.value) || 0;
+            const damagedCount = parseInt(conditionDamagedInput.value) || 0;
+            const missingCount = parseInt(conditionMissingInput.value) || 0;
+            const totalReturned = goodCount + damagedCount + missingCount;
+            const totalBorrowed = parseInt(totalBorrowedInput.value);
+
+            // Validation cases that should prevent submission
+            if (totalReturned === 0) {
+                showErrorAlert(`Return failed - No items returned (0 of ${totalBorrowed})`);
+                return;
+            }
+
+            if (totalReturned > totalBorrowed) {
+                showErrorAlert(
+                    `Cannot return ${totalReturned} items - only ${totalBorrowed} were borrowed (${totalReturned} of ${totalBorrowed})`
+                );
+                return;
+            }
+
+            // Handle successful return (full or partial)
+            if (totalReturned === totalBorrowed) {
+                let successMessage = `Successfully returned all ${totalReturned} ${itemName} items`;
+                
+                // Add condition details if any items were damaged or missing
+                if (damagedCount > 0 || missingCount > 0) {
+                    const conditionDetails = [];
+                    if (damagedCount > 0) conditionDetails.push(`${damagedCount} damaged`);
+                    if (missingCount > 0) conditionDetails.push(`${missingCount} missing`);
+                    successMessage += ` (${conditionDetails.join(" and ")})`;
+                }
+                
+                showSuccessAlert(successMessage);
+            } else {
+                let incompleteMessage = `Return incomplete - ${totalReturned} of ${totalBorrowed} ${itemName} items returned`;
+                
+                // Add condition details if any items were damaged or missing
+                if (damagedCount > 0 || missingCount > 0) {
+                    const conditionDetails = [];
+                    if (damagedCount > 0) conditionDetails.push(`${damagedCount} damaged`);
+                    if (missingCount > 0) conditionDetails.push(`${missingCount} missing`);
+                    incompleteMessage += ` (${conditionDetails.join(" and ")})`;
+                }
+                
+                showIncompleteAlert(incompleteMessage);
+            }
+
+            // Update inventory - remove the returned items from borrowedItems
+            if (borrowedItems[itemName]) {
+                // For partial returns, we need to adjust the remaining quantity
+                if (totalReturned < totalBorrowed) {
+                    // Find the most recent borrow record to modify
+                    const mostRecentRecord = borrowedItems[itemName].reduce((latest, record) => 
+                        new Date(record.borrowDate) > new Date(latest.borrowDate) ? record : latest
+                    );
+                    
+                    // Reduce the quantity in the most recent record
+                    mostRecentRecord.quantity -= totalReturned;
+                    
+                    // If quantity reaches zero, remove the record
+                    if (mostRecentRecord.quantity <= 0) {
+                        borrowedItems[itemName] = borrowedItems[itemName].filter(
+                            record => record !== mostRecentRecord
+                        );
+                    }
+                } else {
+                    // Full return - remove all records for this item
+                    delete borrowedItems[itemName];
+                }
+                
+                saveBorrowedItems();
+                updateAllItemIndicators();
+            }
+
+            closeReturnModal();
+        });
+
+        // CONDITION REPORT SUBMISSION (IF EXISTS)
+        if (conditionModalSubmit) {
+            conditionModalSubmit.addEventListener("click", () => {
+                const itemName = conditionItemNameInput.value;
+                const reportText = conditionReportTextarea.value;
+                
+                if (!reportText.trim()) {
+                    showErrorAlert("Please enter a condition report");
+                    return;
+                }
+                
+                showSuccessAlert(`Condition report submitted for ${itemName}`);
+                closeConditionModal();
+            });
+        }
+
+        // CLEAR PASSWORD ERROR ON INPUT
+        passwordInput.addEventListener("input", () => {
+            if (passwordInput.value.trim()) {
+                passwordError.style.display = "none";
+            }
+        });
+
+        // CLOSE MODALS WHEN CLICKING OUTSIDE
+        window.addEventListener("click", (event) => {
+            if (event.target === borrowModal) closeBorrowModal();
+            if (event.target === passwordModal) {
+                localStorage.removeItem("tempBorrowData");
+                closePasswordModal();
+            }
+            if (event.target === returnModal) closeReturnModal();
+            if (conditionModal && event.target === conditionModal) closeConditionModal();
+        });
+
+        // SUBMIT PASSWORD ON ENTER KEY
+        passwordInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") confirmPwBtn.click();
+        });
+      });
+
+      // LOGOUT MODAL FUNCTIONALITY
+      const logoutModal = document.querySelector(".logout-modal");
+      const logoutLink = document.getElementById("logoutLink");
+      const confirmLogoutBtn = document.getElementById("confirmLogout");
+      const cancelLogoutBtn = document.getElementById("cancelLogout");
+
+      // SHOW MODAL WHEN LOGOUT LINK IS CLICKED
+      logoutLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        logoutModal.classList.add("show");
+      });
+
+      // CLOSE MODAL WHEN 'CANCEL' IS CLICKED
+      cancelLogoutBtn.addEventListener("click", function () {
+        logoutModal.classList.remove("show");
+      });
+
+      // REDIRECT TO LOGIN PAGE WHEN 'LOGOUT' IS CLICKED
+      confirmLogoutBtn.addEventListener("click", function () {
+        logoutModal.classList.remove("show");
+        setTimeout(function () {
+          window.location.href = "login.html";
+        }, 300);
+      });
+
+      // CLOSE MODAL WHEN CLICKING OUTSIDE OF IT
+      window.addEventListener("click", function (event) {
+        if (event.target == logoutModal) {
+          logoutModal.classList.remove("show");
+        }
+      });
+
+      // CUSTOM ALERT FUNCTION
+      function showCustomAlert(message, isSuccess = true) {
+          const alertDiv = document.createElement("div");
+          alertDiv.className = "custom-alert";
+          alertDiv.style.cssText = `
+              position: fixed;
+              top: 20px;
+              left: 50%;
+              transform: translateX(-50%);
+              background-color: ${isSuccess ? '#4CAF50' : '#f44336'};
+              color: white;
+              padding: 10px 15px;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+              z-index: 2000;
+              animation: slideIn 0.5s, fadeOut 0.5s 2.5s;
+              max-width: 90%;
+              width: auto;
+              font-size: 14px;
+              box-sizing: border-box;
+          `;
+
+          const icon = document.createElement("span");
+          icon.innerHTML = isSuccess ? "✓" : "⚠";
+          icon.style.cssText = `
+              font-size: 20px;
+              margin-right: 10px;
+          `;
+
+          const messageText = document.createElement("span");
+          messageText.textContent = message;
+          messageText.style.cssText = `
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              max-width: 80vw;
+          `;
+
+          alertDiv.appendChild(icon);
+          alertDiv.appendChild(messageText);
+          document.body.appendChild(alertDiv);
+
+          setTimeout(() => {
+              if (alertDiv.parentNode) {
+                  alertDiv.parentNode.removeChild(alertDiv);
+              }
+          }, 3000);
+      }
+
+      // CONDITION REPORT MODAL FUNCTIONALITY
+      document.addEventListener("DOMContentLoaded", function () {
+          const conditionModal = document.getElementById("conditionModal");
+          const conditionCloseBtn = conditionModal.querySelector(
+              ".condition-modal-close"
+          );
+          const conditionSubmitBtn = conditionModal.querySelector(
+              ".condition-modal-submit"
+          );
+          const conditionReportBtns = document.querySelectorAll(
+              ".condition-report-btn"
+          );
+          const conditionItemNameInput =
+              conditionModal.querySelector("#conditionItemName");
+          const conditionReportInput =
+              conditionModal.querySelector("#conditionReport");
+
+          // FUNCTION: OPEN CONDITION MODAL
+          function openConditionModal(itemName) {
+              conditionItemNameInput.value = itemName;
+              conditionReportInput.value = "";
+              conditionModal.classList.add("show");
+          }
+
+          // FUNCTION: CLOSE CONDITION MODAL
+          function closeConditionModal() {
+              conditionModal.classList.remove("show");
+          }
+
+          // ATTACH CLICK EVENT TO ALL CONDITION REPORT BUTTONS
+          conditionReportBtns.forEach((btn) => {
+              btn.addEventListener("click", function () {
+                  const card = this.closest(".card");
+                  const itemName = card.querySelector("h3").textContent;
+                  openConditionModal(itemName);
+              });
+          });
+
+          // CLOSE MODAL EVENTS
+          conditionCloseBtn.addEventListener("click", closeConditionModal);
+
+          // SUBMIT CONDITION REPORT
+          conditionSubmitBtn.addEventListener("click", function () {
+              const itemName = conditionItemNameInput.value;
+              const reportDetails = conditionReportInput.value;
+
+              if (reportDetails.trim() === "") {
+                  showCustomAlert("Please provide condition report details", false);
+                  return;
+              }
+
+              // Show success message
+              showCustomAlert(`Condition report submitted for ${itemName} successfully!`);
+              
+              // Here you would typically send the data to your server
+              console.log(`Condition report for ${itemName}:`, reportDetails);
+              
+              closeConditionModal();
+          });
+
+          // CLOSE MODAL WHEN CLICKING OUTSIDE
+          conditionModal.addEventListener("click", function (event) {
+              if (event.target === conditionModal) {
+                  closeConditionModal();
+              }
+          });
+      });
+    </script>
+    <!-- END JAVASCRIPT -->
+  </body>
+</html>
